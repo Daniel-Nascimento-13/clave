@@ -1,0 +1,51 @@
+// ==========================================================
+// TSCONFIG.JSON · CONFIGURAÇÃO DO TYPESCRIPT
+// O QUE FAZ: DEFINE AS REGRAS DO COMPILADOR TS: VERSÃO DO JS ALVO,
+//            MODO ESTRITO, ALIAS DE IMPORTS (@/) E SUPORTE AO JSX DO REACT.
+// QUANDO MEXER: QUASE NUNCA — GERADO PELO CREATE-NEXT-APP, MEXER COM CUIDADO.
+// ==========================================================
+{
+  "compilerOptions": {
+    // VERSÃO DO JAVASCRIPT GERADO E BIBLIOTECAS DE TIPOS DISPONÍVEIS
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+
+    // MODO ESTRITO: CAPTURA ERROS DE TIPOS EM TEMPO DE DESENVOLVIMENTO
+    "strict": true,
+
+    // NEXT.JS CUIDA DO BUILD — O TS SÓ VERIFICA TIPOS, NÃO GERA ARQUIVOS
+    "noEmit": true,
+
+    // COMPATIBILIDADE DE MÓDULOS (PADRÃO DO NEXT.JS)
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+
+    // PLUGIN OFICIAL DO NEXT.JS — HABILITA SUPORTE A SERVER COMPONENTS ETC.
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+
+    // ALIAS DE IMPORT: "@/" APONTA PARA "src/" — EX: @/components/ui/Button
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}

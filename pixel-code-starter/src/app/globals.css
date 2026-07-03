@@ -1,0 +1,53 @@
+/* ==========================================================
+   GLOBALS.CSS · ESTILO GLOBAL
+   O QUE FAZ: IMPORTA O TAILWIND V4, DEFINE A PALETA DE CORES E
+              FONTES VIA @THEME, E APLICA RESETS E UTILITÁRIOS BASE.
+   QUANDO MEXER: TODA LP — TROQUE AS CORES E FONTES DA MARCA AQUI.
+   ========================================================== */
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Cormorant Garamond', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Space Grotesk', sans-serif;
+
+  --color-bg: #0C0A09;
+  --color-fg: #EDE8DF;
+  --color-amber: #C09A5A;
+  --color-violet: #8C1C1C;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-amber);
+    color: var(--color-bg);
+  }
+}
+
+@layer utilities {
+  /* Gradiente utilitário amber → violet */
+  .gradient-brand {
+    background: linear-gradient(135deg, var(--color-amber), var(--color-violet));
+  }
+
+  .text-gradient-brand {
+    background: linear-gradient(135deg, var(--color-amber), var(--color-violet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
