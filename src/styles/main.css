@@ -36,7 +36,14 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 42%; /* desloca o foco um pouco pra cima, reduz corte */
   will-change: opacity;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 100svh; /* usa viewport real do mobile, sem contar barra de endereço */
+  }
 }
 
 /* ============================================
