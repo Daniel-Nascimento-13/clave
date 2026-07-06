@@ -27,6 +27,22 @@ export function initElevador() {
   video.pause(); // CONTROLADO MANUALMENTE VIA CURRENTTIME
 
   function setup() {
+    // PRIMING iOS — destrava o decoder de hardware antes do scrub via currentTime.
+    // Sem isso, Safari/iOS mantém a <video> preta pois nunca houve playback real.
+    const prime = video.play();
+    if (prime && typeof prime.then === "function") {
+      prime
+        .then(() => {
+          video.pause();
+          video.currentTime = 0;
+        })
+        .catch(() => {
+          // Autoplay bloqueado (ex.: Low Power Mode) — scrub segue funcionando.
+        });
+    } else {
+      video.pause();
+    }
+
     let hasRevealed = false;
 
     // TIMELINE ÚNICA DE REVEAL — DISPARA UMA VEZ, NÃO É SCRUBADA
