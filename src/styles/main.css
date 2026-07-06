@@ -155,6 +155,18 @@ body {
   z-index: 1;
 }
 
+.marcas::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8rem;
+  background: linear-gradient(to top, #060b14 0%, rgb(6 11 20 / 0.5) 30%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .marcas__intro {
   position: relative;
   z-index: 2;
@@ -194,13 +206,6 @@ body {
   transform: translateY(28px);
 }
 
-.marcas__bar {
-  position: relative;
-  z-index: 2;
-  padding-bottom: 3.5rem;
-  border-bottom: 1px solid rgb(0 0 0 / 0.1);
-}
-
 .marcas__track {
   overflow: hidden;
   width: 100%;
@@ -234,6 +239,20 @@ body {
   }
 }
 
+.marcas__dots {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 50% 0%, #2a7fff0f 0, #0000 55%),
+    radial-gradient(#14140f1a 1px, #0000 1px);
+  background-size: 100% 100%, 12px 12px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
+          mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
+  opacity: .6;
+}
+
 /* ============================================ */
 /* SEÇÃO 4 — DIFERENCIAIS                        */
 /* ============================================ */
@@ -246,7 +265,7 @@ body {
   --mut: #8496b3;
   --acc: #2a7fff;
   position: relative;
-  overflow-x: clip;                 /* segura o reveal lateral (x:70) */
+  overflow-x: clip;
   background: var(--nav);
   padding: clamp(64px, 10vw, 120px) 24px;
   color: var(--txt);
@@ -254,22 +273,20 @@ body {
 
 .clv-defs { position: absolute; width: 0; height: 0; }
 
-/* Fundo pontilhado da seção (reaproveitável) */
 .clv-dots {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   background-image:
-    radial-gradient(circle at 50% 0%, #2a7fff14 0, #0000 55%),   /* halo azul */
-    radial-gradient(#22345a 1px, #0000 1px);                     /* dot */
+    radial-gradient(circle at 50% 0%, #2a7fff14 0, #0000 55%),
+    radial-gradient(#22345a 1px, #0000 1px);
   background-size: 100% 100%, 12px 12px;
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
           mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
   opacity: .6;
 }
 
-/* Conteúdo acima do fundo pontilhado */
 .clv-inner {
   position: relative;
   z-index: 1;
@@ -279,15 +296,6 @@ body {
 
 /* ---------- CABEÇALHO ---------- */
 .clv-section-head { margin-bottom: clamp(32px, 5vw, 56px); }
-
-.clv-index {
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: .1em;
-  color: var(--acc);
-  margin: 0 0 10px;
-}
 
 .clv-heading {
   font-family: "Bricolage Grotesque", sans-serif;
@@ -314,33 +322,30 @@ body {
 .clv-card-container {
   position: relative;
   border-radius: 1em;
-  min-height: 250px;    /* piso; cresce se precisar (linha abaixo) */
-  height: auto;
+  overflow: hidden;      /* ← contém o blur, elimina o vazamento em desktop */
+  isolation: isolate;    /* ← garante que o z-index: -2 do glow não escape do contexto */
 }
-
-/* deixa o container crescer com o conteúdo do card absoluto */
-.clv-card-container { display: grid; }
-.clv-card { position: relative; }  /* NÃO — mantém absolute, ver nota */
 
 .clv-card-border {
   position: absolute;
   inset: 0;
-  background: #0005;        /* escuro como o original — gera a linha nítida */
+  z-index: 0;
+  background: #0005;
   border-radius: inherit;
 }
 
 .clv-card {
-  position: relative;       /* no fluxo → altura pelo conteúdo */
-  margin: 2px;              /* equivalente ao inset:.125em do original */
-  border-radius: .875em;
-  background: var(--card);  /* opaco: tapa o centro, glow só na borda */
+  position: relative;
+  z-index: 1;
+  margin: .125em;
+  border-radius: calc(1em - .125em);
+  background: var(--card);
   display: flex;
   flex-direction: column;
   color: var(--txt);
   overflow: hidden;
 }
 
-/* Conteúdo do card acima das camadas de glow */
 .clv-head, .clv-body { position: relative; z-index: 1; }
 
 /* ---------- HEADER DO CARD ---------- */
@@ -416,13 +421,14 @@ body {
 .clv-chk svg { width: 11px; height: 11px; }
 
 /* ============================================ */
-/* GLOW GIRATÓRIO (valores 100% originais)      */
+/* GLOW GIRATÓRIO (valores 100% originais)       */
 /* ============================================ */
 .clv-spin {
   position: absolute;
   inset: 0;
   z-index: -2;
-  overflow: hidden;         /* SEM border-radius aqui */
+  overflow: hidden;
+  border-radius: inherit;
 }
 .clv-spin-blur    { filter: blur(3em) url(#unopaq); }
 .clv-spin-intense { inset: -.125em; filter: blur(.5em) url(#unopaq2); border-radius: .75em; }
@@ -444,7 +450,6 @@ body {
   to  { rotate: 370deg; }
 }
 
-/* Acessibilidade / economia mobile */
 @media (prefers-reduced-motion: reduce) {
   .clv-spin::before { animation: none; rotate: 120deg; }
 }

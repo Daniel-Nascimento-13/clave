@@ -9,9 +9,8 @@ export const STAGGER = 0.2;
 // DIFERENCIAIS — REVEAL
 // ============================================
 export const DIFERENCIAIS = {
-  start: "top 75%",
-  duration: 1.0,      // premium (0.8–1.2)
-  ease: "expo.out",
-  stagger: 0.24,      // entrada sequencial (câmera)
-  revealX: 70,        // deslocamento lateral (px) — sinal alterna por índice
+  revealX: 70,
+  duration: 0.9,
+  ease: "power3.out",
+  start: "top 85%",
 };
