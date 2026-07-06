@@ -1,0 +1,450 @@
+/* ============================================
+   FONTES E TOKENS GLOBAIS
+   ============================================ */
+@import "@fontsource/bricolage-grotesque/400.css";
+@import "@fontsource/bricolage-grotesque/800.css";
+@import "@fontsource-variable/inter";
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f4f3f0;
+  --color-ink: #14140f;
+  --color-accent: #2a7fff;
+  --font-display: "Bricolage Grotesque", sans-serif;
+  --font-body: "Inter Variable", sans-serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+/* ============================================
+   HERO — MARCA ANIMADA
+   ============================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--color-paper);
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: opacity;
+}
+
+/* ============================================
+   SEÇÃO 2 — ANIMAÇÃO ELEVADOR
+   ============================================ */
+.elevador {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+.elevador__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.elevador__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgb(0 0 0 / 0.92) 0%, rgb(0 0 0 / 0.25) 50%, transparent 70%),
+    linear-gradient(to top, rgb(0 0 0 / 0.75) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.elevador__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 4rem 6vw 0;
+  max-width: 640px;
+  color: #fff;
+}
+
+.elevador__label,
+.elevador__title,
+.elevador__text {
+  opacity: 0;
+  transform: translateY(24px);
+  clip-path: inset(0 0 100% 0);
+  text-shadow: 0 2px 16px rgb(0 0 0 / 0.4);
+}
+
+.elevador__label {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 0.75rem;
+}
+
+.elevador__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.75rem, 5vw, 3.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+}
+
+.elevador__text {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgb(255 255 255 / 0.85);
+  max-width: 420px;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .elevador__content {
+    padding: 2.5rem 6vw 0;
+  }
+}
+
+.elevador::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 12rem;
+  background: linear-gradient(to top, #000 0%, rgb(0 0 0 / 0.5) 30%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================
+   SEÇÃO 3 — MARCAS
+   ============================================ */
+.marcas {
+  position: relative;
+  padding: 6rem 6vw 7rem;
+  background: var(--color-paper);
+  overflow: hidden;
+}
+
+.marcas::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6rem;
+  background: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.5) 30%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.marcas__intro {
+  position: relative;
+  z-index: 2;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 0 6vw;
+}
+
+.marcas__headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.75rem, 7vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.marcas__headline span {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.marcas__subtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  max-width: 32rem;
+  margin: 1.5rem 0 0;
+  color: rgb(20 20 15 / 0.65);
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.marcas__bar {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 3.5rem;
+  border-bottom: 1px solid rgb(0 0 0 / 0.1);
+}
+
+.marcas__track {
+  overflow: hidden;
+  width: 100%;
+}
+
+.marcas__marquee {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+}
+
+.marcas__marquee span {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 3.5rem;
+  color: rgb(20 20 15 / 0.35);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .marcas__marquee span {
+    font-size: 2rem;
+  }
+
+  .marcas__marquee {
+    gap: 1.5rem;
+  }
+
+  .marcas__intro {
+    padding: 0 6vw;
+  }
+}
+
+/* ============================================ */
+/* SEÇÃO 4 — DIFERENCIAIS                        */
+/* ============================================ */
+.clv-diferenciais {
+  --nav: #060b14;
+  --card: #0b1524;
+  --head: #0a1220;
+  --line: #17233a;
+  --txt: #e8eef7;
+  --mut: #8496b3;
+  --acc: #2a7fff;
+  position: relative;
+  overflow-x: clip;                 /* segura o reveal lateral (x:70) */
+  background: var(--nav);
+  padding: clamp(64px, 10vw, 120px) 24px;
+  color: var(--txt);
+}
+
+.clv-defs { position: absolute; width: 0; height: 0; }
+
+/* Fundo pontilhado da seção (reaproveitável) */
+.clv-dots {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 50% 0%, #2a7fff14 0, #0000 55%),   /* halo azul */
+    radial-gradient(#22345a 1px, #0000 1px);                     /* dot */
+  background-size: 100% 100%, 12px 12px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
+          mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
+  opacity: .6;
+}
+
+/* Conteúdo acima do fundo pontilhado */
+.clv-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* ---------- CABEÇALHO ---------- */
+.clv-section-head { margin-bottom: clamp(32px, 5vw, 56px); }
+
+.clv-index {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: .1em;
+  color: var(--acc);
+  margin: 0 0 10px;
+}
+
+.clv-heading {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  margin: 0;
+  max-width: 16ch;
+}
+
+/* ---------- COLUNA ÚNICA ---------- */
+.clv-grid {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 4vw, 40px);
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+/* ============================================ */
+/* CARD + BORDA (idêntico ao Uiverse, cores azuis) */
+/* ============================================ */
+.clv-card-container {
+  position: relative;
+  border-radius: 1em;
+  min-height: 250px;    /* piso; cresce se precisar (linha abaixo) */
+  height: auto;
+}
+
+/* deixa o container crescer com o conteúdo do card absoluto */
+.clv-card-container { display: grid; }
+.clv-card { position: relative; }  /* NÃO — mantém absolute, ver nota */
+
+.clv-card-border {
+  position: absolute;
+  inset: 0;
+  background: #0005;        /* escuro como o original — gera a linha nítida */
+  border-radius: inherit;
+}
+
+.clv-card {
+  position: relative;       /* no fluxo → altura pelo conteúdo */
+  margin: 2px;              /* equivalente ao inset:.125em do original */
+  border-radius: .875em;
+  background: var(--card);  /* opaco: tapa o centro, glow só na borda */
+  display: flex;
+  flex-direction: column;
+  color: var(--txt);
+  overflow: hidden;
+}
+
+/* Conteúdo do card acima das camadas de glow */
+.clv-head, .clv-body { position: relative; z-index: 1; }
+
+/* ---------- HEADER DO CARD ---------- */
+.clv-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 18px 15px;
+  background: var(--head);
+  border-bottom: 1px solid var(--line);
+}
+
+.clv-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #2a7fff1f;
+  color: var(--acc);
+  flex-shrink: 0;
+}
+.clv-icon svg { width: 20px; height: 20px; }
+
+.clv-head-text { flex-grow: 1; line-height: 1.25; }
+.clv-title { font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
+.clv-sub { font-size: 11.5px; color: var(--mut); margin-top: 2px; }
+
+.clv-num {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2a7fff80;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- CORPO DO CARD ---------- */
+.clv-body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.clv-desc {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #c2cedf;
+}
+
+.clv-list { display: flex; flex-direction: column; gap: 8px; }
+
+.clv-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  color: var(--txt);
+}
+
+.clv-chk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  background: #2a7fff22;
+  color: var(--acc);
+  flex-shrink: 0;
+}
+.clv-chk svg { width: 11px; height: 11px; }
+
+/* ============================================ */
+/* GLOW GIRATÓRIO (valores 100% originais)      */
+/* ============================================ */
+.clv-spin {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;         /* SEM border-radius aqui */
+}
+.clv-spin-blur    { filter: blur(3em) url(#unopaq); }
+.clv-spin-intense { inset: -.125em; filter: blur(.5em) url(#unopaq2); border-radius: .75em; }
+.clv-spin-inside  { inset: -2px; border-radius: inherit; filter: blur(2px) url(#unopaq3); z-index: 0; }
+
+.clv-spin::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  animation: clv-speen 8s cubic-bezier(.56, .15, .28, .86) infinite;
+}
+.clv-spin-blur::before    { background: linear-gradient(-45deg, #2a7fff, #0000 46% 54%, #22d3ee); }
+.clv-spin-intense::before { background: linear-gradient(-45deg, #5aa0ff, #0000 35% 65%, #5ee6ff); }
+.clv-spin-inside::before  { background: linear-gradient(-45deg, #a9ccff, #0000 35% 65%, #b0f2ff); }
+
+@keyframes clv-speen {
+  0%  { rotate: 10deg; }
+  50% { rotate: 190deg; }
+  to  { rotate: 370deg; }
+}
+
+/* Acessibilidade / economia mobile */
+@media (prefers-reduced-motion: reduce) {
+  .clv-spin::before { animation: none; rotate: 120deg; }
+}

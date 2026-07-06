@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CLAVE — Mídia Indoor</title>
+    <meta
+      name="description"
+      content="Atenção que conecta marcas ao público. Mídia indoor em elevadores e áreas comuns de condomínios."
+    />
+  </head>
+  <body>
+    <main id="app">
+      <!-- ==================== HERO ==================== -->
+      <section class="hero" data-hero>
+        <video
+          class="hero__video"
+          src="/videos/marca-animada.mp4"
+          autoplay
+          muted
+          playsinline
+          preload="auto"
+        ></video>
+      </section>
+
+      <!-- ==================== SEÇÃO 2 — ANIMAÇÃO ELEVADOR ==================== -->
+      <section class="elevador" data-elevador>
+        <video class="elevador__video" muted playsinline preload="auto">
+          <source src="/videos/elevador-scrub-mobile.mp4" media="(max-width: 768px)" />
+          <source src="/videos/elevador-scrub.mp4" />
+        </video>
+
+        <div class="elevador__overlay"></div>
+
+        <div class="elevador__content">
+          <h2 class="elevador__title">Telas no cotidiano das pessoas</h2>
+          <p class="elevador__text">
+            Posicionamos nossos displays no exato ponto onde seu cliente mora, trabalha e transita. Sem interferências, sem dispersão.
+          </p>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO 3 — MARCAS ==================== -->
+      <section class="marcas" data-marcas>
+        <!-- INTRO PINADA — LETRAS SE FORMAM CONFORME O SCROLL -->
+        <div class="marcas__intro" data-marcas-intro>
+          <h2 class="marcas__headline" data-marcas-headline>Marcas parceiras</h2>
+          <p class="marcas__subtitle" data-marcas-subtitle>
+            Empresas que já confiam na Clave para estar perto do seu público.
+          </p>
+        </div>
+
+        <div class="marcas__bar">
+          <div class="marcas__track">
+            <div class="marcas__marquee" data-marquee>
+              <span>Marca 01</span>
+              <span>Marca 02</span>
+              <span>Marca 03</span>
+              <span>Marca 04</span>
+              <span>Marca 05</span>
+              <span>Marca 06</span>
+              <span>Marca 01</span>
+              <span>Marca 02</span>
+              <span>Marca 03</span>
+              <span>Marca 04</span>
+              <span>Marca 05</span>
+              <span>Marca 06</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEÇÃO 4 — DIFERENCIAIS ==================== -->
+      <section class="clv-diferenciais" data-diferenciais>
+        <!-- Filtros SVG da borda animada (glow) -->
+        <svg class="clv-defs" aria-hidden="true">
+          <filter id="unopaq" y="-100%" height="300%" x="-100%" width="300%"><feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 5 0"/></filter>
+          <filter id="unopaq2" y="-100%" height="300%" x="-100%" width="300%"><feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 10 0"/></filter>
+          <filter id="unopaq3" y="-100%" height="300%" x="-100%" width="300%"><feColorMatrix values="1 0 0 1 0  0 1 0 1 0  0 0 1 1 0  0 0 0 2 0"/></filter>
+        </svg>
+
+        <div class="clv-dots" aria-hidden="true"></div>
+
+        <div class="clv-inner">
+          <header class="clv-section-head">
+            <p class="clv-index">03</p>
+            <h2 class="clv-heading">Diferenciais Clave</h2>
+          </header>
+
+          <div class="clv-grid">
+
+            <!-- 01 — Alta definição -->
+            <article class="clv-card-container" data-diferencial>
+              <div class="clv-spin clv-spin-blur"></div>
+              <div class="clv-spin clv-spin-intense"></div>
+              <div class="clv-card-border"><div class="clv-spin clv-spin-inside"></div></div>
+              <div class="clv-card">
+                <div class="clv-backdrop"></div>
+                <div class="clv-head">
+                  <div class="clv-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
+                  </div>
+                  <div class="clv-head-text">
+                    <div class="clv-title">Alta definição</div>
+                    <div class="clv-sub">Tecnologia de ponta</div>
+                  </div>
+                  <div class="clv-num">01</div>
+                </div>
+                <div class="clv-body">
+                  <p class="clv-desc">Telas Full HD em elevadores e áreas comuns. Imagem nítida, presença premium.</p>
+                  <div class="clv-list">
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Telas Full HD</div>
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Instalação profissional</div>
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Visual premium</div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 02 — Conteúdo dinâmico -->
+            <article class="clv-card-container" data-diferencial>
+              <div class="clv-spin clv-spin-blur"></div>
+              <div class="clv-spin clv-spin-intense"></div>
+              <div class="clv-card-border"><div class="clv-spin clv-spin-inside"></div></div>
+              <div class="clv-card">
+                <div class="clv-backdrop"></div>
+                <div class="clv-head">
+                  <div class="clv-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
+                  </div>
+                  <div class="clv-head-text">
+                    <div class="clv-title">Conteúdo dinâmico</div>
+                    <div class="clv-sub">Atualização em tempo real</div>
+                  </div>
+                  <div class="clv-num">02</div>
+                </div>
+                <div class="clv-body">
+                  <p class="clv-desc">Troque campanhas remotamente quando quiser. Conteúdo sempre novo, sem reimpressão.</p>
+                  <div class="clv-list">
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Atualização remota</div>
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Campanhas dinâmicas</div>
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Sem papel</div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 03 — Segmentação local -->
+            <article class="clv-card-container" data-diferencial>
+              <div class="clv-spin clv-spin-blur"></div>
+              <div class="clv-spin clv-spin-intense"></div>
+              <div class="clv-card-border"><div class="clv-spin clv-spin-inside"></div></div>
+              <div class="clv-card">
+                <div class="clv-backdrop"></div>
+                <div class="clv-head">
+                  <div class="clv-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.2"/></svg>
+                  </div>
+                  <div class="clv-head-text">
+                    <div class="clv-title">Segmentação local</div>
+                    <div class="clv-sub">Onde seu público está</div>
+                  </div>
+                  <div class="clv-num">03</div>
+                </div>
+                <div class="clv-body">
+                  <p class="clv-desc">Anuncie exatamente nos condomínios certos de Lajeado e região. Público qualificado.</p>
+                  <div class="clv-list">
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Condomínios estratégicos</div>
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Público qualificado</div>
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Lajeado e região</div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 04 — Custo zero p/ condomínio -->
+            <article class="clv-card-container" data-diferencial>
+              <div class="clv-spin clv-spin-blur"></div>
+              <div class="clv-spin clv-spin-intense"></div>
+              <div class="clv-card-border"><div class="clv-spin clv-spin-inside"></div></div>
+              <div class="clv-card">
+                <div class="clv-backdrop"></div>
+                <div class="clv-head">
+                  <div class="clv-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M9 15l6-6"/></svg>
+                  </div>
+                  <div class="clv-head-text">
+                    <div class="clv-title">Custo zero p/ condomínio</div>
+                    <div class="clv-sub">Rede em expansão</div>
+                  </div>
+                  <div class="clv-num">04</div>
+                </div>
+                <div class="clv-body">
+                  <p class="clv-desc">O condomínio recebe a tela sem pagar nada — mais adesões, mais pontos pra sua marca.</p>
+                  <div class="clv-list">
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Sem custo de instalação</div>
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Adesão facilitada</div>
+                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Rede crescente</div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
