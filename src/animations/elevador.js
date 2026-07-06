@@ -26,9 +26,47 @@ export function initElevador() {
 
   video.pause(); // CONTROLADO MANUALMENTE VIA CURRENTTIME
 
-  function setup() {
-    // PRIMING iOS — destrava o decoder de hardware antes do scrub via currentTime.
-    // Sem isso, Safari/iOS mantém a <video> preta pois nunca houve playback real.
+  let hasRevealed = false;
+
+  // TIMELINE ÚNICA DE REVEAL — DISPARA UMA VEZ, NÃO É SCRUBADA
+  function revealContent() {
+    if (hasRevealed) return;
+    hasRevealed = true;
+
+    gsap
+      .timeline({ defaults: { ease: EASE.primary } })
+      .to(label, { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1, duration: DURATIONS.sm })
+      .to(
+        title,
+        { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1, duration: DURATIONS.md },
+        `-=${DURATIONS.sm * 0.6}`
+      )
+      .to(
+        text,
+        { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0, duration: DURATIONS.sm },
+        `-=${DURATIONS.md * 0.6}`
+      );
+  }
+
+  // PIN + SCRUB — CRIADO SÍNCRONO PARA QUE O SPACER DE PIN EXISTA ANTES
+  // DE MARCAS/DIFERENCIAIS MEDIREM SUAS POSIÇÕES. O currentTime é protegido
+  // por video.duration porque os metadados podem não ter carregado ainda.
+  ScrollTrigger.create({
+    trigger: section,
+    start: "top top",
+    end: SCRUB_DISTANCE,
+    pin: true,
+    scrub: 1,
+    invalidateOnRefresh: true,
+    onUpdate: (self) => {
+      if (video.duration) video.currentTime = self.progress * video.duration;
+      if (self.progress > 0.02) revealContent();
+    },
+  });
+
+  // PRIMING iOS — destrava o decoder de hardware antes do scrub via currentTime.
+  // Sem isso, Safari/iOS mantém a <video> preta pois nunca houve playback real.
+  function primeVideo() {
     const prime = video.play();
     if (prime && typeof prime.then === "function") {
       prime
@@ -42,48 +80,11 @@ export function initElevador() {
     } else {
       video.pause();
     }
-
-    let hasRevealed = false;
-
-    // TIMELINE ÚNICA DE REVEAL — DISPARA UMA VEZ, NÃO É SCRUBADA
-    function revealContent() {
-      if (hasRevealed) return;
-      hasRevealed = true;
-
-      gsap
-        .timeline({ defaults: { ease: EASE.primary } })
-        .to(label, { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1, duration: DURATIONS.sm })
-        .to(
-          title,
-          { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1, duration: DURATIONS.md },
-          `-=${DURATIONS.sm * 0.6}`
-        )
-        .to(
-            text,
-            { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0, duration: DURATIONS.sm },
-            `-=${DURATIONS.md * 0.6}`
-);
-    }
-
-    // PIN + SCRUB — FONTE ÚNICA DO AVANÇO DO VÍDEO É O PROGRESSO DO SCROLL
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: SCRUB_DISTANCE,
-      pin: true,
-      scrub: 1,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => {
-        video.currentTime = self.progress * video.duration;
-        if (self.progress > 0.02) revealContent();
-      },
-    });
   }
 
-  // GARANTE DURATION DISPONÍVEL ANTES DE CALCULAR CURRENTTIME
   if (video.readyState >= 1) {
-    setup();
+    primeVideo();
   } else {
-    video.addEventListener("loadedmetadata", setup, { once: true });
+    video.addEventListener("loadedmetadata", primeVideo, { once: true });
   }
 }
