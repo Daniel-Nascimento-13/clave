@@ -21,7 +21,7 @@ body {
 }
 
 /* ============================================
-   HERO — MARCA ANIMADA
+   SEÇÃO 1 — HERO — LOGO ANIMADA
    ============================================ */
 .hero {
   position: relative;
@@ -36,18 +36,18 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 42%; /* desloca o foco um pouco pra cima, reduz corte */
+  object-position: center 42%; /* DESLOCA O FOCO UM POUCO PRA CIMA, REDUZ CORTE */
   will-change: opacity;
 }
 
 @media (max-width: 640px) {
   .hero {
-    min-height: 100svh; /* usa viewport real do mobile, sem contar barra de endereço */
+    min-height: 100svh; /* USA VIEWPORT REAL DO MOBILE, SEM CONTAR BARRA DE ENDEREÇO */
   }
 }
 
 /* ============================================
-   SEÇÃO 2 — ANIMAÇÃO ELEVADOR
+   SEÇÃO 2 — ELEVADOR — ANIMAÇÃO SCRUB
    ============================================ */
 .elevador {
   position: relative;
@@ -141,7 +141,7 @@ body {
 }
 
 /* ============================================
-   SEÇÃO 3 — MARCAS
+   SEÇÃO 3 — MARCAS — CARROSSEL E HEADLINE
    ============================================ */
 .marcas {
   position: relative;
@@ -260,9 +260,9 @@ body {
   opacity: .6;
 }
 
-/* ============================================ */
-/* SEÇÃO 4 — DIFERENCIAIS                        */
-/* ============================================ */
+/* ============================================
+   SEÇÃO 4 — DIFERENCIAIS — CARDS E GLOW
+   ============================================ */
 .clv-diferenciais {
   --nav: #060b14;
   --card: #0b1524;
@@ -294,6 +294,27 @@ body {
   opacity: .6;
 }
 
+/* Degradê topo/rodapé — mesmo padrão da seção Prédios */
+.clv-diferenciais::before,
+.clv-diferenciais::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  z-index: 2;
+  height: clamp(80px, 12vw, 160px);
+  pointer-events: none;
+}
+
+.clv-diferenciais::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--nav) 0%, transparent 100%);
+}
+
+.clv-diferenciais::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--nav) 0%, transparent 100%);
+}
+
 .clv-inner {
   position: relative;
   z-index: 1;
@@ -323,14 +344,12 @@ body {
   margin: 0 auto;
 }
 
-/* ============================================ */
-/* CARD + BORDA (idêntico ao Uiverse, cores azuis) */
-/* ============================================ */
+/* ---------- CARD + BORDA ---------- */
 .clv-card-container {
   position: relative;
   border-radius: 1em;
-  overflow: hidden;      /* ← contém o blur, elimina o vazamento em desktop */
-  isolation: isolate;    /* ← garante que o z-index: -2 do glow não escape do contexto */
+  overflow: hidden;      /* ← CONTÉM O BLUR, ELIMINA O VAZAMENTO EM DESKTOP */
+  isolation: isolate;    /* ← GARANTE QUE O z-index: -2 DO GLOW NÃO ESCAPE DO CONTEXTO */
 }
 
 .clv-card-border {
@@ -427,9 +446,7 @@ body {
 }
 .clv-chk svg { width: 11px; height: 11px; }
 
-/* ============================================ */
-/* GLOW GIRATÓRIO (valores 100% originais)       */
-/* ============================================ */
+/* ---------- GLOW GIRATÓRIO (VALORES 100% ORIGINAIS) ---------- */
 .clv-spin {
   position: absolute;
   inset: 0;
@@ -459,4 +476,568 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .clv-spin::before { animation: none; rotate: 120deg; }
+}
+
+/* ============================================
+   SEÇÃO 5 — PRODUTO — TELA ANIMADA
+   ============================================ */
+.produto {
+  position: relative;              
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: clamp(64px, 10vw, 120px) 24px;  
+  overflow: hidden;
+}
+
+.produto::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6rem;
+  background: linear-gradient(to bottom, #060b14 0%, rgb(6 11 20 / 0.5) 30%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.produto::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8rem;
+  background: linear-gradient(to top, #060b14 0%, rgb(6 11 20 / 0.5) 30%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.produto__dots {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 50% 0%, #2a7fff0f 0, #0000 55%),
+    radial-gradient(#14140f1a 1px, #0000 1px);
+  background-size: 100% 100%, 12px 12px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
+          mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
+  opacity: .6;
+}
+
+.produto__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: clamp(32px, 5vw, 48px);
+  margin: 0 0 24px 32px;
+}
+
+.produto__content {
+  width: 100%;
+  max-width: 480px;
+  margin: 0;
+  text-align: left;
+}
+
+.produto__list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  align-items: flex-start;
+  margin: 0 0 20px 32px;
+  gap: 15px;
+}
+
+.produto__item {
+  justify-content: flex-start;
+}
+
+.produto__frame-container {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto; /* mantém o vídeo centralizado, só o texto volta pra esquerda */
+}
+
+/* ---------- CONTEÚDO LATERAL ---------- */
+.produto__content {
+  opacity: 0;
+}
+
+.produto__heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  color: var(--color-ink);
+  margin: 0 0 24px;
+}
+
+.produto__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.produto__chk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: #2a7fff1f;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.produto__text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgb(20 20 15 / 0.6);
+  max-width: 32ch;
+  margin: 0 0 24px 32px;
+}
+
+/* ---------- BOTÃO CTA ANIMADO (UIVERSE, ADAPTADO) ---------- */
+.produto__cta {
+  --border-radius: 9999px;
+  --transition: .3s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .875rem 1.75rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  transform: scale(calc(1 + (var(--active, 0) * .06)));
+  transition: transform var(--transition);
+}
+
+.produto__cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  border-radius: var(--border-radius);
+  box-shadow:
+    inset 0 .5px hsl(0 0% 100% / .15),
+    0 4px 10px -4px hsl(0 0% 0% / calc(1 - var(--active, 0))),
+    0 0 0 calc(var(--active, 0) * .3rem) #2a7fff55;
+  transition: box-shadow var(--transition);
+  z-index: 0;
+}
+
+.produto__cta:is(:hover, :focus-visible) {
+  --active: 1;
+}
+.produto__cta:active {
+  transform: scale(1);
+}
+
+.produto__cta-border {
+  --size: calc(100% + 2px);
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--size);
+  height: var(--size);
+  border-radius: var(--border-radius);
+  z-index: -1;
+}
+.produto__cta-border::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  width: 100%;
+  height: 2rem;
+  background: var(--color-accent);
+  mask: linear-gradient(transparent 0%, white 120%);
+  animation: produto-cta-rotate 2s linear infinite;
+}
+@keyframes produto-cta-rotate {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.produto__cta-sparkle {
+  position: relative;
+  z-index: 1;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: #15cc12;
+}
+
+.produto__cta-text {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  font-weight: 500;
+  background-image: linear-gradient(90deg, #fff 0%, hsl(0 0% 100% / var(--active, 0)) 120%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ---------- CHECKBOX ANIMADO (UIVERSE, ADAPTADO PARA SCROLL) ---------- */
+.produto__chk-svg {
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+.produto__chk-path {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke-dasharray .5s ease, stroke-dashoffset .5s ease;
+  stroke-dasharray: 241 9999999;
+  stroke-dashoffset: 0;
+}
+
+.produto__item.is-checked .produto__chk-path {
+  stroke-dasharray: 70.5096664428711 9999999;
+  stroke-dashoffset: -262.2723388671875;
+}
+
+
+/* ---------- QUADRO DO VÍDEO (BORDA GLOW, IGUAL AOS CARDS) ---------- */
+.produto__frame-container {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  isolation: isolate;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.produto__frame-border {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #0005;
+  border-radius: inherit;
+}
+
+.produto__frame {
+  position: relative;
+  z-index: 1;
+  margin: .125em;
+  border-radius: calc(16px - .125em);
+  aspect-ratio: 5 / 6;
+  background: #0b1524;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(.96);
+}
+
+.produto__spin {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.produto__spin-blur    { filter: blur(3em) url(#unopaq); }
+.produto__spin-intense { inset: -.125em; filter: blur(.5em) url(#unopaq2); border-radius: 12px; }
+.produto__spin-inside  { inset: -2px; border-radius: inherit; filter: blur(2px) url(#unopaq3); z-index: 0; }
+
+.produto__spin::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  animation: clv-speen 8s cubic-bezier(.56, .15, .28, .86) infinite;
+}
+.produto__spin-blur::before    { background: linear-gradient(-45deg, #2a7fff, #0000 46% 54%, #22d3ee); }
+.produto__spin-intense::before { background: linear-gradient(-45deg, #5aa0ff, #0000 35% 65%, #5ee6ff); }
+.produto__spin-inside::before  { background: linear-gradient(-45deg, #a9ccff, #0000 35% 65%, #b0f2ff); }
+
+/* ============================================
+   SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL
+   ============================================ */
+.predios {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: var(--color-ink);
+  padding: clamp(64px, 10vw, 120px) 24px;
+  overflow: hidden;
+}
+
+/* pontilhado de fundo — mesma classe da Diferenciais */
+.predios .clv-dots {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Degradê topo/rodapé — mesmo padrão das outras seções escuras */
+.predios::before,
+.predios::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  z-index: 2;
+  height: clamp(80px, 12vw, 160px);
+  pointer-events: none;
+}
+
+.predios::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--color-ink) 0%, transparent 100%);
+}
+
+.predios::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--color-ink) 0%, transparent 100%);
+}
+
+.predios__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.predios__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: clamp(32px, 5vw, 48px);
+}
+
+.predios__heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 44px);
+  letter-spacing: -.02em;
+  color: var(--color-paper);
+  margin: 0;
+  opacity: 0;
+}
+
+/* ---------- FILTROS ---------- */
+.predios__filters {
+  display: flex;
+  gap: 8px;
+}
+
+.predios__filter {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgb(250 250 245 / 0.5);
+  background: transparent;
+  border: 1px solid rgb(250 250 245 / 0.15);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+
+.predios__filter.is-active,
+.predios__filter:hover {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border-color: var(--color-paper);
+}
+
+/* ---------- CARROSSEL ---------- */
+.predios__carousel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.predios__arrow {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgb(250 250 245 / 0.05);
+  border: 1px solid rgb(250 250 245 / 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-paper);
+  cursor: pointer;
+  transition: background .2s ease;
+}
+.predios__arrow:hover {
+  background: rgb(250 250 245 / 0.1);
+}
+.predios__arrow:disabled {
+  opacity: .3;
+  cursor: default;
+  pointer-events: none;
+}
+
+.predios__card {
+  flex: 1;
+  background: rgb(250 250 245 / 0.04);
+  border: 1px solid rgb(250 250 245 / 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+
+/* ---------- FOTO ---------- */
+.predios__photo-wrap {
+  position: relative;
+  height: clamp(240px, 32vw, 380px);
+}
+
+.predios__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.predios__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgb(0 0 0 / 0.5);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.predios__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.predios__counter {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgb(0 0 0 / 0.5);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+/* ---------- CORPO ---------- */
+.predios__body {
+  padding: 20px 24px;
+}
+
+.predios__desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgb(250 250 245 / 0.6);
+  margin: 0 0 16px;
+  max-width: 60ch;
+}
+
+.predios__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+/* ---------- MÉTRICAS ---------- */
+.predios__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgb(250 250 245 / 0.08);
+}
+
+.predios__metric {
+  padding: 16px 20px;
+  border-right: 1px solid rgb(250 250 245 / 0.08);
+}
+.predios__metric:last-child {
+  border-right: none;
+}
+
+.predios__metric-label {
+  font-size: 11px;
+  color: rgb(250 250 245 / 0.5);
+  margin-bottom: 4px;
+}
+
+.predios__metric-valor {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-paper);
+}
+
+/* ---------- PROGRESSO ---------- */
+.predios__progress {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.predios__progress-dot {
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgb(250 250 245 / 0.15);
+  cursor: pointer;
+  transition: background .2s ease, width .2s ease;
+}
+.predios__progress-dot.is-active {
+  width: 28px;
+  background: var(--color-paper);
+}
+
+@media (max-width: 768px) {
+  .predios__metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .predios__metric:nth-child(2) {
+    border-right: none;
+  }
+  .predios__metric:nth-child(3),
+  .predios__metric:nth-child(4) {
+    border-top: 1px solid rgb(250 250 245 / 0.08);
+  }
+  .predios__arrow {
+    width: 36px;
+    height: 36px;
+  }
 }

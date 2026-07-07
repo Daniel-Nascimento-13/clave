@@ -11,7 +11,9 @@
   </head>
   <body>
     <main id="app">
-      <!-- ==================== HERO ==================== -->
+      <!-- ============================================
+           SEÇÃO 1 — HERO — LOGO ANIMADA
+           ============================================ -->
       <section class="hero" data-hero>
         <video
           class="hero__video"
@@ -23,7 +25,9 @@
         ></video>
       </section>
 
-      <!-- ==================== SEÇÃO 2 — ANIMAÇÃO ELEVADOR ==================== -->
+      <!-- ============================================
+           SEÇÃO 2 — ELEVADOR — ANIMAÇÃO SCRUB
+           ============================================ -->
       <section class="elevador" data-elevador>
         <video class="elevador__video" muted playsinline preload="auto">
           <source src="/videos/elevador-scrub-mobile.mp4" media="(max-width: 768px)" />
@@ -40,9 +44,11 @@
         </div>
       </section>
 
-      <!-- ==================== SEÇÃO 3 — MARCAS ==================== -->
+      <!-- ============================================
+           SEÇÃO 3 — MARCAS — CARROSSEL E HEADLINE
+           ============================================ -->
       <section class="marcas" data-marcas>
-        <!-- INTRO PINADA — LETRAS SE FORMAM CONFORME O SCROLL -->
+        <!-- ---------- INTRO PINADA — LETRAS SE FORMAM CONFORME O SCROLL ---------- -->
         <div class="marcas__dots"></div>
         <div class="marcas__intro" data-marcas-intro>
           <h2 class="marcas__headline" data-marcas-headline>Marcas parceiras</h2>
@@ -71,9 +77,11 @@
         </div>
       </section>
 
-      <!-- ==================== SEÇÃO 4 — DIFERENCIAIS ==================== -->
+      <!-- ============================================
+           SEÇÃO 4 — DIFERENCIAIS — CARDS E GLOW
+           ============================================ -->
       <section class="clv-diferenciais" data-diferenciais>
-        <!-- Filtros SVG da borda animada (glow) -->
+        <!-- ---------- FILTROS SVG DA BORDA ANIMADA (GLOW) ---------- -->
         <svg class="clv-defs" aria-hidden="true">
           <filter id="unopaq" y="-100%" height="300%" x="-100%" width="300%"><feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 5 0"/></filter>
           <filter id="unopaq2" y="-100%" height="300%" x="-100%" width="300%"><feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 10 0"/></filter>
@@ -89,13 +97,16 @@
 
           <div class="clv-grid">
 
-            <!-- 01 — Alta definição -->
+            <!-- 01 — ALTA DEFINIÇÃO -->
             <article class="clv-card-container" data-diferencial>
+              <!-- ---------- GLOW GIRATÓRIO (VALORES 100% ORIGINAIS) ---------- -->
               <div class="clv-spin clv-spin-blur"></div>
               <div class="clv-spin clv-spin-intense"></div>
+              <!-- ---------- CARD + BORDA ---------- -->
               <div class="clv-card-border"><div class="clv-spin clv-spin-inside"></div></div>
               <div class="clv-card">
                 <div class="clv-backdrop"></div>
+                <!-- ---------- HEADER DO CARD ---------- -->
                 <div class="clv-head">
                   <div class="clv-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
@@ -106,6 +117,7 @@
                   </div>
                   <div class="clv-num">01</div>
                 </div>
+                <!-- ---------- CORPO DO CARD ---------- -->
                 <div class="clv-body">
                   <p class="clv-desc">Telas Full HD em elevadores e áreas comuns. Imagem nítida, presença premium.</p>
                   <div class="clv-list">
@@ -117,7 +129,7 @@
               </div>
             </article>
 
-            <!-- 02 — Conteúdo dinâmico -->
+            <!-- 02 — CONTEÚDO DINÂMICO -->
             <article class="clv-card-container" data-diferencial>
               <div class="clv-spin clv-spin-blur"></div>
               <div class="clv-spin clv-spin-intense"></div>
@@ -145,7 +157,7 @@
               </div>
             </article>
 
-            <!-- 03 — Segmentação local -->
+            <!-- 03 — SEGMENTAÇÃO LOCAL -->
             <article class="clv-card-container" data-diferencial>
               <div class="clv-spin clv-spin-blur"></div>
               <div class="clv-spin clv-spin-intense"></div>
@@ -173,7 +185,7 @@
               </div>
             </article>
 
-            <!-- 04 — Custo zero p/ condomínio -->
+            <!-- 04 — CUSTO ZERO P/ CONDOMÍNIO -->
             <article class="clv-card-container" data-diferencial>
               <div class="clv-spin clv-spin-blur"></div>
               <div class="clv-spin clv-spin-intense"></div>
@@ -204,6 +216,137 @@
           </div>
         </div>
       </section>
+
+      <!-- ============================================
+           SEÇÃO 5 — PRODUTO — TELA ANIMADA
+           ============================================ -->
+      <section class="produto" data-produto>
+        <div class="produto__dots"></div>
+
+        <div class="produto__inner">
+          <div class="produto__content">
+            <h2 class="produto__heading">Nosso equipamento</h2>
+
+            <ul class="produto__list">
+              <li class="produto__item">
+                <svg class="produto__chk-svg" viewBox="0 0 64 64">
+                  <path
+                    class="produto__chk-path"
+                    pathLength="575.0541381835938"
+                    d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                  />
+                </svg>
+                Tela profissional 4K
+              </li>
+
+              <li class="produto__item">
+                <svg class="produto__chk-svg" viewBox="0 0 64 64">
+                  <path
+                    class="produto__chk-path"
+                    pathLength="575.0541381835938"
+                    d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                  />
+                </svg>
+                Processamento de alto desempenho
+              </li>
+
+              <li class="produto__item">
+              <svg class="produto__chk-svg" viewBox="0 0 64 64">
+                <path
+                  class="produto__chk-path"
+                  pathLength="575.0541381835938"
+                  d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                />
+              </svg>
+              Instalação sem obra
+            </li>
+
+              <li class="produto__item">
+              <svg class="produto__chk-svg" viewBox="0 0 64 64">
+                <path
+                  class="produto__chk-path"
+                  pathLength="575.0541381835938"
+                  d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                />
+              </svg>
+              Conectividade remota
+            </li>
+            </ul>
+
+            <p class="produto__text">
+              Hardware silencioso, resistente e conectado — a tecnologia some, só a mensagem aparece.
+            </p>
+
+            <a class="produto__cta" href="#" data-whatsapp-cta target="_blank" rel="noopener noreferrer">
+              <div class="produto__cta-border"></div>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="produto__cta-sparkle" fill="currentColor">
+                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.04 3.67C14.25 3.67 16.32 4.53 17.88 6.09C19.44 7.66 20.29 9.73 20.29 11.92C20.29 16.46 16.58 20.15 12.03 20.15C10.56 20.15 9.12 19.76 7.85 19.03L7.55 18.86L4.43 19.68L5.26 16.65L5.06 16.33C4.26 15 3.83 13.47 3.83 11.91C3.84 7.37 7.5 3.67 12.04 3.67ZM8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7 8.5 7 9.71C7 10.93 7.89 12.1 8 12.27C8.14 12.44 9.76 14.94 12.25 16.05C14.32 16.97 14.74 16.81 15.19 16.77C15.64 16.73 16.65 16.16 16.86 15.58C17.07 15 17.07 14.5 17 14.4C16.94 14.3 16.78 14.24 16.53 14.12C16.28 13.99 15.06 13.39 14.83 13.31C14.6 13.23 14.44 13.19 14.28 13.44C14.11 13.69 13.63 14.24 13.49 14.4C13.34 14.57 13.2 14.59 12.95 14.47C12.7 14.34 11.9 14.08 10.95 13.23C10.21 12.57 9.71 11.75 9.57 11.5C9.42 11.25 9.55 11.12 9.67 10.99C9.79 10.87 9.94 10.68 10.06 10.53C10.19 10.38 10.23 10.27 10.31 10.1C10.4 9.94 10.35 9.79 10.29 9.67C10.23 9.55 9.72 8.33 9.5 7.83C9.28 7.36 9.06 7.33 8.85 7.33H8.53Z"/>
+              </svg>
+              <span class="produto__cta-text">Fale conosco</span>
+            </a>
+          </div>
+
+        <div class="produto__frame-container">
+            <div class="produto__spin produto__spin-blur"></div>
+            <div class="produto__spin produto__spin-intense"></div>
+            <div class="produto__frame-border"><div class="produto__spin produto__spin-inside"></div></div>
+            <div class="produto__frame">
+              <video class="produto__video" muted playsinline preload="auto">
+                <source src="/videos/tela-scrub-mobile.mp4" media="(max-width: 768px)" />
+                <source src="/videos/tela-scrub.mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<!-- ============================================
+     SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL
+     ============================================ -->
+<section class="predios" data-predios>
+  <div class="clv-dots"></div>
+  <div class="predios__inner">
+    <div class="predios__head">
+      <h2 class="predios__heading">Onde estamos</h2>
+      <div class="predios__filters">
+        <button class="predios__filter is-active" data-filter="todos">Todos</button>
+        <button class="predios__filter" data-filter="Residencial">Residencial</button>
+        <button class="predios__filter" data-filter="Comercial">Comercial</button>
+      </div>
+    </div>
+
+    <div class="predios__carousel">
+      <button class="predios__arrow predios__arrow--prev" aria-label="Anterior">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
+      </button>
+
+      <div class="predios__card">
+        <div class="predios__photo-wrap">
+          <img class="predios__photo" src="" alt="" />
+          <div class="predios__badge">
+            <span class="predios__dot"></span>
+            <span class="predios__nome"></span>
+          </div>
+          <div class="predios__counter"></div>
+        </div>
+
+        <div class="predios__body">
+          <p class="predios__desc"></p>
+          <a class="predios__cta" href="#" data-whatsapp-cta target="_blank" rel="noopener noreferrer">Saber mais</a>
+        </div>
+
+        <div class="predios__metrics"></div>
+      </div>
+
+      <button class="predios__arrow predios__arrow--next" aria-label="Próximo">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="predios__progress"></div>
+  </div>
+</section>
+
 
     </main>
     <script type="module" src="/src/main.js"></script>

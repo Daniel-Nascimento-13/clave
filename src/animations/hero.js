@@ -1,6 +1,6 @@
-// ============================================
-// HERO — MARCA ANIMADA EM AUTOPLAY (1X, SEM LOOP)
-// ============================================
+/* ============================================
+   SEÇÃO 1 — HERO — LOGO ANIMADA
+   ============================================ */
 import { gsap } from "../lib/gsap.js";
 import { getLenis } from "../lib/smooth-scroll.js";
 

@@ -1,10 +1,10 @@
-// ============================================
-// SEÇÃO 2 — ELEVADOR: PIN + SCRUB + REVEAL
-// ============================================
+/* ============================================
+   SEÇÃO 2 — ELEVADOR — ANIMAÇÃO SCRUB
+   ============================================ */
 import { gsap, ScrollTrigger } from "../lib/gsap.js";
 import { DURATIONS, EASE } from "../constants/motion.js";
+import { animateRouletteTitle } from "../lib/roulette-title.js";
 
-// TRILHO DE SCROLL — QUANTO MAIOR, MAIS LENTO/CONTROLADO O SCRUB
 const SCRUB_DISTANCE = "+=250%";
 
 export function initElevador() {
@@ -15,42 +15,37 @@ export function initElevador() {
   const label = document.querySelector(".elevador__label");
   const title = document.querySelector(".elevador__title");
   const text = document.querySelector(".elevador__text");
+
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // GUARD — REDUCED MOTION: SEM PIN, SEM SCRUB, TUDO ESTÁTICO E VISÍVEL
   if (reduce) {
     gsap.set([label, title, text], { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1 });
     video.pause();
     return;
   }
 
-  video.pause(); // CONTROLADO MANUALMENTE VIA CURRENTTIME
+  video.pause();
 
   let hasRevealed = false;
 
-  // TIMELINE ÚNICA DE REVEAL — DISPARA UMA VEZ, NÃO É SCRUBADA
-  function revealContent() {
-    if (hasRevealed) return;
-    hasRevealed = true;
+ function revealContent() {
+  if (hasRevealed) return;
+  hasRevealed = true;
 
-    gsap
-      .timeline({ defaults: { ease: EASE.primary } })
-      .to(label, { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1, duration: DURATIONS.sm })
-      .to(
-        title,
-        { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1, duration: DURATIONS.md },
-        `-=${DURATIONS.sm * 0.6}`
-      )
-      .to(
-        text,
-        { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0, duration: DURATIONS.sm },
-        `-=${DURATIONS.md * 0.6}`
-      );
-  }
+  gsap
+    .timeline({ defaults: { ease: EASE.primary } })
+    .to(label, { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1, duration: DURATIONS.sm })
+    .add(() => {
+      gsap.set(title, { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1 });
+      animateRouletteTitle(title);
+    }, `-=${DURATIONS.sm * 0.4}`)
+    .to(
+      text,
+      { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0, duration: DURATIONS.sm },
+      `-=${DURATIONS.md * 0.3}`
+    );
+}
 
-  // PIN + SCRUB — CRIADO SÍNCRONO PARA QUE O SPACER DE PIN EXISTA ANTES
-  // DE MARCAS/DIFERENCIAIS MEDIREM SUAS POSIÇÕES. O currentTime é protegido
-  // por video.duration porque os metadados podem não ter carregado ainda.
   ScrollTrigger.create({
     trigger: section,
     start: "top top",
@@ -64,19 +59,13 @@ export function initElevador() {
     },
   });
 
-  // PRIMING iOS — destrava o decoder de hardware antes do scrub via currentTime.
-  // Sem isso, Safari/iOS mantém a <video> preta pois nunca houve playback real.
   function primeVideo() {
     const prime = video.play();
     if (prime && typeof prime.then === "function") {
-      prime
-        .then(() => {
-          video.pause();
-          video.currentTime = 0;
-        })
-        .catch(() => {
-          // Autoplay bloqueado (ex.: Low Power Mode) — scrub segue funcionando.
-        });
+      prime.then(() => {
+        video.pause();
+        video.currentTime = 0;
+      }).catch(() => {});
     } else {
       video.pause();
     }

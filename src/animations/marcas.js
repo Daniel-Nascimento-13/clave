@@ -1,6 +1,6 @@
-// ============================================
-// SEÇÃO 3 — MARQUEE + INTRO EM SCATTER
-// ============================================
+/* ============================================
+   SEÇÃO 3 — MARCAS — CARROSSEL E HEADLINE
+   ============================================ */
 import { gsap, ScrollTrigger } from "../lib/gsap.js";
 
 const SCATTER_PRESETS = [
@@ -21,9 +21,7 @@ function getScatter(index) {
   };
 }
 
-// ============================================
-// INTRO PINADA — HEADLINE EM SCATTER, CONVERGE NO SCROLL
-// ============================================
+/* ---------- INTRO PINADA — HEADLINE EM SCATTER, CONVERGE NO SCROLL ---------- */
 function initMarcasIntro() {
   const container = document.querySelector("[data-marcas-intro]");
   const headline = document.querySelector("[data-marcas-headline]");
@@ -47,7 +45,7 @@ function initMarcasIntro() {
     return;
   }
 
-  // ESTADO INICIAL — FUNÇÕES POR PROPRIEDADE (sintaxe correta do GSAP)
+  // ESTADO INICIAL — FUNÇÕES POR PROPRIEDADE (SINTAXE CORRETA DO GSAP)
   gsap.set(letters, {
     x: (index) => getScatter(index).x,
     y: (index) => getScatter(index).y,
@@ -92,9 +90,7 @@ function initMarcasIntro() {
   });
 }
 
-// ============================================
-// MARQUEE — LOOP INFINITO EM VELOCIDADE CONSTANTE
-// ============================================
+/* ---------- MARQUEE — LOOP INFINITO EM VELOCIDADE CONSTANTE ---------- */
 function initMarquee(section, reduce) {
   const track = section.querySelector("[data-marquee]");
   if (!track || reduce) return;
@@ -107,9 +103,7 @@ function initMarquee(section, reduce) {
   });
 }
 
-// ============================================
-// BOOT DA SEÇÃO
-// ============================================
+/* ---------- BOOT DA SEÇÃO ---------- */
 export function initMarcas() {
   const section = document.querySelector("[data-marcas]");
   if (!section) return;
