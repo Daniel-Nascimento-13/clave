@@ -722,7 +722,9 @@ body {
   border-radius: 16px;
   overflow: hidden;
   isolation: isolate;
-  max-width: 320px;
+  height: min(384px, 50vh);
+  width: auto;
+  aspect-ratio: 5 / 6;
   margin: 0 auto;
 }
 
