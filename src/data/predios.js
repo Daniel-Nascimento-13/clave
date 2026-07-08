@@ -9,7 +9,7 @@ export const PREDIOS = [
   {
     nome: "Residencial São cristóvão",
     categoria: "Residencial",
-    foto: "/public/images/PREDIO-SAO-CRISTOVAO.webp",
+    foto: "/images/PREDIO-SAO-CRISTOVAO.webp",
     descricao:
       "Torre residencial de alto padrão, mais alta do estado, localizado no bairro São Cristóvão em Lajeado, com telas Clave posicionadas nos elevadores.",
     metricas: {
@@ -24,7 +24,7 @@ export const PREDIOS = [
   {
     nome: "Edifício Line Tower",
     categoria: "Residencial",
-    foto: "/public/images/PREDIO-LINE-TOWER.webp",
+    foto: "/images/PREDIO-LINE-TOWER.webp",
     descricao:
       "Torre residencial de alto padrão, localizado no bairro São Cristóvão em Lajeado, com telas instaladas nos elevadores.",
     metricas: {
@@ -39,7 +39,7 @@ export const PREDIOS = [
   {
     nome: "Edifício Diamond Life",
     categoria: "Residencial",
-    foto: "/public/images/PREDIO-DIAMOND-LIFE.webp",
+    foto: "/images/PREDIO-DIAMOND-LIFE.webp",
     descricao:
       "Torre residencial de alto padrão, localizado no bairro Americano em Lajeado, com telas instaladas nos elevadores.",
     metricas: {
@@ -54,7 +54,7 @@ export const PREDIOS = [
   {
     nome: "Edifício Scartesini",
     categoria: "Residencial",
-    foto: "/public/images/PREDIO-SCARTESINI.webp",
+    foto: "/images/PREDIO-SCARTESINI.webp",
     descricao:
       "Prédio residencial na rotula movimentada da Univates, localizado no bairro São Cristóvão em Lajeado, telas instaladas nos elevadores.",
     metricas: {
@@ -69,7 +69,7 @@ export const PREDIOS = [
   {
     nome: "Residencial do Parque",
     categoria: "Residencial",
-    foto: "/public/images/PREDIO-DO-PARQUE.webp",
+    foto: "/images/PREDIO-DO-PARQUE.webp",
     descricao:
       "Condomínio horizontal fechado com duas torres, localizado no bairro Moinhos em Lajeado, telas instaladas nos elevadores.",
     metricas: {
@@ -86,7 +86,7 @@ export const PREDIOS = [
   {
     nome: "Edifício Comercial 300",
     categoria: "Comercial",
-    foto: "/public/images/PREDIO-300.webp",
+    foto: "/images/PREDIO-300.webp",
     descricao:
       "Torre comercial com salas corporativas e clínicas, localizado no bairro São Cristóvão em Lajeado, telas instaladas nos elevadores com fluxo intenso de profissionais e clientes.",
     metricas: {
