@@ -902,7 +902,6 @@ body {
 }
 
 .predios__card {
-  flex: 1;
   background: rgb(250 250 245 / 0.04);
   border: 1px solid rgb(250 250 245 / 0.08);
   border-radius: 16px;
@@ -936,6 +935,13 @@ body {
   font-weight: 500;
   padding: 6px 14px;
   border-radius: 20px;
+  max-width: 85%;
+}
+
+.predios__badge .predios__nome {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .predios__dot {
@@ -946,16 +952,18 @@ body {
   flex-shrink: 0;
 }
 
+.predios__card-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .predios__counter {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgb(0 0 0 / 0.5);
-  color: #fff;
+  align-self: flex-end;
   font-size: 12px;
   font-weight: 500;
-  padding: 6px 14px;
-  border-radius: 20px;
+  color: rgb(250 250 245 / 0.5);
 }
 
 /* ---------- CORPO ---------- */
@@ -1047,4 +1055,55 @@ body {
     width: 36px;
     height: 36px;
   }
+}
+
+/* ---------- ANIMACAO ARROW  ---------- */
+.predios__arrow-wrap {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  isolation: isolate;
+  flex-shrink: 0;
+}
+
+.predios__arrow-spin {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.predios__arrow-spin::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  animation: clv-speen 8s cubic-bezier(.56, .15, .28, .86) infinite;
+  background: linear-gradient(-45deg, #2a7fff, #0000 46% 54%, #22d3ee);
+}
+
+.predios__arrow {
+  position: relative;
+  z-index: 1;
+  margin: 1.5px;
+  width: calc(100% - 3px);
+  height: calc(100% - 3px);
+  border-radius: 50%;
+  background: var(--color-ink);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-paper);
+  cursor: pointer;
+  transition: background .2s ease;
+}
+.predios__arrow:hover {
+  background: rgb(250 250 245 / 0.1);
+}
+.predios__arrow:disabled {
+  opacity: .3;
+  cursor: default;
+  pointer-events: none;
 }
