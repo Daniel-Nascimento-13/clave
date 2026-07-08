@@ -58,20 +58,20 @@ export function initProduto() {
     });
   }
 
-  /* ---------- PIN + SCRUB DO VÍDEO (SÍNCRONO — EVITA BUG DE TIMING) ---------- */
-  ScrollTrigger.create({
-    trigger: section,
-    start: "top top",
-    end: PRODUTO.scrubDistance,
-    pin: true,
-    scrub: 1,
-    invalidateOnRefresh: true,
-    onUpdate: (self) => {
-      if (video.duration) {
-        video.currentTime = self.progress * video.duration;
-      }
-    },
-  });
+ /* ---------- PIN + SCRUB DO VÍDEO (SÍNCRONO — EVITA BUG DE TIMING) ---------- */
+ScrollTrigger.create({
+  trigger: frame,
+  start: "bottom bottom",
+  end: PRODUTO.scrubDistance,
+  pin: section,
+  scrub: 1,
+  invalidateOnRefresh: true,
+  onUpdate: (self) => {
+    if (video.duration) {
+      video.currentTime = self.progress * video.duration;
+    }
+  },
+});
 
   /* ---------- PRIMING iOS ---------- */
   function primeVideo() {
