@@ -54,6 +54,11 @@ body {
   height: 100vh;
   overflow: hidden;
   background: #000;
+  /* Costura Hero(paper) -> Elevador(preto): é o maior contraste da página. A
+     coordenada é inteira (sem gap de layout), mas no instante do pin o render
+     pode deixar 1px de paper entre o Hero e o Elevador fixo. Sobe 1px sobre o
+     Hero para o preto cobrir esse straddle. No-op perceptível no desktop. */
+  margin-top: -1px;
 }
 
 .elevador__video {
@@ -276,6 +281,11 @@ body {
   background: var(--nav);
   padding: clamp(64px, 10vw, 120px) 24px;
   color: var(--txt);
+  /* Espelho do fix da costura de baixo (.predios margin-top:-1px): a costura
+     Diferenciais->Produto cai numa coordenada fracionária (a .produto pina num
+     Y .39), então some 1px sobre o pin-spacer da .produto para cobrir a linha de
+     paper que o arredondamento de subpixel deixa no topo quando a .produto pina. */
+  margin-bottom: -1px;
 }
 
 .clv-defs { position: absolute; width: 0; height: 0; }
