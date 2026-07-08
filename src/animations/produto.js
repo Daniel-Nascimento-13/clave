@@ -59,21 +59,25 @@ export function initProduto() {
   }
 
  /* ---------- PIN + SCRUB DO VÍDEO (SÍNCRONO — EVITA BUG DE TIMING) ---------- */
-ScrollTrigger.create({
-  trigger: frame,
-  start: "bottom bottom",
-  end: PRODUTO.scrubDistance,
-  pin: section,
-  scrub: 1,
-  invalidateOnRefresh: true,
-  onUpdate: (self) => {
-    if (video.duration) {
-      video.currentTime = self.progress * video.duration;
-    }
-  },
-});
+    /* O trigger é a própria section (não o frame): a section é mais alta que a
+       viewport, então prendê-la pelo topo (top top) faz ela cobrir a tela
+       inteira durante o pin. Usar o frame como trigger prendia a section com o
+       fundo no meio da tela, deixando um vão de --color-paper até a .predios subir. */
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: PRODUTO.scrubDistance,
+      pin: section,
+      scrub: 1,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        if (video.duration) {
+          video.currentTime = self.progress * video.duration;
+        }
+      },
+    });
 
-  /* ---------- PRIMING iOS ---------- */
+/* ---------- PRIMING iOS ---------- */
   function primeVideo() {
     const prime = video.play();
     if (prime && typeof prime.then === "function") {
@@ -88,7 +92,11 @@ ScrollTrigger.create({
 
   if (video.readyState >= 1) {
     primeVideo();
+    ScrollTrigger.refresh();
   } else {
-    video.addEventListener("loadedmetadata", primeVideo, { once: true });
+    video.addEventListener("loadedmetadata", () => {
+      primeVideo();
+      ScrollTrigger.refresh();
+    }, { once: true });
   }
 }
