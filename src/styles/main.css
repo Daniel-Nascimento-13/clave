@@ -265,6 +265,20 @@ body {
   opacity: .6;
 }
 
+.marcas__logo {
+  height: 56px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+
+.marcas__logo:hover {
+  opacity: 1;
+}
+
 /* ============================================
    SEÇÃO 4 — DIFERENCIAIS — CARDS E GLOW
    ============================================ */

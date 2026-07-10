@@ -45,7 +45,6 @@ function initMarcasIntro() {
     return;
   }
 
-  // ESTADO INICIAL — FUNÇÕES POR PROPRIEDADE (SINTAXE CORRETA DO GSAP)
   gsap.set(letters, {
     x: (index) => getScatter(index).x,
     y: (index) => getScatter(index).y,
@@ -65,13 +64,11 @@ function initMarcasIntro() {
     invalidateOnRefresh: true,
     onUpdate: (self) => {
       const progress = self.progress;
-
       letters.forEach((letter, index) => {
         const start = Math.min((index / total) * 0.6, 0.6);
         const end = Math.min(start + 0.3, 0.85);
         const p = gsap.utils.clamp(0, 1, gsap.utils.normalize(start, end, progress));
         const scatter = getScatter(index);
-
         gsap.set(letter, {
           x: gsap.utils.interpolate(scatter.x, 0, p),
           y: gsap.utils.interpolate(scatter.y, 0, p),
@@ -90,17 +87,31 @@ function initMarcasIntro() {
   });
 }
 
-/* ---------- MARQUEE — LOOP INFINITO EM VELOCIDADE CONSTANTE ---------- */
-function initMarquee(section, reduce) {
-  const track = section.querySelector("[data-marquee]");
+/* ---------- MARQUEE — LOOP INFINITO, DUAS DIREÇÕES ---------- */
+function initMarquee(track, direction, reduce) {
   if (!track || reduce) return;
 
-  gsap.to(track, {
-    xPercent: -50,
-    duration: 22,
-    ease: "none",
-    repeat: -1,
-  });
+  const duration = direction === "right" ? 26 : 22;
+
+  if (direction === "right") {
+    gsap.fromTo(
+      track,
+      { xPercent: -50 },
+      {
+        xPercent: 0,
+        duration,
+        ease: "none",
+        repeat: -1,
+      }
+    );
+  } else {
+    gsap.to(track, {
+      xPercent: -50,
+      duration,
+      ease: "none",
+      repeat: -1,
+    });
+  }
 }
 
 /* ---------- BOOT DA SEÇÃO ---------- */
@@ -111,5 +122,10 @@ export function initMarcas() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   initMarcasIntro();
-  initMarquee(section, reduce);
+
+  const tracks = section.querySelectorAll("[data-marquee]");
+  tracks.forEach((track) => {
+    const direction = track.dataset.direction || "left";
+    initMarquee(track, direction, reduce);
+  });
 }
