@@ -1,0 +1,226 @@
+/* ============================================
+   MENU — NAVEGAÇÃO PRINCIPAL
+   ============================================ */
+
+.clv-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  will-change: transform;
+}
+
+.clv-menu::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  height: 70px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+.clv-menu__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem 3rem;
+}
+
+.clv-menu__logo {
+  order: 2; /* MOBILE: LOGO À DIREITA */
+}
+
+.clv-menu__logo img {
+  height: 32px;
+  width: auto;
+}
+
+.clv-menu__nav {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.clv-menu__link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter Variable', sans-serif;
+  font-size: 0.9375rem;
+  color: #fff;
+  padding: 0;
+}
+
+.clv-menu__cta {
+  font-family: 'Inter Variable', sans-serif;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ============================================
+   BURGER (MOBILE)
+   ============================================ */
+
+/* ---------- 3 BARRAS ---------- */
+
+.clv-menu__burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  order: 1; /* MOBILE: BURGER À ESQUERDA */
+}
+
+.clv-menu__burger span {
+  width: 24px;
+  height: 1.5px;
+  background: #fff;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+/* ---------- ABERTO: AS 3 BARRAS VIRAM UM X ---------- */
+
+.clv-menu__burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.clv-menu__burger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.clv-menu__burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ============================================
+   MOBILE (MAX 860PX) — PAINEL EM TELA CHEIA
+   ============================================ */
+
+@media (max-width: 860px) {
+  /* ---------- FECHADO: NAV E CTA SOMEM, SÓ O BURGER FICA ---------- */
+  .clv-menu__nav,
+  .clv-menu__cta {
+    display: none;
+  }
+
+  /* ---------- ABERTO (.IS-OPEN): O JS ADICIONA A CLASSE ---------- */
+  .clv-menu__nav.is-open,
+  .clv-menu__cta.is-open {
+    display: flex;
+  }
+
+  .clv-menu__nav.is-open {
+    position: fixed;
+    inset: 0;
+    z-index: 90; /* ABAIXO DO HEADER (100), PRO BURGER CONTINUAR CLICÁVEL */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    background: #0a0a0af5;
+  }
+
+  .clv-menu__nav.is-open .clv-menu__link {
+    font-size: 1.5rem;
+  }
+
+  .clv-menu__cta.is-open {
+    position: fixed;
+    z-index: 90;
+    bottom: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .clv-menu__burger {
+    display: flex;
+    position: relative;
+    z-index: 200; /* SEMPRE ACIMA DO PAINEL, PRA CONTINUAR CLICÁVEL E FECHAR */
+  }
+}
+
+/* ============================================
+   DESKTOP (MIN 861PX) — RECOMPÕE A BARRA DO HEADER
+   ============================================ */
+
+/* NAV E CTA SÃO IRMÃOS DO <header>, NÃO FILHOS: SÓ ASSIM O PAINEL MOBILE PODE */
+/* SER position: fixed (O HEADER TEM will-change/transform E VIRARIA CONTAINING */
+/* BLOCK). AQUI A BARRA É RECOMPOSTA COM AS MEDIDAS DO .clv-menu__inner: */
+/* ALTURA 80px (32px DA LOGO + 1.5rem DE PADDING VERTICAL), RECUO LATERAL 3rem, */
+/* GAP DE 2.5rem ENTRE OS LINKS E 2rem ENTRE A NAV E O CTA. */
+
+@media (min-width: 861px) {
+  .clv-menu__nav,
+  .clv-menu__cta {
+    position: fixed;
+    top: 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    z-index: 101;
+  }
+
+  .clv-menu__nav {
+    gap: 2.5rem;
+    right: calc(3rem + 101px + 2rem); /* RECUO + LARGURA DO CTA + GAP */
+  }
+
+  .clv-menu__cta {
+    right: 3rem;
+  }
+}
+
+/* ============================================
+   OVERLAY — SOBRE / ANUNCIE (BASE COMPARTILHADA)
+   ============================================ */
+
+.clv-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: #0a0a0aeb;
+  pointer-events: none;
+  visibility: hidden;
+  /* clip-path, opacity E visibility CONTROLADOS VIA GSAP */
+}
+
+.clv-overlay__panel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 6rem 3rem;
+}
+
+.clv-overlay__close {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.clv-overlay__close span {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: #fff;
+}
+.clv-overlay__close span:first-child { transform: rotate(45deg); }
+.clv-overlay__close span:last-child  { transform: rotate(-45deg); }
+
+.clv-no-scroll {
+  overflow: hidden;
+}

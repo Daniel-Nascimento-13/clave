@@ -10,6 +10,7 @@ import { initDiferenciais } from "./animations/diferenciais.js";
 import { initProduto } from "./animations/produto.js";
 import { initPredios } from "./animations/predios.js";
 import { getWhatsappLink } from "./lib/whatsapp.js";
+import { initMenu } from "./components/menu/menu.js";
 
 /* ============================================
    INICIALIZAÇÃO GLOBAL
@@ -24,3 +25,4 @@ initPredios();
 document.querySelectorAll("[data-whatsapp-cta]").forEach((el) => {
   el.href = getWhatsappLink();
 });
+initMenu();

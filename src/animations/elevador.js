@@ -19,7 +19,7 @@ export function initElevador() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (reduce) {
-    gsap.set([label, title, text], { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1 });
+    gsap.set([title, text], { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1 });
     video.pause();
     return;
   }
@@ -34,11 +34,10 @@ export function initElevador() {
 
   gsap
     .timeline({ defaults: { ease: EASE.primary } })
-    .to(label, { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1, duration: DURATIONS.sm })
     .add(() => {
       gsap.set(title, { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1 });
       animateRouletteTitle(title);
-    }, `-=${DURATIONS.sm * 0.4}`)
+    }, 0)
     .to(
       text,
       { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0, duration: DURATIONS.sm },

@@ -21,6 +21,23 @@ function getScatter(index) {
   };
 }
 
+/* ---------- ALVO DE SCROLL DO MENU ("ANUNCIANTES") ---------- */
+
+// FRAÇÃO DO PROGRESSO DO PIN ONDE O MENU DEVE PARAR.
+// ABAIXO DE ~0.88 O CARROSSEL AINDA ESTÁ FORA DA DOBRA: O SPACER DO PIN MEDE
+// 320vh (70vh DA INTRO + 250vh DE CURSO) E O TOPO DO .marcas__bar CAI EM
+// 320vh - progress * 250vh. EM 1.0 O PIN SOLTA E A SEÇÃO COMEÇA A SUBIR.
+const REVEAL_PROGRESS = 0.97;
+
+let introTrigger = null;
+
+// RETORNA null SE O PIN NÃO EXISTE (reduced-motion) — CHAMADOR USA O FALLBACK.
+export function getMarcasRevealY() {
+  if (!introTrigger) return null;
+  const { start, end } = introTrigger;
+  return start + (end - start) * REVEAL_PROGRESS;
+}
+
 /* ---------- INTRO PINADA — HEADLINE EM SCATTER, CONVERGE NO SCROLL ---------- */
 function initMarcasIntro() {
   const container = document.querySelector("[data-marcas-intro]");
@@ -55,7 +72,8 @@ function initMarcasIntro() {
 
   const total = letters.length;
 
-  ScrollTrigger.create({
+  introTrigger = ScrollTrigger.create({
+    id: "marcas-intro",
     trigger: container,
     start: "top top",
     end: "+=250%",

@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="512x512" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
     <title>CLAVE — Mídia Indoor</title>
     <meta
       name="description"
@@ -10,11 +15,74 @@
     />
   </head>
   <body>
+
+    <!-- ============================================
+         MENU — NAVEGAÇÃO PRINCIPAL
+         ============================================ -->
+    <header class="clv-menu" id="clv-menu" data-menu>
+      <div class="clv-menu__inner">
+
+        <a href="#hero" class="clv-menu__logo" data-menu-link data-action="scroll" data-target="#hero">
+          <img src="/images/logo/LOGO-BRANCA-CROP.webp" alt="Clave Mídia Indoor" />
+        </a>
+
+        <button type="button" class="clv-menu__burger" data-menu-burger aria-expanded="false" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- IRMÃOS DO <header>, NÃO FILHOS: O HEADER TEM will-change/transform E -->
+    <!-- VIRARIA CONTAINING BLOCK, IMPEDINDO O PAINEL MOBILE DE SER position: fixed -->
+    <!-- EM TELA CHEIA. O CSS RECOMPÕE A BARRA NO DESKTOP (min-width: 861px). -->
+    <nav class="clv-menu__nav" data-menu-nav>
+      <button type="button" class="clv-menu__link" data-menu-link data-action="overlay" data-target="sobre">
+        Sobre
+      </button>
+      <button type="button" class="clv-menu__link" data-menu-link data-action="scroll" data-target=".marcas__bar">
+        Anunciantes
+      </button>
+      <button type="button" class="clv-menu__link" data-menu-link data-action="overlay" data-target="anuncie">
+        Anuncie com a Clave
+      </button>
+    </nav>
+
+    <a href="#" class="clv-menu__cta" data-whatsapp-cta>Fale conosco</a>
+
+    <!-- ============================================
+         OVERLAY — SOBRE
+         ============================================ -->
+    <div class="clv-overlay" id="overlay-sobre" data-overlay="sobre" aria-hidden="true">
+      <div class="clv-overlay__panel">
+        <button type="button" class="clv-overlay__close" data-overlay-close aria-label="Fechar">
+          <span></span><span></span>
+        </button>
+        <div class="clv-overlay__content">
+          <!-- Texto + carrossel de fotos entram na etapa de design -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         OVERLAY — ANUNCIE COM A CLAVE
+         ============================================ -->
+    <div class="clv-overlay" id="overlay-anuncie" data-overlay="anuncie" aria-hidden="true">
+      <div class="clv-overlay__panel">
+        <button type="button" class="clv-overlay__close" data-overlay-close aria-label="Fechar">
+          <span></span><span></span>
+        </button>
+        <div class="clv-overlay__content">
+          <!-- Sub-menu (Residencial / Comercial / Hotéis / Restaurantes / Eventos)
+              + cards grandes + mapa entram na etapa de design -->
+        </div>
+      </div>
+    </div>
+
     <main id="app">
       <!-- ============================================
            SEÇÃO 1 — HERO — LOGO ANIMADA
            ============================================ -->
-      <section class="hero" data-hero>
+      <section class="hero" id="hero" data-hero>
         <video
           class="hero__video"
           src="/videos/marca-animada.mp4"
@@ -47,7 +115,7 @@
 <!-- ============================================
      SEÇÃO 3 — MARCAS — CARROSSEL E HEADLINE
      ============================================ -->
-<section class="marcas" data-marcas>
+<section class="marcas" id="marcas" data-marcas>
   <!-- ---------- INTRO PINADA — LETRAS SE FORMAM CONFORME O SCROLL ---------- -->
   <div class="marcas__dots"></div>
   <div class="marcas__intro" data-marcas-intro>
