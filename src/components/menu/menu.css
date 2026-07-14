@@ -72,8 +72,9 @@
 
 .clv-menu__burger {
   display: none;
-  flex-direction: column;
-  gap: 5px;
+  position: relative;
+  width: 50px;
+  height: 40px;
   background: none;
   border: none;
   cursor: pointer;
@@ -81,22 +82,43 @@
 }
 
 .clv-menu__burger span {
-  width: 24px;
-  height: 1.5px;
-  background: #fff;
-  transition: transform 0.4s ease, opacity 0.3s ease;
+  position: absolute;
+  left: 3px;
+  width: 45px;
+  height: 5px;
+  background: #f1faee;
+  border-radius: 100px;
+  transition: 0.3s ease;
 }
+
+.clv-menu__burger span:nth-child(1) { top: 6px; }
+.clv-menu__burger span:nth-child(2) { top: 17px; }
+.clv-menu__burger span:nth-child(3) { bottom: 6px; }
 
 /* ---------- ABERTO: AS 3 BARRAS VIRAM UM X ---------- */
 
-.clv-menu__burger[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(6.5px) rotate(45deg);
+/* AS BARRAS GIRAM EM TORNO DO PRÓPRIO CENTRO E SÃO TRAZIDAS PARA O CENTRO
+   DO BOTÃO (25, 20). CENTRO FECHADO: BARRA 1 EM Y=9.5, BARRA 3 EM Y=30.5,
+   LOGO O DESLOCAMENTO SIMÉTRICO É DE ±10.5PX. LEFT 1 + WIDTH 48 CENTRA EM X. */
+
+.clv-menu__burger[aria-expanded="true"] span:nth-child(1),
+.clv-menu__burger[aria-expanded="true"] span:nth-child(3) {
+  width: 48px;
+  left: 1px;
+  transform-origin: center;
 }
+
+.clv-menu__burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(10.5px) rotate(45deg);
+}
+
 .clv-menu__burger[aria-expanded="true"] span:nth-child(2) {
+  transform: translateX(-20px);
   opacity: 0;
 }
+
 .clv-menu__burger[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-6.5px) rotate(-45deg);
+  transform: translateY(-10.5px) rotate(-45deg);
 }
 
 /* ============================================
