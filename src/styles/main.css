@@ -2,6 +2,8 @@
    FONTES E TOKENS GLOBAIS
    ============================================ */
 @import '../components/menu/menu.css';
+@import '../components/sobre/sobre.css';
+@import '../components/anuncie/anuncie.css';
 @import "@fontsource/bricolage-grotesque/400.css";
 @import "@fontsource/bricolage-grotesque/800.css";
 @import "@fontsource-variable/inter";
@@ -55,10 +57,10 @@ body {
   height: 100vh;
   overflow: hidden;
   background: #000;
-  /* Costura Hero(paper) -> Elevador(preto): é o maior contraste da página. A
-     coordenada é inteira (sem gap de layout), mas no instante do pin o render
-     pode deixar 1px de paper entre o Hero e o Elevador fixo. Sobe 1px sobre o
-     Hero para o preto cobrir esse straddle. No-op perceptível no desktop. */
+  /* COSTURA HERO(PAPER) -> ELEVADOR(PRETO): É O MAIOR CONTRASTE DA PÁGINA. A
+     COORDENADA É INTEIRA (SEM GAP DE LAYOUT), MAS NO INSTANTE DO PIN O RENDER
+     PODE DEIXAR 1px DE PAPER ENTRE O HERO E O ELEVADOR FIXO. SOBE 1px SOBRE O
+     HERO PARA O PRETO COBRIR ESSE STRADDLE. no-op PERCEPTÍVEL NO DESKTOP. */
   margin-top: -1px;
 }
 
@@ -296,10 +298,10 @@ body {
   background: var(--nav);
   padding: clamp(64px, 10vw, 120px) 24px;
   color: var(--txt);
-  /* Espelho do fix da costura de baixo (.predios margin-top:-1px): a costura
-     Diferenciais->Produto cai numa coordenada fracionária (a .produto pina num
-     Y .39), então some 1px sobre o pin-spacer da .produto para cobrir a linha de
-     paper que o arredondamento de subpixel deixa no topo quando a .produto pina. */
+  /* ESPELHO DO FIX DA COSTURA DE BAIXO (.predios margin-top:-1px): A COSTURA
+     DIFERENCIAIS->PRODUTO CAI NUMA COORDENADA FRACIONÁRIA (A .produto PINA NUM
+     Y .39), ENTÃO SOME 1px SOBRE O pin-spacer DA .produto PARA COBRIR A LINHA DE
+     PAPER QUE O ARREDONDAMENTO DE SUBPIXEL DEIXA NO TOPO QUANDO A .produto PINA. */
   margin-bottom: -1px;
 }
 
@@ -319,7 +321,7 @@ body {
   opacity: .6;
 }
 
-/* Degradê topo/rodapé — mesmo padrão da seção Prédios */
+/* DEGRADÊ TOPO/RODAPÉ — MESMO PADRÃO DA SEÇÃO PRÉDIOS */
 .clv-diferenciais::before,
 .clv-diferenciais::after {
   content: "";
@@ -810,12 +812,12 @@ body {
   background: var(--color-ink);
   padding: clamp(64px, 10vw, 120px) 24px;
   overflow: hidden;
-  /* Sobe 1px sobre a costura com o pin-spacer da .produto para cobrir a
-     linha fina de subpixel que o arredondamento de altura do pin pode deixar. */
+  /* SOBE 1px SOBRE A COSTURA COM O pin-spacer DA .produto PARA COBRIR A
+     LINHA FINA DE SUBPIXEL QUE O ARREDONDAMENTO DE ALTURA DO PIN PODE DEIXAR. */
   margin-top: -1px;
 }
 
-/* pontilhado de fundo — mesma classe da Diferenciais */
+/* PONTILHADO DE FUNDO — MESMA CLASSE DA DIFERENCIAIS */
 .predios .clv-dots {
   position: absolute;
   inset: 0;
@@ -823,7 +825,7 @@ body {
   pointer-events: none;
 }
 
-/* Degradê topo/rodapé — mesmo padrão das outras seções escuras */
+/* DEGRADÊ TOPO/RODAPÉ — MESMO PADRÃO DAS OUTRAS SEÇÕES ESCURAS */
 .predios::before,
 .predios::after {
   content: "";

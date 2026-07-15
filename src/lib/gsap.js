@@ -1,18 +1,18 @@
-// ============================================
-// GSAP — REGISTRO DE PLUGINS
-// ============================================
+/* ============================================
+   GSAP — REGISTRO DE PLUGINS
+   ============================================ */
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// iOS Safari mostra/esconde a barra de endereço de forma assimétrica com a
-// direção do scroll (colapsa descendo, expande subindo), disparando um resize
-// a cada toggle. Sem isto o ScrollTrigger dá refresh() no meio do gesto e o pin
-// da .produto entra cortado ao voltar (Prédios -> Produto). ignoreMobileResize
-// faz o ScrollTrigger ignorar esses resizes só-de-altura em touch (no-op no
-// desktop), mantendo start/end do pin estáveis nas duas direções.
+// iOS SAFARI MOSTRA/ESCONDE A BARRA DE ENDEREÇO DE FORMA ASSIMÉTRICA COM A
+// DIREÇÃO DO SCROLL (COLAPSA DESCENDO, EXPANDE SUBINDO), DISPARANDO UM resize
+// A CADA TOGGLE. SEM ISTO O ScrollTrigger DÁ refresh() NO MEIO DO GESTO E O PIN
+// DA .produto ENTRA CORTADO AO VOLTAR (PRÉDIOS -> PRODUTO). ignoreMobileResize
+// FAZ O ScrollTrigger IGNORAR ESSES resizes SÓ-DE-ALTURA EM TOUCH (no-op NO
+// DESKTOP), MANTENDO start/end DO PIN ESTÁVEIS NAS DUAS DIREÇÕES.
 ScrollTrigger.config({ ignoreMobileResize: true });
 
 export { gsap, ScrollTrigger };

@@ -11,7 +11,8 @@ import { initProduto } from "./animations/produto.js";
 import { initPredios } from "./animations/predios.js";
 import { getWhatsappLink } from "./lib/whatsapp.js";
 import { initMenu } from "./components/menu/menu.js";
-import { initSobre } from './animations/sobre.js';
+import { initSobre } from "./components/sobre/sobre.js";
+import { initAnuncie } from "./components/anuncie/anuncie.js";
 
 /* ============================================
    INICIALIZAÇÃO GLOBAL
@@ -28,3 +29,4 @@ document.querySelectorAll("[data-whatsapp-cta]").forEach((el) => {
 });
 initMenu();
 initSobre();
+initAnuncie();

@@ -28,22 +28,22 @@ export function initElevador() {
 
   let hasRevealed = false;
 
- function revealContent() {
-  if (hasRevealed) return;
-  hasRevealed = true;
+  function revealContent() {
+    if (hasRevealed) return;
+    hasRevealed = true;
 
-  gsap
-    .timeline({ defaults: { ease: EASE.primary } })
-    .add(() => {
-      gsap.set(title, { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1 });
-      animateRouletteTitle(title);
-    }, 0)
-    .to(
-      text,
-      { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0, duration: DURATIONS.sm },
-      `-=${DURATIONS.md * 0.3}`
-    );
-}
+    gsap
+      .timeline({ defaults: { ease: EASE.primary } })
+      .add(() => {
+        gsap.set(title, { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1 });
+        animateRouletteTitle(title);
+      }, 0)
+      .to(
+        text,
+        { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0, duration: DURATIONS.sm },
+        `-=${DURATIONS.md * 0.3}`
+      );
+  }
 
   ScrollTrigger.create({
     trigger: section,

@@ -1,14 +1,14 @@
-// ============================================
-// LENIS — FONTE ÚNICA DE SCROLL
-// ============================================
+/* ============================================
+   LENIS — FONTE ÚNICA DE SCROLL
+   ============================================ */
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "./gsap.js";
 
 let lenis = null;
 
-// ============================================
-// INIT — RESPEITA PREFERS-REDUCED-MOTION
-// ============================================
+/* ============================================
+   INIT — RESPEITA prefers-reduced-motion
+   ============================================ */
 export function initSmoothScroll() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) return null;
@@ -25,19 +25,19 @@ export function initSmoothScroll() {
   gsap.ticker.lagSmoothing(0);
 
   // iOS SAFARI — RE-SYNC DO PIN QUANDO A BARRA DE ENDEREÇO APARECE/SOME.
-  // A barra do Safari é OVERLAY: sobrepõe o conteúdo sem redimensionar o layout
-  // (svh não muda), criando dessincronia temporária entre visual viewport e
-  // layout viewport bem no instante em que o pin da .produto deveria enquadrar
-  // 100% ao voltar (Prédios -> Produto). ignoreMobileResize (em gsap.js) faz o
-  // ScrollTrigger IGNORAR o resize da toolbar; aqui re-medimos de forma pontual
-  // e debounced (só DEPOIS da toolbar assentar) para re-alinhar o pin sem o
-  // "jump" de um refresh no meio do gesto. Só em touch — no-op no desktop.
+  // A BARRA DO SAFARI É OVERLAY: SOBREPÕE O CONTEÚDO SEM REDIMENSIONAR O LAYOUT
+  // (svh NÃO MUDA), CRIANDO DESSINCRONIA TEMPORÁRIA ENTRE VISUAL VIEWPORT E
+  // LAYOUT VIEWPORT BEM NO INSTANTE EM QUE O PIN DA .produto DEVERIA ENQUADRAR
+  // 100% AO VOLTAR (PRÉDIOS -> PRODUTO). ignoreMobileResize (EM gsap.js) FAZ O
+  // ScrollTrigger IGNORAR O resize DA TOOLBAR; AQUI RE-MEDIMOS DE FORMA PONTUAL
+  // E DEBOUNCED (SÓ DEPOIS DA TOOLBAR ASSENTAR) PARA RE-ALINHAR O PIN SEM O
+  // "JUMP" DE UM refresh NO MEIO DO GESTO. SÓ EM TOUCH — no-op NO DESKTOP.
   const vv = window.visualViewport;
   if (vv && window.matchMedia("(pointer: coarse)").matches) {
     let lastHeight = vv.height;
     let settleTimer = 0;
     vv.addEventListener("resize", () => {
-      // Só reage a mudanças de altura reais (a toolbar), ignora ruído/largura.
+      // SÓ REAGE A MUDANÇAS DE ALTURA REAIS (A TOOLBAR), IGNORA RUÍDO/LARGURA.
       if (Math.abs(vv.height - lastHeight) < 2) return;
       lastHeight = vv.height;
       clearTimeout(settleTimer);
@@ -50,16 +50,16 @@ export function initSmoothScroll() {
   return lenis;
 }
 
-// ============================================
-// ACESSO À INSTÂNCIA — usado por outras animações (ex: scroll programático)
-// ============================================
+/* ============================================
+   ACESSO À INSTÂNCIA — USADO POR OUTRAS ANIMAÇÕES (EX.: SCROLL PROGRAMÁTICO)
+   ============================================ */
 export function getLenis() {
   return lenis;
 }
 
-// ============================================
-// CLEANUP — DESTRÓI LENIS E TODOS OS SCROLLTRIGGERS
-// ============================================
+/* ============================================
+   CLEANUP — DESTRÓI LENIS E TODOS OS SCROLLTRIGGERS
+   ============================================ */
 export function destroySmoothScroll() {
   if (lenis) {
     lenis.destroy();
