@@ -2,12 +2,18 @@
    MENU — NAVEGAÇÃO PRINCIPAL
    ============================================ */
 
+/* --menu-y É ANIMADA PELO JS NO :root (VER menu.js). A BARRA DO DESKTOP É FEITA
+   DE TRÊS ELEMENTOS IRMÃOS — HEADER, NAV E CTA — E TODOS LEEM A MESMA VAR, SÓ
+   ASSIM ELES ESCONDEM E APARECEM JUNTOS. NO MOBILE (MAX 860PX) NAV E CTA NÃO
+   HERDAM ESSE transform: O PAINEL EM TELA CHEIA NÃO PODE SAIR DA DOBRA. */
+
 .clv-menu {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 100;
+  transform: translateY(var(--menu-y, 0%));
   will-change: transform;
 }
 
@@ -38,7 +44,7 @@
 }
 
 .clv-menu__logo img {
-  height: 32px;
+  height: 25px;
   width: auto;
 }
 
@@ -73,8 +79,8 @@
 .clv-menu__burger {
   display: none;
   position: relative;
-  width: 50px;
-  height: 40px;
+  width: 40px;
+  height: 36px;
   background: none;
   border: none;
   cursor: pointer;
@@ -83,33 +89,33 @@
 
 .clv-menu__burger span {
   position: absolute;
-  left: 3px;
-  width: 45px;
-  height: 5px;
+  left: 2.5px;
+  width: 38px;
+  height: 4px;
   background: #f1faee;
   border-radius: 100px;
   transition: 0.3s ease;
 }
 
-.clv-menu__burger span:nth-child(1) { top: 6px; }
-.clv-menu__burger span:nth-child(2) { top: 17px; }
-.clv-menu__burger span:nth-child(3) { bottom: 6px; }
+.clv-menu__burger span:nth-child(1) { top: 5px; }
+.clv-menu__burger span:nth-child(2) { top: 16px; }
+.clv-menu__burger span:nth-child(3) { bottom: 5px; }
 
 /* ---------- ABERTO: AS 3 BARRAS VIRAM UM X ---------- */
 
 /* AS BARRAS GIRAM EM TORNO DO PRÓPRIO CENTRO E SÃO TRAZIDAS PARA O CENTRO
-   DO BOTÃO (25, 20). CENTRO FECHADO: BARRA 1 EM Y=9.5, BARRA 3 EM Y=30.5,
-   LOGO O DESLOCAMENTO SIMÉTRICO É DE ±10.5PX. LEFT 1 + WIDTH 48 CENTRA EM X. */
+   DO BOTÃO (22.5, 18). CENTRO FECHADO: BARRA 1 EM Y=7, BARRA 3 EM Y=29,
+   LOGO O DESLOCAMENTO SIMÉTRICO É DE ±11PX. LEFT 1 + WIDTH 43 CENTRA EM X. */
 
 .clv-menu__burger[aria-expanded="true"] span:nth-child(1),
 .clv-menu__burger[aria-expanded="true"] span:nth-child(3) {
-  width: 48px;
+  width: 43px;
   left: 1px;
   transform-origin: center;
 }
 
 .clv-menu__burger[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(10.5px) rotate(45deg);
+  transform: translateY(11px) rotate(45deg);
 }
 
 .clv-menu__burger[aria-expanded="true"] span:nth-child(2) {
@@ -118,7 +124,7 @@
 }
 
 .clv-menu__burger[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-10.5px) rotate(-45deg);
+  transform: translateY(-11px) rotate(-45deg);
 }
 
 /* ============================================
@@ -187,6 +193,8 @@
     display: flex;
     align-items: center;
     z-index: 101;
+    transform: translateY(var(--menu-y, 0%)); /* ACOMPANHA O HEADER NO HIDE/SHOW */
+    will-change: transform;
   }
 
   .clv-menu__nav {

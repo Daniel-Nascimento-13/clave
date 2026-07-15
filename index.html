@@ -408,9 +408,53 @@
     <div class="predios__head">
       <h2 class="predios__heading">Onde estamos</h2>
       <div class="predios__filters">
+        <div class="predios__cat-wrap">
+          <button type="button" class="predios__cat-burger" data-predios-burger aria-expanded="false" aria-label="Abrir categorias">
+            <span></span><span></span><span></span>
+          </button>
+
+          <!-- OS ITENS USAM data-menu-link + data-action="overlay": O bindMenuLinks() DO -->
+          <!-- menu.js VARRE O DOCUMENTO INTEIRO E JÁ CUIDA DO CLIQUE. NÃO DUPLICAR AQUI. -->
+          <div class="predios__cat-menu" data-predios-cat-menu>
+            <button class="predios__cat-item" data-menu-link data-action="overlay" data-target="anuncie" data-category="residencial">
+              Residencial
+              <span class="predios__cat-sweep"></span>
+              <span class="predios__cat-debris"></span>
+              <span class="predios__cat-debris"></span>
+              <span class="predios__cat-debris"></span>
+            </button>
+            <button class="predios__cat-item" data-menu-link data-action="overlay" data-target="anuncie" data-category="comercial">
+              Comercial
+              <span class="predios__cat-sweep"></span>
+              <span class="predios__cat-debris"></span>
+              <span class="predios__cat-debris"></span>
+              <span class="predios__cat-debris"></span>
+            </button>
+            <button class="predios__cat-item" data-menu-link data-action="overlay" data-target="anuncie" data-category="hoteis">
+              Hotéis
+              <span class="predios__cat-sweep"></span>
+              <span class="predios__cat-debris"></span>
+              <span class="predios__cat-debris"></span>
+              <span class="predios__cat-debris"></span>
+            </button>
+            <button class="predios__cat-item" data-menu-link data-action="overlay" data-target="anuncie" data-category="restaurantes">
+              Restaurantes
+              <span class="predios__cat-sweep"></span>
+              <span class="predios__cat-debris"></span>
+              <span class="predios__cat-debris"></span>
+              <span class="predios__cat-debris"></span>
+            </button>
+            <button class="predios__cat-item" data-menu-link data-action="overlay" data-target="anuncie" data-category="eventos">
+              Eventos
+              <span class="predios__cat-sweep"></span>
+              <span class="predios__cat-debris"></span>
+              <span class="predios__cat-debris"></span>
+              <span class="predios__cat-debris"></span>
+            </button>
+          </div>
+        </div>
+
         <button class="predios__filter is-active" data-filter="todos">Todos</button>
-        <button class="predios__filter" data-filter="Residencial">Residencial</button>
-        <button class="predios__filter" data-filter="Comercial">Comercial</button>
       </div>
     </div>
     <div class="predios__carousel">

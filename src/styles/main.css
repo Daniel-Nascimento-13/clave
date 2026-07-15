@@ -896,6 +896,155 @@ body {
   border-color: var(--color-paper);
 }
 
+/* ============================================
+   MENU DE CATEGORIAS (PRÉDIOS)
+   ============================================ */
+
+/* ---------- BURGER DA SEÇÃO ---------- */
+/* MESMO DESENHO DO BURGER DO MENU PRINCIPAL (VER menu.css), EM ESCALA ~0.75.
+   position: relative — ELE VIVE DENTRO DO HEADER DA SEÇÃO, NUNCA fixed. */
+
+.predios__cat-wrap {
+  position: relative;
+}
+
+.predios__cat-burger {
+  position: relative;
+  width: 30px;
+  height: 27px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.predios__cat-burger span {
+  position: absolute;
+  left: 1px;
+  width: 28px;
+  height: 3px;
+  background: var(--color-paper);
+  border-radius: 100px;
+  transition: 0.3s ease;
+}
+
+.predios__cat-burger span:nth-child(1) { top: 4px; }
+.predios__cat-burger span:nth-child(2) { top: 12px; }
+.predios__cat-burger span:nth-child(3) { bottom: 4px; }
+
+/* ---------- ABERTO: AS 3 BARRAS VIRAM UM X ---------- */
+
+/* MESMA GEOMETRIA DO BURGER GRANDE: AS BARRAS GIRAM EM TORNO DO PRÓPRIO CENTRO
+   E VÊM PARA O CENTRO DO BOTÃO (15, 13.5). CENTRO FECHADO: BARRA 1 EM Y=5.5,
+   BARRA 3 EM Y=21.5 — DESLOCAMENTO SIMÉTRICO DE ±8PX. LEFT -1 + WIDTH 32
+   CENTRA EM X E DÁ O COMPRIMENTO DA DIAGONAL. */
+
+.predios__cat-burger[aria-expanded="true"] span:nth-child(1),
+.predios__cat-burger[aria-expanded="true"] span:nth-child(3) {
+  width: 32px;
+  left: -1px;
+  transform-origin: center;
+}
+
+.predios__cat-burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.predios__cat-burger[aria-expanded="true"] span:nth-child(2) {
+  transform: translateX(-16px);
+  opacity: 0;
+}
+
+.predios__cat-burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ---------- CONTAINER DO DROPDOWN ---------- */
+
+/* ESTADO INICIAL (clip-path + opacity) É SETADO VIA GSAP NO initPredios(),
+   NÃO AQUI — A REVELAÇÃO É GSAP-ONLY, IGUAL AO PAINEL DO MENU PRINCIPAL. */
+
+/* ANCORADO PELA DIREITA: O BURGER FICA NA PONTA DIREITA DO HEADER DA SEÇÃO E,
+   COM left: 0, O PAINEL DE 200PX VAZAVA PRA FORA DO .predios__inner. */
+
+.predios__cat-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 20;
+  width: 200px;
+  background: rgb(12, 12, 12);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid rgb(28, 28, 28);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- ITEM BASE ---------- */
+
+.predios__cat-item {
+  position: relative;
+  overflow: hidden;
+  background: rgb(20, 20, 20);
+  color: rgb(170, 170, 170);
+  border: 1px solid rgb(35, 35, 35);
+  padding: 10px 12px;
+  text-align: left;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: 'Inter Variable', sans-serif;
+  font-size: 0.9375rem;
+  /* COR, FUNDO E POSIÇÃO SÃO ANIMADOS VIA GSAP NO HOVER (predios.js) — NUNCA CSS TRANSITION */
+}
+
+/* SHEEN ESTÁTICO — NÃO ANIMADO, SEM CONFLITO COM A REGRA GSAP-ONLY */
+.predios__cat-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), transparent 55%);
+  pointer-events: none;
+}
+
+/* ---------- SWEEP (BRILHO NO HOVER) — ELEMENTO REAL, ANIMADO VIA GSAP ---------- */
+/* PALETA IGUAL AO GLOW DAS SETAS DO CARROSSEL (.predios__arrow-spin) E DOS CARDS
+   DE DIFERENCIAIS (.clv-spin): AZUL #2a7fff → CIANO #22d3ee, MESMO PADRÃO DO SITE */
+
+.predios__cat-sweep {
+  position: absolute;
+  inset: -70%;
+  background: conic-gradient(
+    from 180deg,
+    rgba(42, 127, 255, 0),
+    rgba(42, 127, 255, 0.25),
+    rgba(34, 211, 238, 0.25),
+    rgba(90, 160, 255, 0.18),
+    rgba(255, 255, 255, 0.1),
+    rgba(42, 127, 255, 0)
+  );
+  filter: blur(16px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-70%) rotate(20deg);
+}
+
+/* ---------- DEBRIS (PARTÍCULAS) — ELEMENTOS REAIS, ANIMADOS VIA GSAP ---------- */
+
+.predios__cat-debris {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(90, 160, 255, 0.3);
+  border-radius: 1px;
+  top: 50%;
+  left: -20px;
+  opacity: 0;
+  filter: blur(0.3px);
+  pointer-events: none;
+}
+
 /* ---------- CARROSSEL ---------- */
 .predios__carousel {
   display: flex;

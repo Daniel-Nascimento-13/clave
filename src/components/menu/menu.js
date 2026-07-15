@@ -16,7 +16,7 @@ const EASE = 'power3.out';
    ESTADO
    ============================================ */
 
-let menuEl, overlays, isMenuVisible = true, openOverlayId = null;
+let rootEl, overlays, isMenuVisible = true, openOverlayId = null;
 let lenis = null; // PODE SER null EM prefers-reduced-motion — TODO USO ABAIXO TRATA ISSO
 
 /* ============================================
@@ -24,7 +24,9 @@ let lenis = null; // PODE SER null EM prefers-reduced-motion — TODO USO ABAIXO
    ============================================ */
 
 export function initMenu() {
-  menuEl = document.querySelector('[data-menu]');
+  // O HIDE/SHOW NÃO ANIMA UM ELEMENTO E SIM A VAR --menu-y NO :root: HEADER, NAV
+  // E CTA SÃO IRMÃOS (VER index.html) E SÓ ASSIM SE MOVEM JUNTOS. VER menu.css.
+  rootEl = document.documentElement;
   overlays = document.querySelectorAll('[data-overlay]');
   lenis = getLenis(); // null SE reduced-motion ESTIVER ATIVO
 
@@ -33,6 +35,8 @@ export function initMenu() {
   });
 
   if (lenis) {
+    gsap.set(rootEl, { '--menu-y': '-100%' }); // ESCONDE O MENU ATÉ O PRIMEIRO SCROLL
+    isMenuVisible = false;
     bindScrollHide();
   }
   // SEM LENIS: NAV PERMANECE FIXA E SEMPRE VISÍVEL (isMenuVisible FICA true)
@@ -55,12 +59,12 @@ function bindScrollHide() {
 
     if (shouldShow && !isMenuVisible) {
       isMenuVisible = true;
-      gsap.to(menuEl, { yPercent: 0, duration: REVEAL_DURATION, ease: EASE, overwrite: true });
+      gsap.to(rootEl, { '--menu-y': '0%', duration: REVEAL_DURATION, ease: EASE, overwrite: true });
     }
 
     if (!shouldShow && isMenuVisible) {
       isMenuVisible = false;
-      gsap.to(menuEl, { yPercent: -100, duration: HIDE_DURATION, ease: EASE, overwrite: true });
+      gsap.to(rootEl, { '--menu-y': '-100%', duration: HIDE_DURATION, ease: EASE, overwrite: true });
     }
   });
 }

@@ -22,14 +22,13 @@ export function initPredios() {
   const progressEl = section.querySelector(".predios__progress");
   const prevBtn = section.querySelector(".predios__arrow--prev");
   const nextBtn = section.querySelector(".predios__arrow--next");
-  const filterBtns = section.querySelectorAll(".predios__filter");
+  const todosBtn = section.querySelector('.predios__filter[data-filter="todos"]');
 
-  let filtered = PREDIOS;
   let index = 0;
 
   function renderProgress() {
     progressEl.innerHTML = "";
-    filtered.forEach((_, i) => {
+    PREDIOS.forEach((_, i) => {
       const dot = document.createElement("button");
       dot.className = "predios__progress-dot" + (i === index ? " is-active" : "");
       dot.setAttribute("aria-label", `Ir para item ${i + 1}`);
@@ -52,24 +51,24 @@ export function initPredios() {
   }
 
   function render() {
-    const item = filtered[index];
+    const item = PREDIOS[index];
     if (!item) return;
 
     photo.src = item.foto;
     photo.alt = item.nome;
     badgeNome.textContent = item.nome;
-    counter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(filtered.length).padStart(2, "0")}`;
+    counter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(PREDIOS.length).padStart(2, "0")}`;
     desc.textContent = item.descricao;
 
     renderMetrics(item.metricas);
     renderProgress();
 
     prevBtn.disabled = index === 0;
-    nextBtn.disabled = index === filtered.length - 1;
+    nextBtn.disabled = index === PREDIOS.length - 1;
   }
 
   function goTo(i) {
-    if (i < 0 || i >= filtered.length || i === index) return;
+    if (i < 0 || i >= PREDIOS.length || i === index) return;
     index = i;
     gsap.fromTo(
       card,
@@ -81,18 +80,18 @@ export function initPredios() {
   prevBtn.addEventListener("click", () => goTo(index - 1));
   nextBtn.addEventListener("click", () => goTo(index + 1));
 
-  filterBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      filterBtns.forEach((b) => b.classList.remove("is-active"));
-      btn.classList.add("is-active");
-      const filter = btn.dataset.filter;
-      filtered = filter === "todos" ? PREDIOS : PREDIOS.filter((p) => p.categoria === filter);
-      index = 0;
-      render();
-    });
+  // O FILTRO POR CATEGORIA SAIU DAQUI: OS BOTÕES Residencial/Comercial VIRARAM O
+  // DROPDOWN DE CATEGORIAS, QUE ABRE A OVERLAY "ANUNCIE" EM VEZ DE FILTRAR.
+  // "TODOS" SOBROU E APENAS VOLTA O CARROSSEL AO PRIMEIRO ITEM.
+  todosBtn.addEventListener("click", () => {
+    index = 0;
+    render();
   });
 
   render();
+
+  bindCategoryMenu(section);
+  bindCategoryHoverFX(section);
 
   /* ---------- REVEAL DO TÍTULO (ROLETA) ---------- */
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -110,4 +109,118 @@ export function initPredios() {
       },
     });
   }
+}
+
+/* ============================================
+   DROPDOWN DE CATEGORIAS — ABRIR / FECHAR
+   ============================================ */
+
+// REVELAÇÃO GSAP-ONLY (clip-path + opacity), IGUAL AO PAINEL DO BURGER PRINCIPAL
+// EM menu.js. SEM CSS TRANSITION NO CONTAINER — AS DUAS COISAS BRIGARIAM.
+
+function bindCategoryMenu(section) {
+  const burger = section.querySelector("[data-predios-burger]");
+  const menu = section.querySelector("[data-predios-cat-menu]");
+  if (!burger || !menu) return;
+
+  gsap.set(menu, { clipPath: "inset(0 0 100% 0)", autoAlpha: 0, pointerEvents: "none" });
+
+  function open() {
+    burger.setAttribute("aria-expanded", "true");
+    gsap.to(menu, {
+      clipPath: "inset(0 0 0% 0)",
+      autoAlpha: 1,
+      pointerEvents: "auto",
+      duration: 0.6,
+      ease: "power3.out",
+      overwrite: true,
+    });
+  }
+
+  function close() {
+    if (burger.getAttribute("aria-expanded") !== "true") return;
+    burger.setAttribute("aria-expanded", "false");
+    gsap.to(menu, {
+      clipPath: "inset(0 0 100% 0)",
+      autoAlpha: 0,
+      pointerEvents: "none",
+      duration: 0.6,
+      ease: "power3.out",
+      overwrite: true,
+    });
+  }
+
+  burger.addEventListener("click", () => {
+    if (burger.getAttribute("aria-expanded") === "true") close();
+    else open();
+  });
+
+  // O bindMenuLinks() DO menu.js JÁ ABRE A OVERLAY NO CLIQUE DO ITEM, MAS SÓ FECHA
+  // O BURGER DO TOPO — ESTE DROPDOWN FICARIA ABERTO ATRÁS DELA.
+  menu.querySelectorAll(".predios__cat-item").forEach((item) => {
+    item.addEventListener("click", close);
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!section.contains(e.target)) close();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") close();
+  });
+}
+
+/* ============================================
+   EFEITOS DE HOVER DO MENU DE CATEGORIAS
+   ============================================ */
+
+function bindCategoryHoverFX(section) {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReducedMotion) return; // SEM EFEITOS DE HOVER NESSE MODO
+
+  section.querySelectorAll(".predios__cat-item").forEach((item) => {
+    const sweep = item.querySelector(".predios__cat-sweep");
+    const debris = item.querySelectorAll(".predios__cat-debris");
+    let sweepTween;
+    let debrisTweens = [];
+
+    item.addEventListener("mouseenter", () => {
+      gsap.to(item, {
+        x: 2,
+        borderColor: "rgb(110, 110, 110)",
+        backgroundColor: "rgb(22, 22, 22)",
+        color: "#fff",
+        duration: 0.3,
+        ease: "power3.out",
+      });
+
+      gsap.set(sweep, { opacity: 1 });
+      sweepTween = gsap
+        .timeline({ repeat: -1, yoyo: true })
+        .to(sweep, { x: "140%", duration: 1.6, ease: "power1.inOut" });
+
+      debrisTweens = Array.from(debris).map((d, i) =>
+        gsap.timeline({ repeat: -1, delay: i * 0.4 }).fromTo(
+          d,
+          { x: -20, opacity: 0 },
+          { x: 240, opacity: 0.22, duration: 5 + i * 0.8, ease: "power1.inOut" }
+        )
+      );
+    });
+
+    item.addEventListener("mouseleave", () => {
+      gsap.to(item, {
+        x: 0,
+        borderColor: "rgb(35, 35, 35)",
+        backgroundColor: "rgb(20, 20, 20)",
+        color: "rgb(170, 170, 170)",
+        duration: 0.3,
+        ease: "power3.out",
+      });
+      gsap.to(sweep, { opacity: 0, duration: 0.3, ease: "power3.out" });
+      sweepTween?.kill();
+      debrisTweens.forEach((t) => t.kill());
+      gsap.set(debris, { opacity: 0, x: -20 });
+    });
+  });
 }
