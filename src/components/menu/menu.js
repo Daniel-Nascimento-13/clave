@@ -150,6 +150,7 @@ function openOverlay(id) {
   el.setAttribute('aria-hidden', 'false');
   el.style.pointerEvents = 'auto';
   lockScroll();
+  emitOverlayEvent('open', id);
 
   gsap.to(el, {
     clipPath: 'inset(0 0 0% 0)',
@@ -162,6 +163,10 @@ function openOverlay(id) {
 function closeOverlay(immediate = false) {
   if (!openOverlayId) return;
   const el = document.getElementById(`overlay-${openOverlayId}`);
+
+  // ANTES DO TWEEN, NÃO NO onComplete: O CONTEÚDO (EX.: O VÍDEO DO "SOBRE") PRECISA
+  // PARAR JÁ NO CLIQUE, E NÃO SÓ QUANDO O OVERLAY TERMINAR DE SUMIR.
+  emitOverlayEvent('close', openOverlayId);
 
   gsap.to(el, {
     clipPath: 'inset(0 0 100% 0)',
@@ -176,6 +181,15 @@ function closeOverlay(immediate = false) {
 
   unlockScroll();
   openOverlayId = null;
+}
+
+/* ---------- AVISO PRO CONTEÚDO DOS OVERLAYS ---------- */
+
+// menu.js É DONO DO ABRE/FECHA, MAS NÃO PODE CONHECER O CONTEÚDO DE CADA OVERLAY.
+// O EVENTO INVERTE ISSO: QUEM PRECISA REAGIR (sobre-video.js) SE INSCREVE SOZINHO,
+// SEM QUE ESTE ARQUIVO PRECISE IMPORTAR NADA DE DENTRO DOS OVERLAYS.
+function emitOverlayEvent(action, id) {
+  document.dispatchEvent(new CustomEvent(`clv:overlay-${action}`, { detail: { id } }));
 }
 
 function bindOverlayClose() {

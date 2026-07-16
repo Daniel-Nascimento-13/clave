@@ -53,7 +53,12 @@
          OVERLAY — SOBRE
          ============================================ -->
     <div class="clv-overlay" id="overlay-sobre" data-overlay="sobre" aria-hidden="true">
-      <div class="clv-overlay__panel">
+      <!-- data-lenis-prevent — O OVERLAY ABRE COM lenis.stop() (VER lockScroll EM
+           menu.js), MAS O LENIS CONTINUA ESCUTANDO O wheel NA JANELA E ENGOLINDO O
+           EVENTO ANTES DELE CHEGAR AQUI. SEM ESTE ATRIBUTO O overflow-y: auto DO
+           PAINEL NÃO ROLA. ELE FAZ O LENIS IGNORAR wheel/touch ORIGINADOS AQUI
+           DENTRO E DEVOLVE O SCROLL NATIVO AO PAINEL. -->
+      <div class="clv-overlay__panel" data-lenis-prevent>
         <button type="button" class="clv-overlay__close" data-overlay-close aria-label="Fechar">
           <span></span><span></span>
         </button>
@@ -86,19 +91,46 @@
           </div>
 
           <!-- ============================================
-               CARROSSEL DE FOTOS — GLOW GIRATÓRIO (MESMA CASCA DO DIFERENCIAIS)
+               VÍDEO — GLOW GIRATÓRIO (MESMA CASCA DO DIFERENCIAIS)
                ============================================ -->
-          <div class="clv-sobre__carousel-wrap">
-            <article class="clv-card-container clv-sobre__photo-container" data-sobre-carousel>
+          <div class="clv-sobre__video-wrap">
+            <article class="clv-card-container clv-sobre__video-container" data-sobre-video>
               <div class="clv-spin clv-spin-blur"></div>
               <div class="clv-spin clv-spin-intense"></div>
               <div class="clv-card-border"><div class="clv-spin clv-spin-inside"></div></div>
-              <div class="clv-card clv-sobre__photo-card">
-                <img class="clv-sobre__photo" data-sobre-photo src="" alt="" />
+              <div class="clv-card clv-sobre__video-card">
+                <!-- preload="none" — OS 23MB SÓ COMEÇAM A CARREGAR QUANDO O OVERLAY
+                     ABRE (sobre-video.js TROCA PARA "metadata"). ATÉ LÁ O QUE APARECE
+                     É O POSTER ABAIXO, NÃO O PRIMEIRO FRAME DO VÍDEO. -->
+                <video
+                  class="clv-sobre__video"
+                  data-sobre-video-el
+                  preload="none"
+                  playsinline
+                  poster="/images/sobre/VIDEO-SOBRE-POSTER.jpg"
+                >
+                  <source src="/images/sobre/VIDEO-SOBRE.mp4" type="video/mp4" />
+                </video>
+
+                <img
+                  class="clv-sobre__video-poster"
+                  data-sobre-video-poster
+                  src="/images/sobre/VIDEO-SOBRE-POSTER.jpg"
+                  alt="Tela da Clave instalada no hall de um condomínio"
+                />
+
+                <button
+                  type="button"
+                  class="clv-sobre__video-play"
+                  data-sobre-video-play
+                  aria-label="Reproduzir vídeo sobre a Clave"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M8 5v14l11-7z" fill="currentColor" />
+                  </svg>
+                </button>
               </div>
             </article>
-
-            <div class="predios__progress clv-sobre__progress" data-sobre-progress></div>
           </div>
         </div>
       </div>
@@ -108,7 +140,11 @@
          OVERLAY — ANUNCIE COM A CLAVE
          ============================================ -->
     <div class="clv-overlay" id="overlay-anuncie" data-overlay="anuncie" aria-hidden="true">
-      <div class="clv-overlay__panel">
+      <!-- data-lenis-prevent — MESMO MOTIVO DO OVERLAY "SOBRE" ACIMA. AQUI O
+           CONTEÚDO AINDA CABE NA DOBRA, ENTÃO O BUG NÃO APARECE HOJE; O ATRIBUTO
+           FICA PORQUE A CASCA É A MESMA E QUALQUER TEXTO A MAIS FARIA O PAINEL
+           TRAVAR DO MESMO JEITO. -->
+      <div class="clv-overlay__panel" data-lenis-prevent>
         <button type="button" class="clv-overlay__close" data-overlay-close aria-label="Fechar">
           <span></span><span></span>
         </button>

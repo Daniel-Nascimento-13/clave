@@ -1,9 +1,29 @@
 /* ============================================
-   OVERLAY — SOBRE — TEXTO E CARROSSEL DE FOTOS
+   OVERLAY — SOBRE — TEXTO E VÍDEO
    ============================================ */
 
 /* A CASCA DO OVERLAY (.clv-overlay, __panel, __close, .clv-no-scroll) É
    COMPARTILHADA E VIVE EM menu.css. AQUI FICA SÓ O CONTEÚDO DO "SOBRE". */
+
+/* ---------- LAYOUT — TEXTO + VÍDEO ---------- */
+
+/* ESCOPADO EM #overlay-sobre DE PROPÓSITO: .clv-overlay__content É A CASCA
+   COMPARTILHADA (VER menu.css) E TAMBÉM É USADA PELO OVERLAY "ANUNCIE", QUE NÃO
+   PODE VIRAR GRID. MOBILE FICA EM COLUNA ÚNICA (O grid PADRÃO), EMPILHANDO. */
+#overlay-sobre .clv-overlay__content {
+  display: grid;
+  gap: 48px;
+}
+
+/* O VÍDEO É VERTICAL: EM COLUNA ÚNICA ELE NASCERIA ABAIXO DA DOBRA NO DESKTOP,
+   COM OS CONTROLES NATIVOS FORA DE ALCANCE. A PARTIR DE 900px O TEXTO VAI PRA
+   ESQUERDA E O VÍDEO OCUPA A COLUNA DA DIREITA, QUE ANTES FICAVA VAZIA. */
+@media (min-width: 900px) {
+  #overlay-sobre .clv-overlay__content {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+}
 
 .clv-sobre__intro {
   padding: 0 0 24px;
@@ -93,31 +113,74 @@
   margin-top: 4px;
 }
 
-/* ---------- CARROSSEL DE FOTOS ---------- */
+/* ---------- VÍDEO ---------- */
 
-.clv-sobre__carousel-wrap {
-  max-width: 480px;
+/* O VÍDEO É VERTICAL (1080x1920). EM 480px DE LARGURA — O VALOR ANTIGO DO
+   CARROSSEL 4:3 — ELE PASSARIA DE 850px DE ALTURA E ESTOURARIA A DOBRA DENTRO
+   DO OVERLAY. 380px MANTÉM ~675px DE ALTURA.
+   O 39vh É O MESMO LIMITE EM ALTURA: COMO 9:16 DÁ altura = largura * 16/9,
+   39vh DE LARGURA ≈ 69vh DE ALTURA — É O QUE SOBRA DEPOIS DO padding DE 6rem
+   DO .clv-overlay__panel. SEM ISSO, NUM NOTEBOOK BAIXO (~800px) O VÍDEO VOLTA
+   A ESTOURAR A DOBRA MESMO EM DUAS COLUNAS. */
+.clv-sobre__video-wrap {
+  max-width: min(380px, 39vh);
 }
 
-.clv-sobre__photo-container {
-  aspect-ratio: 4 / 3;
+.clv-sobre__video-container {
+  aspect-ratio: 9 / 16;
 }
 
-.clv-sobre__photo-card {
+.clv-sobre__video-card {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
-.clv-sobre__photo {
+.clv-sobre__video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.clv-sobre__progress {
+/* O POSTER É UM <img> POR CIMA DO <video> — E NÃO SÓ O ATRIBUTO poster= —
+   PORQUE O CROSSFADE PRECISA DE DOIS ELEMENTOS SEPARADOS PRA ANIMAR. O
+   ATRIBUTO poster= NO <video> FICA COMO LASTRO ATÉ O PRIMEIRO FRAME PINTAR.
+   autoAlpha/opacity SÃO CONTROLADOS VIA GSAP EM sobre-video.js. */
+.clv-sobre__video-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 2;
+}
+
+.clv-sobre__video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  /* translate NO CSS SÓ CENTRALIZA O ESTADO BASE; QUALQUER MOVIMENTO É GSAP */
+  transform: translate(-50%, -50%);
   display: flex;
-  gap: 6px;
+  align-items: center;
   justify-content: center;
-  margin-top: 16px;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border: 1px solid rgb(250 250 245 / 0.25);
+  border-radius: 50%;
+  background: rgb(10 10 10 / 0.45);
+  backdrop-filter: blur(6px);
+  color: var(--color-paper);
+  cursor: pointer;
+}
+
+.clv-sobre__video-play svg {
+  width: 30px;
+  height: 30px;
+  /* O TRIÂNGULO DE PLAY PARECE DESCENTRALIZADO NUM CÍRCULO SE FICAR NO EIXO */
+  margin-left: 3px;
 }
