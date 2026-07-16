@@ -17,6 +17,23 @@
   --font-body: "Inter Variable", sans-serif;
 }
 
+/* PALETA DO CARD ESCURO (.clv-card E CIA, LOGO ABAIXO DE "DIFERENCIAIS").
+   FICA AQUI EM :root, E NÃO DENTRO DE .clv-diferenciais, PORQUE .clv-card É UM
+   COMPONENTE COMPARTILHADO: O OVERLAY "SOBRE" USA A MESMA CASCA PRO VÍDEO E VIVE
+   FORA DE .clv-diferenciais. ESCOPADA NA SEÇÃO, var(--card) NÃO RESOLVIA NO SOBRE
+   E background: var(--card) CAÍA PRA TRANSPARENTE — MASCARADO SÓ PORQUE O PÔSTER E
+   O VÍDEO COBREM O CARD; SE O VÍDEO FALHASSE, O GLOW VAZAVA CRU PELO MIOLO.
+   --nav CONTINUA NO GRUPO POR SER O TOM MAIS ESCURO DA MESMA PALETA. */
+:root {
+  --nav: #060b14;
+  --card: #0b1524;
+  --head: #0a1220;
+  --line: #17233a;
+  --txt: #e8eef7;
+  --mut: #8496b3;
+  --acc: #2a7fff;
+}
+
 body {
   background: var(--color-paper);
   color: var(--color-ink);
@@ -285,14 +302,9 @@ body {
 /* ============================================
    SEÇÃO 4 — DIFERENCIAIS — CARDS E GLOW
    ============================================ */
+/* A PALETA (--nav, --card, --head, --line, --txt, --mut, --acc) SUBIU PRO :root
+   NO TOPO DO ARQUIVO — VER O PORQUÊ LÁ. */
 .clv-diferenciais {
-  --nav: #060b14;
-  --card: #0b1524;
-  --head: #0a1220;
-  --line: #17233a;
-  --txt: #e8eef7;
-  --mut: #8496b3;
-  --acc: #2a7fff;
   position: relative;
   overflow-x: clip;
   background: var(--nav);

@@ -130,9 +130,20 @@
   aspect-ratio: 9 / 16;
 }
 
+/* O ANEL DO GLOW SÓ EXISTE NA FOLGA ENTRE O CARD E O CONTAINER, E QUEM CRIA ESSA
+   FOLGA É O margin: .125em DO .clv-card (main.css). width/height: 100% MEDEM O
+   CONTAINER INTEIRO (351px), ENTÃO A MARGEM EMPURRAVA O CARD 2px PRA DIREITA E 2px
+   PRA BAIXO E ELE TRANSBORDAVA — O overflow: hidden DO .clv-card-container CORTAVA
+   A SOBRA E O ANEL SUMIA JUSTAMENTE NA DIREITA E EMBAIXO. SOBRAVA GLOW SÓ EM CIMA E
+   À ESQUERDA, QUE É O "BRILHO DESLOCADO PRO CANTO SUPERIOR ESQUERDO".
+
+   DIFERENCIAIS NÃO TEM O PROBLEMA PORQUE LÁ O .clv-card NÃO TEM width/height: FICA
+   auto E O BLOCO SOZINHO SE AJUSTA A container - margens (436px NUM CARD DE 440px),
+   DEIXANDO 2px NOS QUATRO LADOS. O calc AQUI REPRODUZ ISSO NUM CARD QUE PRECISA DE
+   ALTURA EXPLÍCITA: .25em = AS DUAS MARGENS DE .125em. */
 .clv-sobre__video-card {
-  width: 100%;
-  height: 100%;
+  width: calc(100% - .25em);
+  height: calc(100% - .25em);
   position: relative;
 }
 

@@ -221,12 +221,33 @@
   /* clip-path, opacity E visibility CONTROLADOS VIA GSAP */
 }
 
+/* O PAINEL É O CONTAINER DE SCROLL DO OVERLAY (height: 100% + overflow-y: auto).
+   EM FLUXO NORMAL O CONTEÚDO NASCIA COLADO NO TOPO: O padding DE 6rem FIXAVA 96px
+   EM CIMA E TODA A SOBRA IA PRA BAIXO (EM 1920x1080 ERAM 96px EM CIMA CONTRA 308px
+   EMBAIXO). O flex column CENTRA O CONTEÚDO NA ALTURA QUE SOBRA.
+
+   O "safe" NÃO É ENFEITE: É ELE QUE SEPARA ESTE CASO DA REGRA DE NÃO CENTRALIZAR
+   VERTICALMENTE UM CONTAINER DE ALTURA DE VIEWPORT. COM center PURO, ASSIM QUE O
+   CONTEÚDO PASSA DA ALTURA DO PAINEL O EXCEDENTE VAZA PROS DOIS LADOS E O TOPO FICA
+   FORA DO ALCANCE DO SCROLL — INALCANÇÁVEL, PORQUE scrollTop NÃO VAI A NEGATIVO.
+   COM "safe", NO MOMENTO EM QUE HAVERIA OVERFLOW O CENTER É ABANDONADO E O
+   ALINHAMENTO CAI PRA flex-start, DEVOLVENDO O COMPORTAMENTO ATUAL — QUE É
+   EXATAMENTE O QUE O MOBILE E OS NOTEBOOKS BAIXOS PRECISAM.
+
+   SE UM BROWSER NÃO ENTENDER "safe", A DECLARAÇÃO INTEIRA É DESCARTADA E O
+   justify-content VOLTA A flex-start: O PIOR CASO É O LAYOUT DE HOJE, NÃO UM QUEBRADO.
+
+   .clv-overlay__close É position: absolute, ENTÃO FICA FORA DO FLUXO FLEX E NÃO
+   VIRA ITEM FLEX — O BOTÃO NÃO SE MEXE. */
 .clv-overlay__panel {
   position: relative;
   width: 100%;
   height: 100%;
   overflow-y: auto;
   padding: 6rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
 }
 
 .clv-overlay__close {
