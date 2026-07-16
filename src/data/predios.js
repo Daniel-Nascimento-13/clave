@@ -1,13 +1,40 @@
 /* ============================================
    DADOS — PRÉDIOS E CONDOMÍNIOS
    ============================================ */
+
+/* ---------- CATEGORIAS ---------- */
+
+/* slug -> categoria COMO ELA APARECE NOS ITENS ABAIXO. O slug É O QUE TRAFEGA NO
+   data-category DO HTML (MENU DE FILTROS DO "ANUNCIE" E BOTÕES DA SEÇÃO PRÉDIOS).
+   MORA AQUI, JUNTO DOS DADOS, PORQUE OS DOIS CARROSSÉIS DEPENDEM DESSE PAR: EM DOIS
+   LUGARES, AS DUAS CÓPIAS DIVERGIRIAM NA PRIMEIRA CATEGORIA NOVA.
+
+   null = "TODOS", QUE NÃO FILTRA NADA. HOTÉIS/RESTAURANTES/EVENTOS AINDA NÃO TÊM
+   NENHUM ITEM CADASTRADO — O OVERLAY MOSTRA ESTADO VAZIO NELAS. */
+export const CATEGORIAS = {
+  todos: null,
+  residencial: "Residencial",
+  comercial: "Comercial",
+  hoteis: "Hotéis",
+  restaurantes: "Restaurantes",
+  eventos: "Eventos",
+};
+
+// O CAMINHO INVERSO (LABEL -> slug) NÃO PODE SER toLowerCase(): "Hotéis" VIRARIA
+// "hotéis" E NUNCA BATERIA COM O slug "hoteis" DO HTML.
+export function slugDaCategoria(categoria) {
+  return Object.keys(CATEGORIAS).find((slug) => CATEGORIAS[slug] === categoria);
+}
+
+/* ---------- LOCAIS ---------- */
+
 export const PREDIOS = [
 
     /* ---------- RESIDENCIAIS ---------- */
 
   /* - 01 - */
   {
-    nome: "Residencial São cristóvão",
+    nome: "Residencial São Cristóvão",
     categoria: "Residencial",
     foto: "/images/predios/PREDIO-SAO-CRISTOVAO.webp",
     descricao:

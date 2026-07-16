@@ -149,8 +149,103 @@
           <span></span><span></span>
         </button>
         <div class="clv-overlay__content">
-          <!-- SUB-MENU (RESIDENCIAL / COMERCIAL / HOTÉIS / RESTAURANTES / EVENTOS)
-               + CARDS GRANDES + MAPA ENTRAM NA ETAPA DE DESIGN -->
+          <!-- ============================================
+               MENU DE FILTROS — SEMPRE VISÍVEL, LINHA ÚNICA
+               ============================================ -->
+          <div class="clv-anuncie-menu-wrap">
+            <!-- INDICADOR DE SCROLL — LINHA PRÓPRIA ACIMA DAS PÍLULAS, NUNCA POR
+                 CIMA DELAS: ESTÁ NO FLUXO, NÃO É absolute, ENTÃO NÃO TEM COMO
+                 COBRIR NENHUM BOTÃO NEM ROUBAR O TOQUE. A LINHA FICA RESERVADA
+                 MESMO OCULTO (visibility) PRA NÃO PULAR O LAYOUT AO APARECER.
+                 QUEM LIGA/DESLIGA É O MESMO updateFade() DO FADE (VER anuncie.js). -->
+            <span class="clv-anuncie-menu__hint" data-anuncie-hint aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </span>
+
+            <!-- data-lenis-prevent — O MENU ROLA NA HORIZONTAL NO MOBILE. O LENIS SÓ
+                 ENGOLE wheel, MAS EM TOUCH ELE TAMBÉM INTERCEPTA touchmove E MATARIA
+                 O ARRASTE LATERAL AQUI DENTRO. MESMO MOTIVO DO PAINEL ACIMA. -->
+            <nav class="clv-anuncie-menu" data-anuncie-menu data-lenis-prevent aria-label="Categorias">
+              <!-- O GLOW É UM <span> REAL, NÃO UM ::before: O SHIMMER É UM TWEEN GSAP
+                   (VER src/animations/anuncie.js) E GSAP NÃO ALCANÇA PSEUDO-ELEMENTO. -->
+              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="home">
+                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
+                <!-- MESMO PADRÃO DE ÍCONE DO RESTO DO SITE (VER data/diferenciais.js E
+                     AS SEÇÕES EM index.html): OUTLINE 24x24, stroke currentColor 1.8,
+                     PONTAS ARREDONDADAS. currentColor HERDA O BRANCO DA PÍLULA. -->
+                <span class="clv-anuncie-menu__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg>
+                </span>
+                <span class="clv-anuncie-menu__label">Home</span>
+              </button>
+              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="todos">
+                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
+                <span class="clv-anuncie-menu__label">Todos</span>
+              </button>
+              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="residencial">
+                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
+                <span class="clv-anuncie-menu__label">Residencial</span>
+              </button>
+              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="comercial">
+                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
+                <span class="clv-anuncie-menu__label">Comercial</span>
+              </button>
+              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="hoteis">
+                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
+                <span class="clv-anuncie-menu__label">Hotéis</span>
+              </button>
+              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="restaurantes">
+                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
+                <span class="clv-anuncie-menu__label">Restaurantes</span>
+              </button>
+              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="eventos">
+                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
+                <span class="clv-anuncie-menu__label">Eventos</span>
+              </button>
+            </nav>
+          </div>
+
+          <!-- ============================================
+               CARROSSEL — LAYOUT EDITORIAL (TEXTO + FOTO)
+               ============================================ -->
+          <div class="clv-anuncie__carousel" data-anuncie-carousel>
+            <div class="clv-anuncie__info">
+              <div class="clv-anuncie__text" data-anuncie-text>
+                <p class="clv-anuncie__counter" data-anuncie-counter></p>
+                <h2 class="clv-anuncie__title" data-anuncie-title></h2>
+                <p class="clv-anuncie__tag" data-anuncie-tag></p>
+                <p class="clv-anuncie__desc" data-anuncie-desc></p>
+                <!-- MESMAS MÉTRICAS DO CARD DA HOME, VINDAS DE item.metricas. FICAM
+                     DENTRO DE [data-anuncie-text] PARA ENTRAREM NO MESMO REVEAL DO
+                     RESTO DO TEXTO A CADA TROCA DE SLIDE. -->
+                <div class="clv-anuncie__metrics" data-anuncie-metrics></div>
+              </div>
+
+              <!-- MESMA CASCA DAS SETAS DA SEÇÃO PRÉDIOS (wrap + spin + botão):
+                   O GLOW GIRATÓRIO É O clv-speen COMPARTILHADO. VER anuncie.css. -->
+              <div class="clv-anuncie__nav" data-anuncie-nav>
+                <div class="clv-anuncie__arrow-wrap">
+                  <div class="clv-anuncie__arrow-spin"></div>
+                  <button type="button" class="clv-anuncie__arrow" data-anuncie-prev aria-label="Anterior">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
+                  </button>
+                </div>
+                <div class="clv-anuncie__arrow-wrap">
+                  <div class="clv-anuncie__arrow-spin"></div>
+                  <button type="button" class="clv-anuncie__arrow" data-anuncie-next aria-label="Próximo">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="clv-anuncie__media">
+              <img class="clv-anuncie__photo" data-anuncie-photo src="" alt="" />
+            </div>
+          </div>
+
+          <!-- ---------- ESTADO VAZIO — CATEGORIAS AINDA SEM LOCAIS ---------- -->
+          <p class="clv-anuncie__empty" data-anuncie-empty>Em breve novos locais nesta categoria.</p>
         </div>
       </div>
     </div>
@@ -554,7 +649,20 @@
                 </div>
                 <div class="predios__body">
                   <p class="predios__desc"></p>
-                  <a class="predios__cta" href="#" data-whatsapp-cta target="_blank" rel="noopener noreferrer">Saber mais</a>
+                  <!-- ABRE O OVERLAY "ANUNCIE" NO PRÉDIO DESTE CARD, EM VEZ DE IR
+                       DIRETO PRO WHATSAPP. data-category/data-item SÃO PREENCHIDOS
+                       A CADA TROCA DE SLIDE EM animations/predios.js — AQUI ELES
+                       NASCEM VAZIOS PORQUE DEPENDEM DO ITEM ATUAL. VIROU <button>
+                       PORQUE NÃO NAVEGA PARA LUGAR NENHUM, IGUAL AOS BOTÕES DE
+                       CATEGORIA LOGO ACIMA. -->
+                  <button
+                    type="button"
+                    class="predios__cta"
+                    data-predios-cta
+                    data-menu-link
+                    data-action="overlay"
+                    data-target="anuncie"
+                  >Saber mais</button>
                 </div>
                 <div class="predios__metrics"></div>
               </div>

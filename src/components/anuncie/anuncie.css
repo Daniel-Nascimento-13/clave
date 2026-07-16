@@ -3,5 +3,402 @@
    ============================================ */
 
 /* A CASCA DO OVERLAY (.clv-overlay, __panel, __close, .clv-no-scroll) É
-   COMPARTILHADA E VIVE EM menu.css. AQUI ENTRA O CONTEÚDO DO "ANUNCIE"
-   (SUBMENU DE CATEGORIAS + CARDS GRANDES + MAPA) NA ETAPA DE DESIGN. */
+   COMPARTILHADA E VIVE EM menu.css. AQUI FICA SÓ O CONTEÚDO DO "ANUNCIE". */
+
+/* ESCOPADO EM #overlay-anuncie DE PROPÓSITO: .clv-overlay__content É A CASCA
+   COMPARTILHADA E TAMBÉM É USADA PELO OVERLAY "SOBRE", QUE JÁ A TRANSFORMA EM
+   GRID DE 2 COLUNAS. SEM O ESCOPO, AS DUAS DEFINIÇÕES BRIGARIAM. */
+#overlay-anuncie .clv-overlay__content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   MENU DE FILTROS — PÍLULAS EM LINHA ÚNICA
+   ============================================ */
+
+/* ---------- INDICADOR DE SCROLL (SETA) ---------- */
+
+/* O FADE SOZINHO NÃO ESTAVA COMUNICANDO QUE HÁ MAIS FILTROS FORA DA TELA. A SETA
+   REFORÇA — OS DOIS SE SOMAM, DIRIGIDOS PELO MESMO updateFade().
+
+   O WRAPPER É QUEM DÁ A LINHA PRÓPRIA PRA SETA: ELA FICA ACIMA DAS PÍLULAS, NO
+   FLUXO. NADA DE position: absolute SOBRE O MENU — SERIA O ÚNICO JEITO DELA COBRIR
+   UM BOTÃO OU ROUBAR UM TOQUE. */
+.clv-anuncie-menu-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* visibility (E NÃO display) MANTÉM A LINHA RESERVADA QUANDO A SETA SOME: SEM ISSO
+   O MENU INTEIRO PULARIA 20px PRA CIMA AO CHEGAR NO FIM DO SCROLL. QUEM MEXE NISSO
+   DEPOIS É O GSAP (VER toggleHint EM animations/anuncie.js). */
+.clv-anuncie-menu__hint {
+  align-self: flex-end;
+  display: flex;
+  color: #22d3ee;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.clv-anuncie-menu__hint svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+/* flex-wrap: nowrap + flex-shrink: 0 NOS ITENS: OS 7 FILTROS NUNCA QUEBRAM PRA UMA
+   SEGUNDA LINHA. QUANDO NÃO CABEM (MOBILE), O EXCEDENTE VIRA ROLAGEM LATERAL AQUI
+   DENTRO EM VEZ DE EMPILHAR. */
+.clv-anuncie-menu {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  /* A ROLAGEM LATERAL EXISTE, MAS A BARRA NÃO APARECE EM NENHUM ENGINE. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* O RING DO SHIMMER É DESENHADO NA BORDA DA PÍLULA; SEM ESTA FOLGA VERTICAL O
+     overflow-x: auto CORTARIA 1px DELE EM CIMA E EMBAIXO. */
+  padding: 4px 0;
+}
+.clv-anuncie-menu::-webkit-scrollbar { display: none; }
+
+/* ---------- SINALIZAÇÃO DE SCROLL LATERAL ---------- */
+
+/* SEM BARRA DE SCROLL, NADA DIZIA QUE HÁ MAIS FILTROS FORA DA TELA. O mask-image
+   DESSATURA A PÍLULA NA BORDA CORTADA — DÁ PRA VER QUE ELA "CONTINUA" PRA FORA.
+   ESCOLHI mask NO PRÓPRIO CONTAINER, E NÃO UM PSEUDO-ELEMENTO COM GRADIENTE DA COR
+   DE FUNDO: O OVERLAY TEM FUNDO PRÓPRIO (#0a0a0a) E UM GRADIENTE CHAPADO PRECISARIA
+   REPETIR ESSA COR AQUI, QUEBRANDO NA HORA QUE O FUNDO MUDASSE. O mask NÃO CONHECE
+   COR NENHUMA.
+
+   AS CLASSES SÃO EXCLUDENTES E VÊM DO JS (VER anuncie.js), CONFORME O LADO QUE
+   AINDA TEM CONTEÚDO: SEM SCROLL POSSÍVEL, NENHUM FADE APARECE. */
+.clv-anuncie-menu.is-fade-end {
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
+}
+
+.clv-anuncie-menu.is-fade-start {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 40px);
+  mask-image: linear-gradient(90deg, transparent, #000 40px);
+}
+
+.clv-anuncie-menu.is-fade-start.is-fade-end {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+}
+
+/* ---------- PÍLULA ---------- */
+
+/* overflow: hidden + isolation: isolate SÃO OBRIGATÓRIOS, NÃO ENFEITE: SEM ELES O
+   SHIMMER VAZA PRA FORA DO RAIO EM SAFARI/WEBKIT (MESMO BUG QUE O GLOW DO CARD DE
+   VÍDEO DO "SOBRE" JÁ TEVE). O isolate PRENDE O EMPILHAMENTO NA PRÓPRIA PÍLULA. */
+/* flex + gap SERVEM AO ÍCONE DO "HOME" (ÚNICO ITEM COM ÍCONE HOJE). NAS OUTRAS
+   PÍLULAS NÃO MUDA NADA: SÓ O LABEL É ITEM FLEX, E O GLOW É absolute. */
+.clv-anuncie-menu__pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  background: #0a0d12;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* z-index: 1 PELO MESMO MOTIVO DO LABEL: SEM ELE O ÍCONE FICA ATRÁS DO ANEL DO
+   SHIMMER QUANDO O "HOME" ESTÁ ATIVO. */
+.clv-anuncie-menu__icon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  color: #fff;
+}
+
+.clv-anuncie-menu__icon svg {
+  width: 13px;
+  height: 13px;
+  display: block;
+}
+
+/* O LABEL É UM ELEMENTO PRÓPRIO E SEMPRE BRANCO, EM QUALQUER ESTADO. A COR NÃO
+   PODE DEPENDER DE :hover — JÁ HOUVE O BUG DE TEXTO DA COR DO FUNDO, INVISÍVEL ATÉ
+   O MOUSE PASSAR POR CIMA. z-index: 1 MANTÉM O TEXTO ACIMA DO RING DO SHIMMER. */
+.clv-anuncie-menu__label {
+  position: relative;
+  z-index: 1;
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* ---------- BRILHO DESLIZANTE (SHIMMER) ---------- */
+
+/* A FAIXA DE LUZ ATRAVESSA A PÍLULA E VOLTA, SEM GIRAR — É OUTRO EFEITO, NÃO O
+   clv-speen DAS SETAS. O DESLOCAMENTO É UM TWEEN GSAP INFINITO (VER
+   src/animations/anuncie.js): O PROJETO NÃO ADMITE @keyframes NOVO, SÓ O clv-speen
+   QUE JÁ EXISTIA. AQUI FICA APENAS A PINTURA, PARADA.
+
+   O PAR mask/mask-composite RECORTA O MIOLO E DEIXA SÓ O ANEL DE 2px: É O QUE FAZ
+   A LUZ CORRER NA BORDA EM VEZ DE LAVAR O BOTÃO INTEIRO. */
+.clv-anuncie-menu__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 999px;
+  padding: 2px;
+  background: linear-gradient(90deg, transparent, #2a7fff, #22d3ee, #2a7fff, transparent);
+  background-size: 60px 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  /* A VISIBILIDADE É DO GSAP (autoAlpha): NASCE OCULTO E SÓ APARECE NO ITEM ATIVO
+     DEPOIS DE UM CLIQUE REAL DO USUÁRIO. */
+}
+
+/* ============================================
+   CARROSSEL — LAYOUT EDITORIAL
+   ============================================ */
+
+.clv-anuncie__carousel {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+
+/* A PARTIR DE 900px O TEXTO OCUPA A ESQUERDA E A FOTO A DIREITA. ABAIXO DISSO O
+   grid PADRÃO DE COLUNA ÚNICA EMPILHA OS DOIS, SEM QUEBRAR A LEITURA. */
+@media (min-width: 900px) {
+  .clv-anuncie__carousel {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 48px;
+  }
+}
+
+/* ---------- COLUNA DE TEXTO ---------- */
+
+.clv-anuncie__counter {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: rgb(250 250 245 / 0.45);
+  margin: 0 0 16px;
+}
+
+.clv-anuncie__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-paper);
+  margin: 0 0 12px;
+}
+
+.clv-anuncie__tag {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #22d3ee;
+  margin: 0 0 16px;
+}
+
+.clv-anuncie__desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgb(250 250 245 / 0.65);
+  margin: 0;
+  max-width: 460px;
+}
+
+/* ---------- MÉTRICAS ---------- */
+
+/* MESMOS DADOS E MESMA TIPOGRAFIA DO BLOCO .predios__metrics DA HOME (label 11px
+   apagado + valor 20px bold). O QUE MUDA É O ARRANJO: NA HOME SÃO 4 COLUNAS NUM
+   CARD DE ~960px; AQUI A COLUNA DE TEXTO TEM ~525px, ENTÃO 4 EM FILA ESPREMERIAM
+   "Circulação diária" EM TRÊS LINHAS. 2x2 MANTÉM O LABEL INTEIRO NA LINHA. */
+.clv-anuncie__metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 28px;
+  background: rgb(250 250 245 / 0.08); /* O gap DE 1px VIRA A LINHA DIVISÓRIA */
+  border: 1px solid rgb(250 250 245 / 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 460px;
+}
+
+.clv-anuncie__metric {
+  padding: 14px 18px;
+  background: #0a0a0a; /* MESMO FUNDO DO OVERLAY: SÓ O gap FICA VISÍVEL COMO LINHA */
+}
+
+.clv-anuncie__metric-label {
+  font-size: 11px;
+  color: rgb(250 250 245 / 0.5);
+  margin-bottom: 4px;
+}
+
+.clv-anuncie__metric-valor {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-paper);
+  line-height: 1.1;
+}
+
+/* ---------- SETAS — GLOW GIRATÓRIO clv-speen ---------- */
+
+.clv-anuncie__nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* MESMA CASCA E MESMOS VALORES DAS SETAS DA SEÇÃO PRÉDIOS (.predios__arrow-*, EM
+   styles/main.css): O EFEITO REAPROVEITADO É O @keyframes clv-speen COMPARTILHADO,
+   QUE CONTINUA DEFINIDO LÁ E NÃO É REDECLARADO AQUI. AS CLASSES SÃO PRÓPRIAS SÓ
+   PRA NÃO PENDURAR O OVERLAY NA NOMENCLATURA DE UMA SEÇÃO DA PÁGINA. */
+.clv-anuncie__arrow-wrap {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  isolation: isolate;
+  flex-shrink: 0;
+}
+
+.clv-anuncie__arrow-spin {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.clv-anuncie__arrow-spin::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  animation: clv-speen 8s cubic-bezier(.56, .15, .28, .86) infinite;
+  background: linear-gradient(-45deg, #2a7fff, #0000 46% 54%, #22d3ee);
+}
+
+.clv-anuncie__arrow {
+  position: relative;
+  z-index: 1;
+  margin: 1.5px;
+  width: calc(100% - 3px);
+  height: calc(100% - 3px);
+  border-radius: 50%;
+  background: #0a0d12;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-paper);
+  cursor: pointer;
+}
+
+/* COM UM ÚNICO ITEM NA CATEGORIA NÃO HÁ PRA ONDE NAVEGAR: A SETA SAI DE ALCANCE EM
+   VEZ DE FICAR CLICÁVEL SEM EFEITO. É ESTADO DO PAR wrap+botão, NÃO SÓ VISUAL. */
+.clv-anuncie__nav.is-disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ---------- COLUNA DE IMAGEM ---------- */
+
+/* AS 6 FOTOS DE data/predios.js SÃO TODAS RETRATO (RATIO 0.59 A 0.75, A MAIORIA
+   EXATAMENTE 3/4). O CONTAINER ERA 4/3 — PAISAGEM — E O object-fit: cover COMIA
+   ~44% DA ALTURA DO PRÉDIO PRA PREENCHER A CAIXA DEITADA. 3/4 ACOMPANHA A FOTO:
+   AS DE 0.75 ENTRAM SEM CORTE NENHUM E AS DUAS MAIS ESTREITAS PERDEM SÓ UMA
+   LASCA DAS LATERAIS.
+
+   A ALTURA MANDA E A LARGURA SEGUE (width: auto): ASSIM A PROPORÇÃO NUNCA QUEBRA
+   QUANDO A COLUNA É LARGA DEMAIS. O max-width DEVOLVE O CONTROLE PRA LARGURA EM
+   TELA ESTREITA, E O aspect-ratio REAJUSTA A ALTURA SOZINHO.
+
+   NÃO COPIEI A PROPORÇÃO DE .predios__photo-wrap: LÁ A CAIXA É AINDA MAIS DEITADA
+   (~2.5:1 NO DESKTOP) E CORTA MAIS QUE A MINHA — FUNCIONA NA HOME PORQUE O CARD É
+   LARGO E A FAIXA PANORÂMICA É PROPOSITAL. O QUE REAPROVEITEI DE LÁ FOI A FAIXA DE
+   ALTURA (clamp), NÃO O RATIO. */
+.clv-anuncie__media {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  height: clamp(320px, 58vh, 560px);
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.clv-anuncie__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- ESTADO VAZIO ---------- */
+
+/* HOTÉIS, RESTAURANTES E EVENTOS AINDA NÃO TÊM LOCAIS CADASTRADOS. O CARROSSEL SAI
+   INTEIRO (display: none VIA .is-hidden) E ESTA MENSAGEM ENTRA NO LUGAR — SEM
+   CONTADOR "00 / 00" E SEM SETAS PENDURADAS. */
+.clv-anuncie__empty {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgb(250 250 245 / 0.65);
+  margin: 0;
+  padding: 48px 0;
+  text-align: center;
+}
+
+.clv-anuncie__carousel.is-hidden,
+.clv-anuncie__empty.is-hidden {
+  display: none;
+}
+
+/* ============================================
+   MOBILE
+   ============================================ */
+
+@media (max-width: 640px) {
+  #overlay-anuncie .clv-overlay__content {
+    gap: 32px;
+  }
+
+  /* PÍLULAS MAIS COMPACTAS, MESMA APARÊNCIA. A FONTE PARA EM 11px: ABAIXO DISSO O
+     LABEL DEIXA DE SER LEGÍVEL. */
+  .clv-anuncie-menu__pill {
+    padding: 8px 14px;
+  }
+
+  .clv-anuncie-menu__label {
+    font-size: 11px;
+  }
+}

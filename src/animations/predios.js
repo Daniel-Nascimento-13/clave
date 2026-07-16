@@ -3,7 +3,7 @@
    ============================================ */
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { PREDIOS } from "../data/predios.js";
+import { PREDIOS, slugDaCategoria } from "../data/predios.js";
 import { animateRouletteTitle } from "../lib/roulette-title.js";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -22,6 +22,7 @@ export function initPredios() {
   const progressEl = section.querySelector(".predios__progress");
   const prevBtn = section.querySelector(".predios__arrow--prev");
   const nextBtn = section.querySelector(".predios__arrow--next");
+  const cta = section.querySelector("[data-predios-cta]");
   const todosBtn = section.querySelector('.predios__filter[data-filter="todos"]');
 
   let index = 0;
@@ -59,6 +60,12 @@ export function initPredios() {
     badgeNome.textContent = item.nome;
     counter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(PREDIOS.length).padStart(2, "0")}`;
     desc.textContent = item.descricao;
+
+    // O "SABER MAIS" ABRE O OVERLAY "ANUNCIE" NESTE PRÉDIO. QUEM LÊ ESSES DOIS
+    // data-* É O menu.js (bindMenuLinks), QUE OS REPASSA NO EVENTO DE ABERTURA —
+    // POR ISSO ELES SÓ PRECISAM ESTAR ATUALIZADOS NO MOMENTO DO CLIQUE.
+    cta.dataset.category = slugDaCategoria(item.categoria) ?? "todos";
+    cta.dataset.item = item.nome;
 
     renderMetrics(item.metricas);
     renderProgress();

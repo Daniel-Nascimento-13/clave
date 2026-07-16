@@ -1167,17 +1167,22 @@ body {
   max-width: 60ch;
 }
 
+/* border/font-family/cursor SÃO RESET DE <button>: O CTA ERA UM <a> E VIROU BOTÃO
+   (ABRE O OVERLAY, NÃO NAVEGA). SEM ISSO ELE HERDARIA A BORDA E A FONTE DO SISTEMA. */
 .predios__cta {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   background: var(--color-paper);
   color: var(--color-ink);
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 500;
   padding: 10px 18px;
+  border: none;
   border-radius: 8px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 /* ---------- MÉTRICAS ---------- */

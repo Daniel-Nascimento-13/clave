@@ -89,7 +89,11 @@ function bindMenuLinks() {
 
       if (action === 'overlay') {
         e.preventDefault();
-        openOverlay(target);
+        // data-category/data-item SÃO REPASSADOS CRUS, SEM SEREM INTERPRETADOS: A
+        // SEÇÃO PRÉDIOS ABRE O "ANUNCIE" JÁ FILTRADO (BOTÕES DE CATEGORIA) E ATÉ
+        // NUM LOCAL ESPECÍFICO ("SABER MAIS" DO CARD). QUEM SABE O QUE ESSES
+        // VALORES SIGNIFICAM É O CONTEÚDO DO OVERLAY, NÃO ESTE ARQUIVO.
+        openOverlay(target, { category: link.dataset.category, item: link.dataset.item });
       }
     });
   });
@@ -140,7 +144,7 @@ function unlockScroll() {
    OVERLAYS
    ============================================ */
 
-function openOverlay(id) {
+function openOverlay(id, params = {}) {
   const el = document.getElementById(`overlay-${id}`);
   if (!el || openOverlayId === id) return;
 
@@ -150,7 +154,7 @@ function openOverlay(id) {
   el.setAttribute('aria-hidden', 'false');
   el.style.pointerEvents = 'auto';
   lockScroll();
-  emitOverlayEvent('open', id);
+  emitOverlayEvent('open', id, params);
 
   gsap.to(el, {
     clipPath: 'inset(0 0 0% 0)',
@@ -160,7 +164,10 @@ function openOverlay(id) {
   });
 }
 
-function closeOverlay(immediate = false) {
+// EXPORTADA PORQUE O ITEM "HOME" DO MENU DE FILTROS DO "ANUNCIE" FECHA O PRÓPRIO
+// OVERLAY. IMPORTAR DAQUI EM VEZ DE REPETIR O FECHAMENTO LÁ: A TRAVA DE SCROLL E O
+// EVENTO DE CLOSE PRECISAM CONTINUAR SAINDO DE UM LUGAR SÓ.
+export function closeOverlay(immediate = false) {
   if (!openOverlayId) return;
   const el = document.getElementById(`overlay-${openOverlayId}`);
 
@@ -188,8 +195,8 @@ function closeOverlay(immediate = false) {
 // menu.js É DONO DO ABRE/FECHA, MAS NÃO PODE CONHECER O CONTEÚDO DE CADA OVERLAY.
 // O EVENTO INVERTE ISSO: QUEM PRECISA REAGIR (sobre-video.js) SE INSCREVE SOZINHO,
 // SEM QUE ESTE ARQUIVO PRECISE IMPORTAR NADA DE DENTRO DOS OVERLAYS.
-function emitOverlayEvent(action, id) {
-  document.dispatchEvent(new CustomEvent(`clv:overlay-${action}`, { detail: { id } }));
+function emitOverlayEvent(action, id, params = {}) {
+  document.dispatchEvent(new CustomEvent(`clv:overlay-${action}`, { detail: { id, ...params } }));
 }
 
 function bindOverlayClose() {
