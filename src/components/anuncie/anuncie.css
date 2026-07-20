@@ -483,7 +483,11 @@
 .clv-anuncie__whatsapp-border::before {
   content: "";
   position: absolute;
-  inset: -50%;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  transform: translate(-50%, -50%);
   background: conic-gradient(
     from 0deg,
     transparent 0%,
@@ -494,7 +498,8 @@
 }
 
 @keyframes anuncie-whatsapp-rotate {
-  to { transform: rotate(360deg); }
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .clv-anuncie__whatsapp-sparkle {
