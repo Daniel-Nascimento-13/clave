@@ -838,7 +838,7 @@ body {
 /* SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL  */
 /* ============================================ */
 
-.predios {`
+.predios {
   position: relative;
   background: var(--nav);
   padding: 80px 0 72px;
