@@ -5,6 +5,7 @@
 @import '../components/sobre/sobre.css';
 @import '../components/anuncie/anuncie.css';
 @import '../components/planos/planos.css';
+@import '../components/cobertura/cobertura.css';
 @import "@fontsource/bricolage-grotesque/400.css";
 @import "@fontsource/bricolage-grotesque/800.css";
 @import "@fontsource-variable/inter";

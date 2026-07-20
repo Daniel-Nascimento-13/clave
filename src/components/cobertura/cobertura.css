@@ -1,0 +1,310 @@
+/* ============================================ */
+/* OVERLAY — COBERTURA AMPLA                    */
+/* ============================================ */
+
+/* ------------ LAYOUT GERAL ------------ */
+
+.clv-cobertura__content {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+/* ------------ CABEÇALHO ------------ */
+
+.clv-cobertura__head {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.clv-cobertura__label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 8px;
+}
+
+.clv-cobertura__heading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  color: var(--color-paper);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.clv-cobertura__subtitle {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ------------ CAMPOS ------------ */
+
+.clv-cobertura__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.clv-cobertura__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.clv-cobertura__field-label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.clv-cobertura__input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.25s;
+  width: 100%;
+}
+
+.clv-cobertura__input:focus {
+  border-color: rgba(42, 127, 255, 0.5);
+}
+
+.clv-cobertura__input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+/* ------------ SECTION LABEL ------------ */
+
+.clv-cobertura__section-label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 16px;
+}
+
+/* ------------ GRID DE LOCAIS ------------ */
+
+.clv-cobertura__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+/* ------------ CARD DE LOCAL ------------ */
+
+.clv-cobertura__loc {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 2 / 3;
+  border: 2px solid transparent;
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.clv-cobertura__loc:hover {
+  transform: translateY(-3px);
+}
+
+.clv-cobertura__loc.is-selected {
+  border-color: #2a7fff;
+}
+
+.clv-cobertura__loc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.65);
+  transition: filter 0.25s;
+}
+
+.clv-cobertura__loc.is-selected .clv-cobertura__loc-img {
+  filter: brightness(0.85);
+}
+
+.clv-cobertura__loc-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.clv-cobertura__loc-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.clv-cobertura__loc.is-selected .clv-cobertura__loc-check {
+  background: #2a7fff;
+  border-color: #2a7fff;
+}
+
+.clv-cobertura__loc-check svg {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.clv-cobertura__loc.is-selected .clv-cobertura__loc-check svg {
+  opacity: 1;
+}
+
+.clv-cobertura__loc-cat {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-family: var(--font-body);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.45);
+  padding: 2px 6px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.clv-cobertura__loc-name {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  right: 10px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-paper);
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+/* ------------ CONTADOR ------------ */
+
+.clv-cobertura__counter {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+  margin-bottom: 24px;
+  min-height: 18px;
+}
+
+.clv-cobertura__counter strong {
+  color: #2a7fff;
+  font-weight: 600;
+}
+
+/* ------------ CTA WHATSAPP ------------ */
+
+.clv-cobertura__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 9999px;
+  border: none;
+  background: #25d366;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.35;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.25s;
+}
+
+.clv-cobertura__cta.is-ready {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.clv-cobertura__cta.is-ready:hover {
+  transform: translateY(-2px);
+}
+
+/* ------------ LINK NO OVERLAY ANUNCIE ------------ */
+
+.clv-anuncie__multipontos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.clv-anuncie__multipontos-text {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.clv-anuncie__multipontos-btn {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: #2a7fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+
+.clv-anuncie__multipontos-btn:hover {
+  opacity: 0.7;
+}
+
+/* ------------ MOBILE ------------ */
+
+@media (max-width: 768px) {
+  .clv-cobertura__fields {
+    grid-template-columns: 1fr;
+  }
+
+  .clv-cobertura__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .clv-anuncie__multipontos {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

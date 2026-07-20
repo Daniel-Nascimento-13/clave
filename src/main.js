@@ -14,6 +14,7 @@ import { initMenu } from "./components/menu/menu.js";
 import { initSobre } from "./components/sobre/sobre.js";
 import { initAnuncie } from "./components/anuncie/anuncie.js";
 import { initPlanos } from "./components/planos/planos.js";
+import { initCobertura } from "./components/cobertura/cobertura.js";
 
 /* ============================================
    INICIALIZAÇÃO GLOBAL
@@ -32,3 +33,4 @@ initMenu();
 initSobre();
 initAnuncie();
 initPlanos();
+initCobertura();
