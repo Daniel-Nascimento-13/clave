@@ -431,3 +431,84 @@
     font-size: 11px;
   }
 }
+
+/* ------------ BOTÃO WHATSAPP ------------ */
+
+/* MESMA CASCA DO CTA DA SEÇÃO PRODUTO (VER .produto__cta EM main.css):
+   PÍLULA ESCURA + BORDA GIRATÓRIA. SÓ O ACENTO MUDA — VERDE WHATSAPP
+   NO LUGAR DO AZUL DA MARCA. */
+.clv-anuncie__whatsapp {
+  --border-radius: 9999px;
+  --transition: .3s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 24px;
+  padding: .875rem 1.75rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  transform: scale(calc(1 + (var(--active, 0) * .06)));
+  transition: transform var(--transition);
+}
+
+.clv-anuncie__whatsapp::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  border-radius: var(--border-radius);
+  box-shadow:
+    inset 0 .5px hsl(0 0% 100% / .15),
+    0 4px 10px -4px hsl(0 0% 0% / calc(1 - var(--active, 0))),
+    0 0 0 calc(var(--active, 0) * .3rem) #25d36655;
+  transition: box-shadow var(--transition);
+  z-index: 0;
+}
+
+.clv-anuncie__whatsapp:is(:hover, :focus-visible) { --active: 1; }
+.clv-anuncie__whatsapp:active { transform: scale(1); }
+
+.clv-anuncie__whatsapp-border {
+  position: absolute;
+  inset: -1px;
+  border-radius: 9999px;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.clv-anuncie__whatsapp-border::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #25d366 30%,
+    transparent 60%
+  );
+  animation: anuncie-whatsapp-rotate 2s linear infinite;
+}
+
+@keyframes anuncie-whatsapp-rotate {
+  to { transform: rotate(360deg); }
+}
+
+.clv-anuncie__whatsapp-sparkle {
+  position: relative;
+  z-index: 1;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: #25d366;
+}
+
+.clv-anuncie__whatsapp-text {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+}

@@ -4,6 +4,7 @@
 import { PREDIOS, CATEGORIAS } from '../../data/predios.js';
 import { getLenis } from '../../lib/smooth-scroll.js';
 import { closeOverlay } from '../menu/menu.js';
+import { getWhatsappLink } from '../../lib/whatsapp.js';
 import {
   playShimmer,
   hideShimmer,
@@ -103,6 +104,16 @@ export function initAnuncie() {
     photo.src = item.foto;
     photo.alt = item.nome;
     renderMetrics(item.metricas);
+
+    /* WHATSAPP — MENSAGEM DINÂMICA COM O NOME DO PRÉDIO ATUAL */
+    const whatsappBtn = overlay.querySelector('[data-anuncie-whatsapp]');
+    if (whatsappBtn) {
+      const nome = item.nome?.trim() ?? '';
+      const msg = nome
+        ? `Olá! Tenho interesse em anunciar no *${nome}*. Podem me passar mais informações?`
+        : `Olá! Tenho interesse em anunciar com a Clave e gostaria de mais informações.`;
+      whatsappBtn.href = getWhatsappLink(msg);
+    }
 
     // COM UM ITEM SÓ NÃO HÁ NAVEGAÇÃO POSSÍVEL (HOJE: "COMERCIAL").
     nav.classList.toggle('is-disabled', itens.length < 2);
