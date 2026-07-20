@@ -23,28 +23,56 @@
 
 /* ---------- INDICADOR DE SCROLL (SETA) ---------- */
 
-/* O FADE SOZINHO NÃO ESTAVA COMUNICANDO QUE HÁ MAIS FILTROS FORA DA TELA. A SETA
-   REFORÇA — OS DOIS SE SOMAM, DIRIGIDOS PELO MESMO updateFade().
+/* O FADE SOZINHO NÃO ESTAVA COMUNICANDO QUE HÁ MAIS FILTROS FORA DA TELA. AS SETAS
+   REFORÇAM — OS DOIS SE SOMAM, DIRIGIDOS PELO MESMO updateFade().
 
-   O WRAPPER É QUEM DÁ A LINHA PRÓPRIA PRA SETA: ELA FICA ACIMA DAS PÍLULAS, NO
-   FLUXO. NADA DE position: absolute SOBRE O MENU — SERIA O ÚNICO JEITO DELA COBRIR
-   UM BOTÃO OU ROUBAR UM TOQUE. */
+   O WRAPPER SÓ SERVE DE ÂNCORA (position: relative). AS SETAS NÃO PODEM VIVER
+   DENTRO DO <nav>: ELE É O CONTAINER DE SCROLL, E ELAS ROLARIAM COM AS PÍLULAS EM
+   VEZ DE FICAR PRESAS NA BORDA. */
 .clv-anuncie-menu-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  position: relative;
 }
 
-/* visibility (E NÃO display) MANTÉM A LINHA RESERVADA QUANDO A SETA SOME: SEM ISSO
-   O MENU INTEIRO PULARIA 20px PRA CIMA AO CHEGAR NO FIM DO SCROLL. QUEM MEXE NISSO
-   DEPOIS É O GSAP (VER toggleHint EM animations/anuncie.js). */
+/* 14px = A LARGURA EXATA DO CHEVRON, E ESSE NÚMERO NÃO É ESTÉTICO: A PÍLULA TEM
+   14px DE padding LATERAL NO MOBILE, ENTÃO UMA FAIXA DE 14px CABE INTEIRA NESSE
+   padding E PARA ONDE O RÓTULO COMEÇA. COM OS 28px QUE ESTAVAM AQUI ANTES, A SETA
+   COMIA 13px DO TEXTO DE QUALQUER PÍLULA QUE PARASSE RENTE À BORDA (MEDIDO:
+   "Hotéis" EM scrollLeft=120). SE O padding DA PÍLULA MUDAR, ESTE VALOR MUDA JUNTO.
+
+   O FADE DO MENU (mask, 40px) É OUTRA COISA E CONTINUA SENDO QUEM APAGA O CONTEÚDO
+   NA BORDA — ESTE DEGRADÊ É SÓ O APOIO LOCAL DA SETA.
+
+   pointer-events: none É REQUISITO, NÃO DETALHE: A SETA FICA POR CIMA DA FILEIRA E
+   SEM ISSO ENGOLIRIA O TOQUE DA PÍLULA QUE PASSA ATRÁS.
+
+   visibility/opacity INICIAIS FICAM AQUI PORQUE O GSAP SÓ ASSUME NO PRIMEIRO
+   updateFade() — SEM ELES A SETA PISCARIA NA CARGA. */
 .clv-anuncie-menu__hint {
-  align-self: flex-end;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
   display: flex;
+  align-items: center;
+  width: 14px;
   color: #22d3ee;
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
+}
+
+/* O DEGRADÊ MORRE EM transparent DO LADO DE DENTRO: A PÍLULA QUE ENTRA POR TRÁS
+   APARECE INTEIRA, SÓ PERDE CONTRASTE NOS ÚLTIMOS PIXELS DA BORDA. */
+.clv-anuncie-menu__hint--next {
+  right: 0;
+  justify-content: flex-end;
+  background: linear-gradient(90deg, transparent, #0a0a0a 70%);
+}
+
+.clv-anuncie-menu__hint--prev {
+  left: 0;
+  justify-content: flex-start;
+  background: linear-gradient(270deg, transparent, #0a0a0a 70%);
 }
 
 .clv-anuncie-menu__hint svg {
@@ -278,9 +306,10 @@
 }
 
 /* MESMA CASCA E MESMOS VALORES DAS SETAS DA SEÇÃO PRÉDIOS (.predios__arrow-*, EM
-   styles/main.css): O EFEITO REAPROVEITADO É O @keyframes clv-speen COMPARTILHADO,
-   QUE CONTINUA DEFINIDO LÁ E NÃO É REDECLARADO AQUI. AS CLASSES SÃO PRÓPRIAS SÓ
-   PRA NÃO PENDURAR O OVERLAY NA NOMENCLATURA DE UMA SEÇÃO DA PÁGINA. */
+   styles/main.css) — AMBAS SINCRONIZADAS. O EFEITO REAPROVEITADO É O @keyframes
+   clv-speen COMPARTILHADO, QUE CONTINUA DEFINIDO LÁ E NÃO É REDECLARADO AQUI.
+   AS CLASSES SÃO PRÓPRIAS PRA NÃO PENDURAR O OVERLAY NA NOMENCLATURA DE UMA
+   SEÇÃO DA PÁGINA. */
 .clv-anuncie__arrow-wrap {
   position: relative;
   width: 44px;

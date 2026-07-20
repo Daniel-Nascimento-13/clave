@@ -54,14 +54,16 @@ export function playShimmer(glows, target) {
 /* ---------- INDICADOR DE SCROLL (SETA) ---------- */
 
 // MESMO PADRÃO DO SHIMMER: TWEEN INFINITO EM GSAP, SEM @keyframes CSS NOVO.
-let hintTween = null;
+// UM TWEEN POR SETA — SÃO DUAS AGORA, E ELAS ACENDEM E APAGAM EM MOMENTOS
+// DIFERENTES. UMA VARIÁVEL SÓ FARIA A SEGUNDA MATAR O TWEEN DA PRIMEIRA.
+const hintTweens = new WeakMap();
 
 export function toggleHint(hint, mostrar) {
   if (!hint) return;
 
   if (!mostrar) {
-    hintTween?.kill();
-    hintTween = null;
+    hintTweens.get(hint)?.kill();
+    hintTweens.delete(hint);
     gsap.set(hint, { visibility: 'hidden', opacity: 0, x: 0 });
     return;
   }
@@ -69,7 +71,7 @@ export function toggleHint(hint, mostrar) {
   // O GUARD É O QUE IMPEDE O LOOP DE REINICIAR A CADA EVENTO DE scroll: SEM ELE A
   // SETA "TRAVA" NO PRIMEIRO FRAME ENQUANTO O DEDO ARRASTA, QUE É JUSTO A HORA EM
   // QUE ELA PRECISA ESTAR ANIMANDO.
-  if (hintTween) return;
+  if (hintTweens.has(hint)) return;
 
   gsap.set(hint, { visibility: 'visible' });
 
@@ -78,13 +80,20 @@ export function toggleHint(hint, mostrar) {
     return;
   }
 
-  // O VAI-E-VOLTA É DE -4 A 0, NÃO DE 0 A 4: ASSIM A BORDA DIREITA DO MENU É O
-  // LIMITE DO MOVIMENTO, E NÃO O PONTO DE PARTIDA — A SETA NUNCA ULTRAPASSA O
-  // ALINHAMENTO. O SENTIDO CONTINUA CERTO (ANDA PRA DIREITA ENQUANTO ACENDE).
-  hintTween = gsap.fromTo(
+  // O VAI-E-VOLTA TERMINA EM 0 E COMEÇA "PRA DENTRO", NÃO O CONTRÁRIO: A BORDA DO
+  // MENU É O LIMITE DO MOVIMENTO, NUNCA O PONTO DE PARTIDA — NENHUMA DAS DUAS
+  // ULTRAPASSA O PRÓPRIO CANTO. O SINAL ESPELHA O LADO, ENTÃO CADA SETA ANDA NO
+  // SENTIDO PRA ONDE ELA APONTA. VALORES (4px, 0.35, 1.4s, power1.inOut) SÃO OS
+  // MESMOS JÁ VALIDADOS NA SETA DA DIREITA.
+  const sentido = hint.dataset.anuncieHint === 'prev' ? 4 : -4;
+
+  hintTweens.set(
     hint,
-    { x: -4, opacity: 0.35 },
-    { x: 0, opacity: 1, duration: 1.4, ease: 'power1.inOut', repeat: -1, yoyo: true }
+    gsap.fromTo(
+      hint,
+      { x: sentido, opacity: 0.35 },
+      { x: 0, opacity: 1, duration: 1.4, ease: 'power1.inOut', repeat: -1, yoyo: true }
+    )
   );
 }
 
@@ -168,8 +177,9 @@ export function revealSlide(textEl, photoEl) {
 // hideShimmer NÃO É REDUNDANTE COM O killTweensOf ABAIXO: MATAR O TWEEN SOZINHO
 // CONGELARIA A FAIXA ACESA NO MEIO DO PERCURSO, E ELA RESSURGIRIA ASSIM NA PRÓXIMA
 // ABERTURA SE O RESET FALHASSE. FECHAR APAGA.
-export function destroyAnuncie(glows, hint, elements) {
+export function destroyAnuncie(glows, hints, elements) {
   hideShimmer(glows);
-  toggleHint(hint, false); // MESMO MOTIVO DO hideShimmer: FECHAR APAGA, NÃO CONGELA.
+  // MESMO MOTIVO DO hideShimmer: FECHAR APAGA, NÃO CONGELA.
+  hints.forEach((hint) => toggleHint(hint, false));
   gsap.killTweensOf(elements);
 }

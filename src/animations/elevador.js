@@ -19,7 +19,7 @@ export function initElevador() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (reduce) {
-    gsap.set([title, text], { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1 });
+    gsap.set([label, title, text], { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1 });
     video.pause();
     return;
   }
@@ -34,6 +34,14 @@ export function initElevador() {
 
     gsap
       .timeline({ defaults: { ease: EASE.primary } })
+      // O LABEL ENTRA JUNTO COM O TÍTULO: O CSS O DEIXA EM opacity:0 NO MESMO
+      // GRUPO DE .elevador__title/.elevador__text, ENTÃO PRECISA DE UM TWEEN
+      // PRÓPRIO — SEM ELE FICARIA INVISÍVEL PARA SEMPRE.
+      .to(
+        label,
+        { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0, duration: DURATIONS.sm },
+        0
+      )
       .add(() => {
         gsap.set(title, { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1 });
         animateRouletteTitle(title);

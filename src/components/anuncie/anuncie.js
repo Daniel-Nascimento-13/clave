@@ -46,7 +46,8 @@ export function initAnuncie() {
   const photo = overlay.querySelector('[data-anuncie-photo]');
   const metricsEl = overlay.querySelector('[data-anuncie-metrics]');
   const menu = overlay.querySelector('[data-anuncie-menu]');
-  const hint = overlay.querySelector('[data-anuncie-hint]');
+  const hintPrev = overlay.querySelector('[data-anuncie-hint="prev"]');
+  const hintNext = overlay.querySelector('[data-anuncie-hint="next"]');
   const nav = overlay.querySelector('[data-anuncie-nav]');
   const prevBtn = overlay.querySelector('[data-anuncie-prev]');
   const nextBtn = overlay.querySelector('[data-anuncie-next]');
@@ -154,13 +155,18 @@ export function initAnuncie() {
   function updateFade() {
     const max = menu.scrollWidth - menu.clientWidth;
     const rolavel = max > 1;
-    // UM CÁLCULO SÓ ALIMENTA OS DOIS SINAIS: O FADE DA DIREITA E A SETA DIZEM A
-    // MESMA COISA ("TEM MAIS PRA LÁ"), ENTÃO NÃO PODEM TER FONTES SEPARADAS —
-    // DIVERGIRIAM NA PRIMEIRA MUDANÇA.
+    // UM CÁLCULO SÓ ALIMENTA OS QUATRO SINAIS: CADA FADE E A SETA DO MESMO LADO
+    // DIZEM A MESMA COISA ("TEM MAIS PRA LÁ"), ENTÃO NÃO PODEM TER FONTES
+    // SEPARADAS — DIVERGIRIAM NA PRIMEIRA MUDANÇA.
+    //
+    // jaRolou É O QUE SEGURA A SETA DA ESQUERDA ATÉ O PRIMEIRO ARRASTE: EM
+    // scrollLeft 0 NÃO HÁ PRA ONDE VOLTAR, E ELA SÓ POLUIRIA A BORDA.
     const temMaisADireita = rolavel && menu.scrollLeft < max - 1;
-    menu.classList.toggle('is-fade-start', rolavel && menu.scrollLeft > 1);
+    const jaRolou = rolavel && menu.scrollLeft > 1;
+    menu.classList.toggle('is-fade-start', jaRolou);
     menu.classList.toggle('is-fade-end', temMaisADireita);
-    toggleHint(hint, temMaisADireita);
+    toggleHint(hintNext, temMaisADireita);
+    toggleHint(hintPrev, jaRolou);
   }
 
   menu.addEventListener('scroll', updateFade, { passive: true });
@@ -223,7 +229,7 @@ export function initAnuncie() {
     if (e.detail.id !== 'anuncie') return;
     // O menu ENTRA NA LISTA POR CAUSA DO TWEEN DE scrollLeft: FECHAR NO MEIO DELE
     // DEIXARIA O MENU ROLANDO SOZINHO ENQUANTO O OVERLAY SOME.
-    destroyAnuncie(glows, hint, [textEl, photo, menu]);
+    destroyAnuncie(glows, [hintPrev, hintNext], [textEl, photo, menu]);
   });
 
   // ESTADO INICIAL — OVERLAY FECHADO, SEM BRILHO E SEM ANIMAÇÃO.

@@ -30,7 +30,7 @@ export function slugDaCategoria(categoria) {
 
 export const PREDIOS = [
 
-    /* ---------- RESIDENCIAIS ---------- */
+/* ---------- RESIDENCIAIS ---------- */
 
   /* - 01 - */
   {
@@ -123,4 +123,37 @@ export const PREDIOS = [
       alcance: { label: "Alcance mensal", valor: "30K" },
     },
   },
+
+   /* ---------- HOTEIS ---------- */
+
+  /* - 01 - */
+  {
+    nome: "Tri Hotel Executive ",
+    categoria: "Hotéis",
+    foto: "/images/predios/HOTEL-TRIHOTEL-SAOCRISTOVAO.webp",
+    descricao:
+      "Hotel executivo de alto padrão localizada no bairro São Cristóvão, em Lajeado, com telas instaladas nos elevadores e áreas de circulação, alcançando um fluxo intenso de hóspedes, visitantes e profissionais.",
+    metricas: {
+      apartamentos: { label: "Salas", valor: "151" },
+      moradores: { label: "Circulação diária", valor: "1k" },
+      telas: { label: "Telas instaladas", valor: "3" },
+      alcance: { label: "Alcance mensal", valor: "30K" },
+    },
+  },
+
+   /* - 02 - */
+  {
+    nome: "Tri Hotel",
+    categoria: "Hotéis",
+    foto: "/images/predios/HOTEL-TRIHOTEL-FLORESTAL.webp",
+    descricao:
+      "Hotel localizado no bairro Florestal, em Lajeado, com telas instaladas nos elevadores e áreas de circulação, alcançando um fluxo intenso de hóspedes, visitantes e profissionais.",
+    metricas: {
+      apartamentos: { label: "Salas", valor: "151" },
+      moradores: { label: "Circulação diária", valor: "1k" },
+      telas: { label: "Telas instaladas", valor: "3" },
+      alcance: { label: "Alcance mensal", valor: "30K" },
+    },
+  },
+
 ];

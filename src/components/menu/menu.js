@@ -144,7 +144,10 @@ function unlockScroll() {
    OVERLAYS
    ============================================ */
 
-function openOverlay(id, params = {}) {
+// EXPORTADA PARA QUE MÓDULOS EXTERNOS (EX.: predios.js, QUE RECRIA SEUS CTAs A CADA
+// TROCA DE CARD) ABRAM OVERLAYS SEM DUPLICAR A LÓGICA: A TRAVA DE SCROLL E A EMISSÃO
+// DO EVENTO DE OPEN PRECISAM CONTINUAR SAINDO DE UM LUGAR SÓ.
+export function openOverlay(id, params = {}) {
   const el = document.getElementById(`overlay-${id}`);
   if (!el || openOverlayId === id) return;
 

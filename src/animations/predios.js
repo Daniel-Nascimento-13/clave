@@ -1,233 +1,238 @@
-/* ============================================
-   SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL
-   ============================================ */
+/* ============================================ */
+/* SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL  */
+/* ============================================ */
+
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PREDIOS, slugDaCategoria } from "../data/predios.js";
 import { animateRouletteTitle } from "../lib/roulette-title.js";
+import { openOverlay } from "../components/menu/menu.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* ------------ CONSTANTES ------------ */
+
+const EASE            = "power3.out";
+const DURATION        = 0.9;
+const NOME_DURATION   = 0.8;
+const NOME_EASE       = "expo.out";
+
+/* ------------ INIT ------------ */
+
 export function initPredios() {
-  const section = document.querySelector("[data-predios]");
+  const section  = document.querySelector("[data-predios]");
   if (!section) return;
 
-  const heading = section.querySelector(".predios__heading");
-  const card = section.querySelector(".predios__card");
-  const photo = section.querySelector(".predios__photo");
-  const badgeNome = section.querySelector(".predios__nome");
-  const counter = section.querySelector(".predios__counter");
-  const desc = section.querySelector(".predios__desc");
-  const metricsEl = section.querySelector(".predios__metrics");
-  const progressEl = section.querySelector(".predios__progress");
-  const prevBtn = section.querySelector(".predios__arrow--prev");
-  const nextBtn = section.querySelector(".predios__arrow--next");
-  const cta = section.querySelector("[data-predios-cta]");
-  const todosBtn = section.querySelector('.predios__filter[data-filter="todos"]');
+  const stage    = section.querySelector("[data-predios-stage]");
+  const btnPrev  = section.querySelector("[data-predios-prev]");
+  const btnNext  = section.querySelector("[data-predios-next]");
+  const elCurrent = section.querySelector(".predios__counter-current");
+  const elTotal   = section.querySelector(".predios__counter-total");
+  const heading   = section.querySelector(".predios__heading");
 
-  let index = 0;
+  if (!stage || PREDIOS.length === 0) return;
 
-  function renderProgress() {
-    progressEl.innerHTML = "";
-    PREDIOS.forEach((_, i) => {
-      const dot = document.createElement("button");
-      dot.className = "predios__progress-dot" + (i === index ? " is-active" : "");
-      dot.setAttribute("aria-label", `Ir para item ${i + 1}`);
-      dot.addEventListener("click", () => goTo(i));
-      progressEl.appendChild(dot);
-    });
-  }
-
-  function renderMetrics(metricas) {
-    metricsEl.innerHTML = "";
-    Object.values(metricas).forEach((m) => {
-      const item = document.createElement("div");
-      item.className = "predios__metric";
-      item.innerHTML = `
-        <div class="predios__metric-label">${m.label}</div>
-        <div class="predios__metric-valor">${m.valor}</div>
-      `;
-      metricsEl.appendChild(item);
-    });
-  }
-
-  function render() {
-    const item = PREDIOS[index];
-    if (!item) return;
-
-    photo.src = item.foto;
-    photo.alt = item.nome;
-    badgeNome.textContent = item.nome;
-    counter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(PREDIOS.length).padStart(2, "0")}`;
-    desc.textContent = item.descricao;
-
-    // O "SABER MAIS" ABRE O OVERLAY "ANUNCIE" NESTE PRÉDIO. QUEM LÊ ESSES DOIS
-    // data-* É O menu.js (bindMenuLinks), QUE OS REPASSA NO EVENTO DE ABERTURA —
-    // POR ISSO ELES SÓ PRECISAM ESTAR ATUALIZADOS NO MOMENTO DO CLIQUE.
-    cta.dataset.category = slugDaCategoria(item.categoria) ?? "todos";
-    cta.dataset.item = item.nome;
-
-    renderMetrics(item.metricas);
-    renderProgress();
-
-    prevBtn.disabled = index === 0;
-    nextBtn.disabled = index === PREDIOS.length - 1;
-  }
-
-  function goTo(i) {
-    if (i < 0 || i >= PREDIOS.length || i === index) return;
-    index = i;
-    gsap.fromTo(
-      card,
-      { opacity: 0, y: 12 },
-      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", onStart: render }
-    );
-  }
-
-  prevBtn.addEventListener("click", () => goTo(index - 1));
-  nextBtn.addEventListener("click", () => goTo(index + 1));
-
-  // O FILTRO POR CATEGORIA SAIU DAQUI: OS BOTÕES Residencial/Comercial VIRARAM O
-  // DROPDOWN DE CATEGORIAS, QUE ABRE A OVERLAY "ANUNCIE" EM VEZ DE FILTRAR.
-  // "TODOS" SOBROU E APENAS VOLTA O CARROSSEL AO PRIMEIRO ITEM.
-  todosBtn.addEventListener("click", () => {
-    index = 0;
-    render();
-  });
-
-  render();
-
-  bindCategoryMenu(section);
-  bindCategoryHoverFX(section);
-
-  /* ---------- REVEAL DO TÍTULO (ROLETA) ---------- */
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (reduce) {
-    gsap.set(heading, { opacity: 1 });
-  } else {
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top 80%",
-      once: true,
-      onEnter: () => {
-        gsap.set(heading, { opacity: 1 });
-        animateRouletteTitle(heading);
-      },
-    });
-  }
-}
+  let activeIdx = 0;
+  let animating = false;
 
-/* ============================================
-   DROPDOWN DE CATEGORIAS — ABRIR / FECHAR
-   ============================================ */
+  /* ------------ TOTAL ------------ */
 
-// REVELAÇÃO GSAP-ONLY (clip-path + opacity), IGUAL AO PAINEL DO BURGER PRINCIPAL
-// EM menu.js. SEM CSS TRANSITION NO CONTAINER — AS DUAS COISAS BRIGARIAM.
+  elTotal.textContent = String(PREDIOS.length).padStart(2, "0");
 
-function bindCategoryMenu(section) {
-  const burger = section.querySelector("[data-predios-burger]");
-  const menu = section.querySelector("[data-predios-cat-menu]");
-  if (!burger || !menu) return;
+  /* ------------ RENDER INICIAL ------------ */
 
-  gsap.set(menu, { clipPath: "inset(0 0 100% 0)", autoAlpha: 0, pointerEvents: "none" });
+  renderCarousel();
+  updateCounter();
 
-  function open() {
-    burger.setAttribute("aria-expanded", "true");
-    gsap.to(menu, {
-      clipPath: "inset(0 0 0% 0)",
-      autoAlpha: 1,
-      pointerEvents: "auto",
-      duration: 0.6,
-      ease: "power3.out",
-      overwrite: true,
-    });
+  /* ------------ SCROLL TRIGGER DO HEADING ------------ */
+
+  // O CSS DEIXA O HEADING EM opacity:0. QUEM DEVOLVE A VISIBILIDADE É AQUI — E
+  // TAMBÉM NO BRANCH DE reduced-motion, PORQUE animateRouletteTitle DÁ return
+  // ANTES DE TOCAR NO ELEMENTO E O TÍTULO FICARIA INVISÍVEL PARA SEMPRE.
+  if (heading) {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      gsap.set(heading, { opacity: 1 });
+    } else {
+      ScrollTrigger.create({
+        trigger: heading,
+        start: "top 85%",
+        once: true,
+        onEnter: () => {
+          gsap.set(heading, { opacity: 1 });
+          animateRouletteTitle(heading);
+        },
+      });
+    }
   }
 
-  function close() {
-    if (burger.getAttribute("aria-expanded") !== "true") return;
-    burger.setAttribute("aria-expanded", "false");
-    gsap.to(menu, {
-      clipPath: "inset(0 0 100% 0)",
+  /* ------------ NAVEGAÇÃO ------------ */
+
+  btnPrev?.addEventListener("click", () => goTo(activeIdx - 1));
+  btnNext?.addEventListener("click", () => goTo(activeIdx + 1));
+
+  /* DELEGAÇÃO — O .predios__card-cta É RECRIADO A CADA goTo(),
+     ENTÃO O bindMenuLinks() DO MENU NÃO COBRE ELE.
+     INTERCEPTAMOS O CLIQUE NA SECTION E ABRIMOS O OVERLAY DIRETAMENTE. */
+  section.addEventListener("click", (e) => {
+    const link = e.target.closest("[data-menu-link]");
+    if (!link) return;
+    const target   = link.dataset.target;
+    const category = link.dataset.category ?? "";
+    const item     = link.dataset.item ?? "";
+    if (target) openOverlay(target, { category, item });
+  });
+
+  /* ------------ CLICK NOS CARDS LATERAIS ------------ */
+
+  stage.addEventListener("click", (e) => {
+    const card = e.target.closest(".predios__card");
+    if (!card || card.classList.contains("predios__card--center")) return;
+    const idx = parseInt(card.dataset.idx, 10);
+    if (!isNaN(idx)) goTo(idx);
+  });
+
+  /* ------------ FUNÇÕES ------------ */
+
+  function getVisibleIndices(centerIdx) {
+    const total = PREDIOS.length;
+    return {
+      left:   (centerIdx - 1 + total) % total,
+      center: centerIdx,
+      right:  (centerIdx + 1) % total,
+    };
+  }
+
+  function renderCarousel() {
+    stage.innerHTML = "";
+    const { left, center, right } = getVisibleIndices(activeIdx);
+
+    stage.appendChild(buildCard(left,   "side-left"));
+    stage.appendChild(buildCard(center, "center"));
+    stage.appendChild(buildCard(right,  "side-right"));
+  }
+
+  function buildCard(idx, role) {
+    const predio = PREDIOS[idx];
+    const isCenter = role === "center";
+
+    const card = document.createElement("div");
+    card.className = `predios__card predios__card--side predios__card--${role}`;
+    if (isCenter) card.classList.remove("predios__card--side");
+    card.dataset.idx = idx;
+
+    const img = document.createElement("img");
+    img.className = "predios__card-img";
+    img.src = predio.foto;
+    img.alt = predio.nome.trim();
+    img.loading = "eager";
+
+    const scrim = document.createElement("div");
+    scrim.className = "predios__card-scrim";
+
+    card.appendChild(img);
+    card.appendChild(scrim);
+
+    if (isCenter) {
+      const info = document.createElement("div");
+      info.className = "predios__card-info";
+
+      const nome = document.createElement("p");
+      nome.className = "predios__card-nome";
+      nome.textContent = predio.nome.trim();
+
+      const cta = document.createElement("button");
+      cta.className = "predios__card-cta";
+      cta.textContent = "Saber mais";
+      cta.dataset.menuLink = "";
+      cta.dataset.action = "overlay";
+      cta.dataset.target = "anuncie";
+      // O OVERLAY "ANUNCIE" VALIDA data-category CONTRA AS CHAVES DE CATEGORIAS,
+      // QUE SÃO SLUGS. MANDAR A LABEL CRUA ("Hotéis") CAI NO FILTRO PADRÃO.
+      cta.dataset.category = slugDaCategoria(predio.categoria) ?? "todos";
+      cta.dataset.item = predio.nome.trim();
+
+      info.appendChild(nome);
+      info.appendChild(cta);
+      card.appendChild(info);
+
+      /* REVEAL DO NOME */
+      if (reduce) {
+        gsap.set(nome, { clipPath: "inset(0 0 0% 0)" });
+      } else {
+        requestAnimationFrame(() => {
+          gsap.fromTo(nome,
+            { clipPath: "inset(0 0 100% 0)", y: 12, autoAlpha: 0 },
+            { clipPath: "inset(0 0 0% 0)",   y: 0,  autoAlpha: 1,
+              duration: NOME_DURATION, ease: NOME_EASE, delay: 0.15 }
+          );
+        });
+      }
+    }
+
+    return card;
+  }
+
+  function goTo(newIdx) {
+    if (animating) return;
+    const total = PREDIOS.length;
+    newIdx = ((newIdx % total) + total) % total;
+    if (newIdx === activeIdx) return;
+
+    if (reduce) {
+      activeIdx = newIdx;
+      renderCarousel();
+      updateCounter();
+      return;
+    }
+
+    animating = true;
+
+    const direction = getDirection(activeIdx, newIdx);
+    const cards     = stage.querySelectorAll(".predios__card");
+
+    gsap.to(cards, {
       autoAlpha: 0,
-      pointerEvents: "none",
-      duration: 0.6,
-      ease: "power3.out",
-      overwrite: true,
+      x: direction === 1 ? -40 : 40,
+      duration: DURATION * 0.45,
+      ease: "power2.in",
+      onComplete: () => {
+        activeIdx = newIdx;
+        renderCarousel();
+        updateCounter();
+
+        const newCards = stage.querySelectorAll(".predios__card");
+        gsap.fromTo(newCards,
+          { autoAlpha: 0, x: direction === 1 ? 40 : -40 },
+          {
+            autoAlpha: 1, x: 0,
+            duration: DURATION * 0.6,
+            ease: EASE,
+            stagger: 0.05,
+            onComplete: () => { animating = false; }
+          }
+        );
+      }
     });
   }
 
-  burger.addEventListener("click", () => {
-    if (burger.getAttribute("aria-expanded") === "true") close();
-    else open();
-  });
+  function getDirection(from, to) {
+    const total = PREDIOS.length;
+    const fwd = ((to - from) + total) % total;
+    return fwd <= total / 2 ? 1 : -1;
+  }
 
-  // O bindMenuLinks() DO menu.js JÁ ABRE A OVERLAY NO CLIQUE DO ITEM, MAS SÓ FECHA
-  // O BURGER DO TOPO — ESTE DROPDOWN FICARIA ABERTO ATRÁS DELA.
-  menu.querySelectorAll(".predios__cat-item").forEach((item) => {
-    item.addEventListener("click", close);
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!section.contains(e.target)) close();
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") close();
-  });
-}
-
-/* ============================================
-   EFEITOS DE HOVER DO MENU DE CATEGORIAS
-   ============================================ */
-
-function bindCategoryHoverFX(section) {
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (prefersReducedMotion) return; // SEM EFEITOS DE HOVER NESSE MODO
-
-  section.querySelectorAll(".predios__cat-item").forEach((item) => {
-    const sweep = item.querySelector(".predios__cat-sweep");
-    const debris = item.querySelectorAll(".predios__cat-debris");
-    let sweepTween;
-    let debrisTweens = [];
-
-    item.addEventListener("mouseenter", () => {
-      gsap.to(item, {
-        x: 2,
-        borderColor: "rgb(110, 110, 110)",
-        backgroundColor: "rgb(22, 22, 22)",
-        color: "#fff",
-        duration: 0.3,
-        ease: "power3.out",
-      });
-
-      gsap.set(sweep, { opacity: 1 });
-      sweepTween = gsap
-        .timeline({ repeat: -1, yoyo: true })
-        .to(sweep, { x: "140%", duration: 1.6, ease: "power1.inOut" });
-
-      debrisTweens = Array.from(debris).map((d, i) =>
-        gsap.timeline({ repeat: -1, delay: i * 0.4 }).fromTo(
-          d,
-          { x: -20, opacity: 0 },
-          { x: 240, opacity: 0.22, duration: 5 + i * 0.8, ease: "power1.inOut" }
-        )
-      );
-    });
-
-    item.addEventListener("mouseleave", () => {
-      gsap.to(item, {
-        x: 0,
-        borderColor: "rgb(35, 35, 35)",
-        backgroundColor: "rgb(20, 20, 20)",
-        color: "rgb(170, 170, 170)",
-        duration: 0.3,
-        ease: "power3.out",
-      });
-      gsap.to(sweep, { opacity: 0, duration: 0.3, ease: "power3.out" });
-      sweepTween?.kill();
-      debrisTweens.forEach((t) => t.kill());
-      gsap.set(debris, { opacity: 0, x: -20 });
-    });
-  });
+  function updateCounter() {
+    if (!elCurrent) return;
+    // O TEXTO TROCA ANTES DO TWEEN: SE FIZESSE O CONTRÁRIO, O FADE-IN RODARIA
+    // SOBRE O NÚMERO ANTIGO E O NOVO APARECERIA DE ESTALO NO FIM.
+    elCurrent.textContent = String(activeIdx + 1).padStart(2, "0");
+    if (reduce) return;
+    gsap.fromTo(elCurrent,
+      { autoAlpha: 0, y: -8 },
+      { autoAlpha: 1, y: 0, duration: 0.4, ease: EASE }
+    );
+  }
 }
