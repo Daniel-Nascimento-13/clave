@@ -107,14 +107,21 @@ function update(grid, counter, cta, inpNome, inpEmp) {
   /* MONTA A MENSAGEM */
   const nome    = inpNome.value.trim();
   const empresa = inpEmp.value.trim();
-  const locais  = selected.map((el) => el.dataset.nome).join(", ");
+  const locais  = selected.map((el) => `• ${el.dataset.nome}`).join(";\n");
 
-  const empresaStr = empresa ? `, da empresa *${empresa}*` : "";
-  const intro      = nome
-    ? `Olá! Me chamo *${nome}*${empresaStr}. Gostaria`
-    : "Olá! Gostaria";
+  const introNome    = nome    ? `Me chamo *${nome}*` : null;
+  const introEmpresa = empresa ? `, da empresa *${empresa}*` : "";
 
-  const msg = `${intro} de anunciar em mais de um local da Clave.\n\nLocais de interesse: ${locais}.\n\nPodem me passar mais informações sobre uma proposta?`;
+  const intro = introNome
+    ? `Olá! ${introNome}${introEmpresa}.\n\n`
+    : `Olá!\n\n`;
+
+  const msg =
+    `${intro}` +
+    `Gostaria de anunciar em mais de um local da Clave.\n\n` +
+    `*Locais de interesse:*\n\n` +
+    `${locais}.\n\n` +
+    `Podem me passar mais informações sobre uma proposta?`;
 
   cta.href = getWhatsappLink(msg);
 }

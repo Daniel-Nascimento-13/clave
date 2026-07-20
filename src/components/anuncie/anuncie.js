@@ -110,8 +110,8 @@ export function initAnuncie() {
     if (whatsappBtn) {
       const nome = item.nome?.trim() ?? '';
       const msg = nome
-        ? `Olá! Tenho interesse em anunciar no *${nome}*. Podem me passar mais informações?`
-        : `Olá! Tenho interesse em anunciar com a Clave e gostaria de mais informações.`;
+        ? `Olá! Espero que esteja tudo bem.\n\nTenho interesse em anunciar no *${nome}*. \n\nPodem me passar mais informações? Obrigado!`
+        : `Olá! Espero que esteja tudo bem.\n\nTenho interesse em anunciar com a Clave e gostaria de mais informações.\n\nObrigado!`;
       whatsappBtn.href = getWhatsappLink(msg);
     }
 
