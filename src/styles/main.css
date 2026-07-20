@@ -4,6 +4,7 @@
 @import '../components/menu/menu.css';
 @import '../components/sobre/sobre.css';
 @import '../components/anuncie/anuncie.css';
+@import '../components/planos/planos.css';
 @import "@fontsource/bricolage-grotesque/400.css";
 @import "@fontsource/bricolage-grotesque/800.css";
 @import "@fontsource-variable/inter";
@@ -837,7 +838,7 @@ body {
 /* SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL  */
 /* ============================================ */
 
-.predios {
+.predios {`
   position: relative;
   background: var(--nav);
   padding: 80px 0 72px;

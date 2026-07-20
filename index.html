@@ -42,6 +42,9 @@
       <button type="button" class="clv-menu__link" data-menu-link data-action="scroll" data-target=".marcas__bar">
         Anunciantes
       </button>
+      <button type="button" class="clv-menu__link" data-menu-link data-action="overlay" data-target="planos">
+        Planos
+      </button>
       <button type="button" class="clv-menu__link" data-menu-link data-action="overlay" data-target="anuncie">
         Anuncie com a Clave
       </button>
@@ -131,6 +134,129 @@
                 </button>
               </div>
             </article>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         OVERLAY — PLANOS
+         ============================================ -->
+    <div class="clv-overlay" id="overlay-planos" data-overlay="planos" aria-hidden="true">
+      <!-- data-lenis-prevent — MESMO MOTIVO DOS OVERLAYS ACIMA: O PAINEL É O
+           CONTAINER DE SCROLL E O LENIS ENGOLIRIA O wheel ANTES DE CHEGAR AQUI. -->
+      <div class="clv-overlay__panel" data-lenis-prevent>
+        <button type="button" class="clv-overlay__close" data-overlay-close aria-label="Fechar">
+          <span></span><span></span>
+        </button>
+        <div class="clv-overlay__content clv-planos__content">
+
+          <div class="clv-planos__head">
+            <p class="clv-planos__label">Nossos planos</p>
+            <h2 class="clv-planos__heading">Escolha sua cobertura</h2>
+          </div>
+
+          <div class="clv-planos__toggle">
+            <div class="clv-planos__toggle-wrap">
+              <button type="button" class="clv-planos__toggle-btn" data-planos-plan="trimestral">Trimestral</button>
+              <button type="button" class="clv-planos__toggle-btn" data-planos-plan="semestral">Semestral</button>
+              <button type="button" class="clv-planos__toggle-btn clv-planos__toggle-btn--active" data-planos-plan="anual">Anual</button>
+            </div>
+          </div>
+
+          <div class="clv-planos__cards">
+
+            <div class="clv-planos__card" data-planos-card="trimestral">
+              <div class="clv-planos__badge">★ Recomendado</div>
+              <p class="clv-planos__card-name">Trimestral</p>
+              <p class="clv-planos__card-desc">Ideal para conhecer a mídia indoor e testar resultados.</p>
+              <p class="clv-planos__card-period">Contrato de 3 meses</p>
+              <ul class="clv-planos__features">
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  1 tela inclusa
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Criação do anúncio
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Relatório mensal
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Suporte via WhatsApp
+                </li>
+              </ul>
+              <a class="clv-planos__cta" href="#" data-planos-cta target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.148-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+                Falar no WhatsApp
+              </a>
+            </div>
+
+            <div class="clv-planos__card clv-planos__card--featured" data-planos-card="anual">
+              <div class="clv-planos__badge">★ Recomendado</div>
+              <p class="clv-planos__card-name">Anual</p>
+              <p class="clv-planos__card-desc">A melhor relação custo-benefício para presença contínua.</p>
+              <p class="clv-planos__card-period">Contrato de 12 meses</p>
+              <ul class="clv-planos__features">
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Até 3 telas inclusas
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Criação e atualização de anúncios
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Relatório mensal detalhado
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Prioridade no suporte
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Acesso a novos espaços em primeira mão
+                </li>
+              </ul>
+              <a class="clv-planos__cta" href="#" data-planos-cta target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.148-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+                Falar no WhatsApp
+              </a>
+            </div>
+
+            <div class="clv-planos__card" data-planos-card="semestral">
+              <div class="clv-planos__badge">★ Recomendado</div>
+              <p class="clv-planos__card-name">Semestral</p>
+              <p class="clv-planos__card-desc">Presença consistente com flexibilidade de médio prazo.</p>
+              <p class="clv-planos__card-period">Contrato de 6 meses</p>
+              <ul class="clv-planos__features">
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Até 2 telas inclusas
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Criação e atualização de anúncios
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Relatório mensal
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Suporte prioritário
+                </li>
+              </ul>
+              <a class="clv-planos__cta" href="#" data-planos-cta target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.148-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+                Falar no WhatsApp
+              </a>
+            </div>
+
           </div>
         </div>
       </div>

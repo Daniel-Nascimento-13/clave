@@ -1,0 +1,237 @@
+/* ============================================ */
+/* OVERLAY — PLANOS                             */
+/* ============================================ */
+
+/* ------------ LAYOUT GERAL ------------ */
+
+.clv-planos__content {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+/* ------------ CABEÇALHO ------------ */
+
+.clv-planos__head {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.clv-planos__label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 8px;
+}
+
+.clv-planos__heading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  color: var(--color-paper);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+/* ------------ TOGGLE ------------ */
+
+.clv-planos__toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.clv-planos__toggle-wrap {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.clv-planos__toggle-btn {
+  padding: 8px 22px;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  white-space: nowrap;
+}
+
+.clv-planos__toggle-btn--active {
+  background: var(--color-paper);
+  color: #0a0a0a;
+}
+
+/* ------------ GRID DE CARDS ------------ */
+
+.clv-planos__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  align-items: end;
+}
+
+/* ------------ CARD ------------ */
+
+.clv-planos__card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 28px 22px 22px;
+  position: relative;
+  transition:
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.4s,
+    border-color 0.4s,
+    box-shadow 0.4s;
+}
+
+.clv-planos__card--featured {
+  background: rgba(42, 127, 255, 0.08);
+  border-color: rgba(42, 127, 255, 0.45);
+  transform: translateY(-12px);
+  box-shadow: 0 20px 60px rgba(42, 127, 255, 0.12);
+}
+
+/* ------------ BADGE ------------ */
+
+.clv-planos__badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2a7fff;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 16px;
+  border-radius: 9999px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.clv-planos__card--featured .clv-planos__badge {
+  opacity: 1;
+}
+
+/* ------------ CONTEÚDO DO CARD ------------ */
+
+.clv-planos__card-name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-paper);
+  margin-bottom: 6px;
+}
+
+.clv-planos__card-desc {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.clv-planos__card-period {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ------------ FEATURES ------------ */
+
+.clv-planos__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.clv-planos__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.4;
+}
+
+.clv-planos__check {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: rgba(255, 255, 255, 0.2);
+  transition: color 0.3s;
+}
+
+.clv-planos__card--featured .clv-planos__check {
+  color: #2a7fff;
+}
+
+/* ------------ CTA WHATSAPP ------------ */
+
+.clv-planos__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 11px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.clv-planos__card--featured .clv-planos__cta {
+  background: #25d366;
+  border-color: #25d366;
+  color: #fff;
+}
+
+/* ------------ MOBILE ------------ */
+
+@media (max-width: 480px) {
+  .clv-planos__cards {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .clv-planos__card--featured {
+    transform: none;
+    order: -1;
+  }
+
+  .clv-planos__toggle-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+}
