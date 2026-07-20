@@ -219,15 +219,21 @@
 
 /* ------------ MOBILE ------------ */
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .clv-planos__cards {
     grid-template-columns: 1fr;
     align-items: start;
   }
 
+  .clv-planos__card {
+    display: none;
+  }
+
   .clv-planos__card--featured {
+    display: flex;
+    flex-direction: column;
     transform: none;
-    order: -1;
+    order: 0;
   }
 
   .clv-planos__toggle-btn {
