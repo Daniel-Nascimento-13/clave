@@ -1,6 +1,6 @@
-/* ============================================ */
-/* SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL  */
-/* ============================================ */
+/* ============================================
+   SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL
+   ============================================ */
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

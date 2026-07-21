@@ -56,14 +56,3 @@ export function initSmoothScroll() {
 export function getLenis() {
   return lenis;
 }
-
-/* ============================================
-   CLEANUP — DESTRÓI LENIS E TODOS OS SCROLLTRIGGERS
-   ============================================ */
-export function destroySmoothScroll() {
-  if (lenis) {
-    lenis.destroy();
-    lenis = null;
-  }
-  ScrollTrigger.getAll().forEach((t) => t.kill());
-}

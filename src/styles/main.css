@@ -835,9 +835,9 @@ body {
 .produto__spin-intense::before { background: linear-gradient(-45deg, #5aa0ff, #0000 35% 65%, #5ee6ff); }
 .produto__spin-inside::before  { background: linear-gradient(-45deg, #a9ccff, #0000 35% 65%, #b0f2ff); }
 
-/* ============================================ */
-/* SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL  */
-/* ============================================ */
+/* ============================================
+   SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL
+   ============================================ */
 
 .predios {
   position: relative;

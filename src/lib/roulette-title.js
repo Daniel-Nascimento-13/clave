@@ -3,9 +3,6 @@
    ============================================ */
 import { gsap } from "gsap";
 
-const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const REEL_LENGTH = 8;
-
 function measureCharWidth(ch, font, letterSpacing) {
   const span = document.createElement("span");
   span.style.cssText = "position:absolute;visibility:hidden;white-space:pre;top:-9999px;";
