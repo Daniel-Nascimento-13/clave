@@ -103,7 +103,7 @@ export const PREDIOS = [
       apartamentos: { label: "Apartamentos", valor: "225" },
       moradores: { label: "Moradores", valor: "600" },
       telas: { label: "Telas instaladas", valor: "4" },
-      alcance: { label: "Alcance mensal", valor: "1200" },
+      alcance: { label: "Alcance mensal", valor: "1.200" },
     },
   },
 
@@ -134,10 +134,10 @@ export const PREDIOS = [
     descricao:
       "Hotel executivo de alto padrão localizada no bairro São Cristóvão, em Lajeado, com telas instaladas nos elevadores e áreas de circulação, alcançando um fluxo intenso de hóspedes, visitantes e profissionais.",
     metricas: {
-      apartamentos: { label: "Salas", valor: "151" },
-      moradores: { label: "Circulação diária", valor: "1k" },
-      telas: { label: "Telas instaladas", valor: "3" },
-      alcance: { label: "Alcance mensal", valor: "30K" },
+      apartamentos: { label: "Quartos", valor: "84" },
+      moradores: { label: "Circulação diária", valor: "60" },
+      telas: { label: "Telas instaladas", valor: "2" },
+      alcance: { label: "Alcance mensal", valor: "1.800" },
     },
   },
 
@@ -149,10 +149,10 @@ export const PREDIOS = [
     descricao:
       "Hotel localizado no bairro Florestal, em Lajeado, com telas instaladas nos elevadores e áreas de circulação, alcançando um fluxo intenso de hóspedes, visitantes e profissionais.",
     metricas: {
-      apartamentos: { label: "Salas", valor: "151" },
-      moradores: { label: "Circulação diária", valor: "1k" },
-      telas: { label: "Telas instaladas", valor: "3" },
-      alcance: { label: "Alcance mensal", valor: "30K" },
+      apartamentos: { label: "Quartos", valor: "118" },
+      moradores: { label: "Circulação diária", valor: "55" },
+      telas: { label: "Telas instaladas", valor: "1" },
+      alcance: { label: "Alcance mensal", valor: "1.600" },
     },
   },
 
