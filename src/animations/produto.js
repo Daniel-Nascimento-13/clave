@@ -1,6 +1,9 @@
 /* ============================================
    SEÇÃO 5 — PRODUTO — TELA ANIMADA
    ============================================ */
+
+/* ---------- IMPORTS ---------- */
+
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PRODUTO } from "../constants/motion.js";
@@ -14,12 +17,13 @@ export function initProduto() {
 
   const heading = section.querySelector(".produto__heading");
   const content = section.querySelector(".produto__content");
-  const frame = section.querySelector(".produto__frame");
-  const video = section.querySelector(".produto__video");
+  const frame   = section.querySelector(".produto__frame");
+  const video   = section.querySelector(".produto__video");
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------- REVEAL AO ENTRAR NA SEÇÃO ---------- */
+
   if (reduce) {
     gsap.set([content, frame], { opacity: 1, scale: 1 });
     if (heading) gsap.set(heading, { opacity: 1 });
@@ -39,6 +43,7 @@ export function initProduto() {
           duration: PRODUTO.revealDuration,
           ease: PRODUTO.revealEase,
         });
+
         gsap.to(frame, {
           opacity: 1,
           scale: 1,
@@ -48,6 +53,7 @@ export function initProduto() {
         });
 
         /* ---------- STAGGER DOS CHECKBOXES ---------- */
+
         const items = section.querySelectorAll(".produto__item");
         items.forEach((item, i) => {
           gsap.delayedCall(0.4 + i * 1.5, () => {
@@ -58,11 +64,10 @@ export function initProduto() {
     });
   }
 
-  /* ---------- PIN + SCRUB DO VÍDEO (SÍNCRONO — EVITA BUG DE TIMING) ---------- */
-  /* O TRIGGER É A PRÓPRIA section (NÃO O frame): A section É MAIS ALTA QUE A
-     VIEWPORT, ENTÃO PRENDÊ-LA PELO TOPO (top top) FAZ ELA COBRIR A TELA
-     INTEIRA DURANTE O PIN. USAR O frame COMO TRIGGER PRENDIA A section COM O
-     FUNDO NO MEIO DA TELA, DEIXANDO UM VÃO DE --color-paper ATÉ A .predios SUBIR. */
+  /* ---------- PIN + SCRUB DO VÍDEO ---------- */
+
+  /* TRIGGER É A section, NÃO O frame — A section É MAIS ALTA QUE A VIEWPORT,
+     ENTÃO PRENDÊ-LA PELO TOPO COBRE A TELA INTEIRA DURANTE O PIN */
   ScrollTrigger.create({
     trigger: section,
     start: "top top",
@@ -71,13 +76,12 @@ export function initProduto() {
     scrub: 1,
     invalidateOnRefresh: true,
     onUpdate: (self) => {
-      if (video.duration) {
-        video.currentTime = self.progress * video.duration;
-      }
+      if (video.duration) video.currentTime = self.progress * video.duration;
     },
   });
 
   /* ---------- PRIMING iOS ---------- */
+
   function primeVideo() {
     const prime = video.play();
     if (prime && typeof prime.then === "function") {

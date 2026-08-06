@@ -1,14 +1,17 @@
 /* ============================================
    ROLETA DE TÍTULO — REUTILIZÁVEL
    ============================================ */
+
+/* ---------- IMPORTS ---------- */
+
 import { gsap } from "gsap";
 
 function measureCharWidth(ch, font, letterSpacing) {
   const span = document.createElement("span");
-  span.style.cssText = "position:absolute;visibility:hidden;white-space:pre;top:-9999px;";
-  span.style.font = font;
+  span.style.cssText    = "position:absolute;visibility:hidden;white-space:pre;top:-9999px;";
+  span.style.font       = font;
   span.style.letterSpacing = letterSpacing;
-  span.textContent = ch;
+  span.textContent      = ch;
   document.body.appendChild(span);
   const w = span.getBoundingClientRect().width;
   document.body.removeChild(span);
@@ -17,15 +20,15 @@ function measureCharWidth(ch, font, letterSpacing) {
 
 export function animateRouletteTitle(el, { stagger = 0.05, duration = 0.7, gap = "-0.02em" } = {}) {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const text = el.textContent;
+  const text   = el.textContent;
   if (reduce) return;
 
   const computed = getComputedStyle(el);
   el.setAttribute("aria-label", text);
-  el.textContent = "";
+  el.textContent     = "";
   el.style.letterSpacing = gap;
 
-  const cols = [];
+  const cols  = [];
   const words = text.split(" ");
 
   words.forEach((word, wi) => {
@@ -41,21 +44,21 @@ export function animateRouletteTitle(el, { stagger = 0.05, duration = 0.7, gap =
 
       const col = document.createElement("div");
       col.style.cssText = "display:flex;flex-direction:column;align-items:center;";
+
       for (let i = 0; i < 8; i++) {
         const s = document.createElement("span");
-        s.textContent = i === 7 ? ch : "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)];
+        s.textContent  = i === 7 ? ch : "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)];
         s.style.cssText = "height:1.2em;line-height:1.2em;";
         col.appendChild(s);
       }
+
       wrap.appendChild(col);
       wordWrap.appendChild(wrap);
       cols.push(col);
     });
 
     el.appendChild(wordWrap);
-    if (wi < words.length - 1) {
-      el.appendChild(document.createTextNode(" "));
-    }
+    if (wi < words.length - 1) el.appendChild(document.createTextNode(" "));
   });
 
   gsap.set(cols, { y: 0 });

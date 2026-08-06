@@ -1,8 +1,8 @@
-/* ============================================ */
-/* OVERLAY — PLANOS                             */
-/* ============================================ */
+/* ============================================
+   OVERLAY — PLANOS
+   ============================================ */
 
-/* ------------ LAYOUT GERAL ------------ */
+/* ---------- LAYOUT GERAL ---------- */
 
 .clv-planos__content {
   width: 100%;
@@ -11,7 +11,7 @@
   padding: 2rem 0;
 }
 
-/* ------------ CABEÇALHO ------------ */
+/* ---------- CABEÇALHO ---------- */
 
 .clv-planos__head {
   text-align: center;
@@ -36,7 +36,7 @@
   line-height: 1;
 }
 
-/* ------------ TOGGLE ------------ */
+/* ---------- TOGGLE ---------- */
 
 .clv-planos__toggle {
   display: flex;
@@ -72,7 +72,7 @@
   color: #0a0a0a;
 }
 
-/* ------------ GRID DE CARDS ------------ */
+/* ---------- GRID DE CARDS ---------- */
 
 .clv-planos__cards {
   display: grid;
@@ -81,7 +81,7 @@
   align-items: end;
 }
 
-/* ------------ CARD ------------ */
+/* ---------- CARD ---------- */
 
 .clv-planos__card {
   background: rgba(255, 255, 255, 0.04);
@@ -103,7 +103,7 @@
   box-shadow: 0 20px 60px rgba(42, 127, 255, 0.12);
 }
 
-/* ------------ BADGE ------------ */
+/* ---------- BADGE ---------- */
 
 .clv-planos__badge {
   position: absolute;
@@ -128,7 +128,7 @@
   opacity: 1;
 }
 
-/* ------------ CONTEÚDO DO CARD ------------ */
+/* ---------- CONTEÚDO DO CARD ---------- */
 
 .clv-planos__card-name {
   font-family: var(--font-display);
@@ -157,7 +157,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-/* ------------ FEATURES ------------ */
+/* ---------- FEATURES ---------- */
 
 .clv-planos__features {
   list-style: none;
@@ -190,7 +190,7 @@
   color: #2a7fff;
 }
 
-/* ------------ CTA WHATSAPP ------------ */
+/* ---------- CTA WHATSAPP ---------- */
 
 .clv-planos__cta {
   display: flex;
@@ -217,7 +217,7 @@
   color: #fff;
 }
 
-/* ------------ MOBILE ------------ */
+/* ---------- MOBILE ---------- */
 
 @media (max-width: 768px) {
   .clv-planos__cards {

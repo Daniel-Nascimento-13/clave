@@ -1,11 +1,13 @@
-/* ============================================ */
-/* OVERLAY — COBERTURA AMPLA                    */
-/* ============================================ */
+/* ============================================
+   OVERLAY — COBERTURA AMPLA
+   ============================================ */
+
+/* ---------- IMPORTS ---------- */
 
 import { PREDIOS } from "../../data/predios.js";
 import { getWhatsappLink } from "../../lib/whatsapp.js";
 
-/* ------------ INIT ------------ */
+/* ---------- INIT ---------- */
 
 export function initCobertura() {
   const overlay = document.querySelector("#overlay-cobertura");
@@ -19,32 +21,25 @@ export function initCobertura() {
 
   const sync = () => update(grid, counter, cta, inpNome, inpEmp);
 
-  /* RENDERIZA OS CARDS A PARTIR DE PREDIOS. O TOGGLE AVISA AQUI EM VEZ DE
-     REDESCOBRIR OS ELEMENTOS NO CLIQUE: OS REFS JÁ ESTÃO NESTE ESCOPO. */
   renderGrid(grid, sync);
 
-  /* LISTENERS DOS INPUTS */
   inpNome.addEventListener("input", sync);
   inpEmp.addEventListener("input", sync);
 
-  /* RESET NA ABERTURA — MESMO MOTIVO DO "ANUNCIE" (VER anuncie.js): É O ÚNICO
-     PONTO QUE PEGA TAMBÉM O FECHAMENTO POR ESC E PELO X, E NÃO LIMPA A TELA NA
-     FRENTE DO USUÁRIO ENQUANTO O PAINEL AINDA ESTÁ SUMINDO.
-     O EVENTO VEM DE document, NÃO DO OVERLAY: menu.js DISPARA NO DOCUMENTO E
-     IDENTIFICA O ALVO POR detail.id. */
+  /* RESET NA ABERTURA — PEGA FECHAMENTO POR ESC E PELO X SEM LIMPAR
+     A TELA ENQUANTO O PAINEL AINDA ESTÁ SUMINDO */
   document.addEventListener("clv:overlay-open", (e) => {
     if (e.detail.id !== "cobertura") return;
     grid.querySelectorAll(".clv-cobertura__loc").forEach((el) => el.classList.remove("is-selected"));
     inpNome.value = "";
-    inpEmp.value = "";
+    inpEmp.value  = "";
     sync();
   });
 
-  /* ESTADO INICIAL — NENHUM LOCAL, CTA DESLIGADO. */
   sync();
 }
 
-/* ------------ RENDER ------------ */
+/* ---------- RENDER ---------- */
 
 function renderGrid(grid, onToggle) {
   grid.innerHTML = "";
@@ -82,14 +77,13 @@ function renderGrid(grid, onToggle) {
   });
 }
 
-/* ------------ UPDATE ------------ */
+/* ---------- UPDATE ---------- */
 
 function update(grid, counter, cta, inpNome, inpEmp) {
   const selected = [...grid.querySelectorAll(".clv-cobertura__loc.is-selected")];
   const count    = selected.length;
   const ready    = count >= 2;
 
-  /* CONTADOR */
   if (count === 0) {
     counter.innerHTML = "Nenhum local selecionado";
   } else if (count === 1) {
@@ -98,23 +92,18 @@ function update(grid, counter, cta, inpNome, inpEmp) {
     counter.innerHTML = `<strong>${count}</strong> locais selecionados`;
   }
 
-  /* ESTADO DO CTA */
   cta.classList.toggle("is-ready", ready);
   cta.setAttribute("aria-disabled", String(!ready));
 
   if (!ready) return;
 
-  /* MONTA A MENSAGEM */
   const nome    = inpNome.value.trim();
   const empresa = inpEmp.value.trim();
   const locais  = selected.map((el) => `• ${el.dataset.nome}`).join(";\n");
 
   const introNome    = nome    ? `Me chamo *${nome}*` : null;
   const introEmpresa = empresa ? `, da empresa *${empresa}*` : "";
-
-  const intro = introNome
-    ? `Olá! ${introNome}${introEmpresa}.\n\n`
-    : `Olá!\n\n`;
+  const intro        = introNome ? `Olá! ${introNome}${introEmpresa}.\n\n` : `Olá!\n\n`;
 
   const msg =
     `${intro}` +

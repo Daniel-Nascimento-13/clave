@@ -1,6 +1,9 @@
 /* ============================================
    SEÇÃO 2 — ELEVADOR — ANIMAÇÃO SCRUB
    ============================================ */
+
+/* ---------- IMPORTS ---------- */
+
 import { gsap, ScrollTrigger } from "../lib/gsap.js";
 import { DURATIONS, EASE } from "../constants/motion.js";
 import { animateRouletteTitle } from "../lib/roulette-title.js";
@@ -34,14 +37,9 @@ export function initElevador() {
 
     gsap
       .timeline({ defaults: { ease: EASE.primary } })
-      // O LABEL ENTRA JUNTO COM O TÍTULO: O CSS O DEIXA EM opacity:0 NO MESMO
-      // GRUPO DE .elevador__title/.elevador__text, ENTÃO PRECISA DE UM TWEEN
-      // PRÓPRIO — SEM ELE FICARIA INVISÍVEL PARA SEMPRE.
-      .to(
-        label,
-        { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0, duration: DURATIONS.sm },
-        0
-      )
+      /* LABEL PRECISA DE TWEEN PRÓPRIO — O CSS O DEIXA EM opacity:0
+         NO MESMO GRUPO QUE title E text */
+      .to(label, { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0, duration: DURATIONS.sm }, 0)
       .add(() => {
         gsap.set(title, { clipPath: "inset(0 0 0% 0)", y: 0, opacity: 1 });
         animateRouletteTitle(title);

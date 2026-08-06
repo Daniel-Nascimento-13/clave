@@ -1,6 +1,7 @@
 /* ============================================
    CONSTANTES — CONTATO WHATSAPP
    ============================================ */
+
 export const WHATSAPP_NUMBER = "5551993607042";
 
 export const WHATSAPP_MESSAGE =

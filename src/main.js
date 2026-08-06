@@ -1,9 +1,11 @@
 /* ============================================
    BOOT — CLAVE
    ============================================ */
+
+/* ---------- IMPORTS ---------- */
+
 import "./styles/main.css";
 import { initSmoothScroll } from "./lib/smooth-scroll.js";
-import { initHero } from "./animations/hero.js";
 import { initElevador } from "./animations/elevador.js";
 import { initMarcas } from "./animations/marcas.js";
 import { initDiferenciais } from "./animations/diferenciais.js";
@@ -19,16 +21,18 @@ import { initCobertura } from "./components/cobertura/cobertura.js";
 /* ============================================
    INICIALIZAÇÃO GLOBAL
    ============================================ */
+
 initSmoothScroll();
-initHero();
 initElevador();
 initMarcas();
 initDiferenciais();
 initProduto();
 initPredios();
+
 document.querySelectorAll("[data-whatsapp-cta]").forEach((el) => {
   el.href = getWhatsappLink();
 });
+
 initMenu();
 initSobre();
 initAnuncie();

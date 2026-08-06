@@ -1,6 +1,9 @@
 /* ============================================
    SEÇÃO 3 — MARCAS — CARROSSEL E HEADLINE
    ============================================ */
+
+/* ---------- IMPORTS ---------- */
+
 import { gsap, ScrollTrigger } from "../lib/gsap.js";
 
 const SCATTER_PRESETS = [
@@ -21,24 +24,23 @@ function getScatter(index) {
   };
 }
 
-/* ---------- ALVO DE SCROLL DO MENU ("ANUNCIANTES") ---------- */
+/* ---------- ALVO DE SCROLL DO MENU ---------- */
 
-// FRAÇÃO DO PROGRESSO DO PIN ONDE O MENU DEVE PARAR.
-// ABAIXO DE ~0.88 O CARROSSEL AINDA ESTÁ FORA DA DOBRA: O SPACER DO PIN MEDE
-// 320vh (70vh DA INTRO + 250vh DE CURSO) E O TOPO DO .marcas__bar CAI EM
-// 320vh - progress * 250vh. EM 1.0 O PIN SOLTA E A SEÇÃO COMEÇA A SUBIR.
+/* FRAÇÃO DO PROGRESSO DO PIN ONDE O MENU DEVE PARAR.
+   O SPACER MEDE 320vh (70vh INTRO + 250vh CURSO) — EM 1.0 O PIN SOLTA. */
 const REVEAL_PROGRESS = 0.97;
 
 let introTrigger = null;
 
-// RETORNA null SE O PIN NÃO EXISTE (reduced-motion) — CHAMADOR USA O FALLBACK.
+/* RETORNA null SE O PIN NÃO EXISTE (REDUCED-MOTION) */
 export function getMarcasRevealY() {
   if (!introTrigger) return null;
   const { start, end } = introTrigger;
   return start + (end - start) * REVEAL_PROGRESS;
 }
 
-/* ---------- INTRO PINADA — HEADLINE EM SCATTER, CONVERGE NO SCROLL ---------- */
+/* ---------- INTRO PINADA — HEADLINE EM SCATTER ---------- */
+
 function initMarcasIntro() {
   const container = document.querySelector("[data-marcas-intro]");
   const headline = document.querySelector("[data-marcas-headline]");
@@ -106,6 +108,7 @@ function initMarcasIntro() {
 }
 
 /* ---------- MARQUEE — LOOP INFINITO, DUAS DIREÇÕES ---------- */
+
 function initMarquee(track, direction, reduce) {
   if (!track || reduce) return;
 
@@ -115,24 +118,15 @@ function initMarquee(track, direction, reduce) {
     gsap.fromTo(
       track,
       { xPercent: -50 },
-      {
-        xPercent: 0,
-        duration,
-        ease: "none",
-        repeat: -1,
-      }
+      { xPercent: 0, duration, ease: "none", repeat: -1 }
     );
   } else {
-    gsap.to(track, {
-      xPercent: -50,
-      duration,
-      ease: "none",
-      repeat: -1,
-    });
+    gsap.to(track, { xPercent: -50, duration, ease: "none", repeat: -1 });
   }
 }
 
 /* ---------- BOOT DA SEÇÃO ---------- */
+
 export function initMarcas() {
   const section = document.querySelector("[data-marcas]");
   if (!section) return;

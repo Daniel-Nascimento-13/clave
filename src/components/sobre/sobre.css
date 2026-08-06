@@ -2,22 +2,18 @@
    OVERLAY — SOBRE — TEXTO E VÍDEO
    ============================================ */
 
-/* A CASCA DO OVERLAY (.clv-overlay, __panel, __close, .clv-no-scroll) É
-   COMPARTILHADA E VIVE EM menu.css. AQUI FICA SÓ O CONTEÚDO DO "SOBRE". */
+/* CASCA DO OVERLAY VIVE EM menu.css.
+   ESCOPADO EM #overlay-sobre PARA NÃO AFETAR O "ANUNCIE", QUE TAMBÉM USA
+   .clv-overlay__content MAS NÃO PODE VIRAR GRID. */
 
 /* ---------- LAYOUT — TEXTO + VÍDEO ---------- */
 
-/* ESCOPADO EM #overlay-sobre DE PROPÓSITO: .clv-overlay__content É A CASCA
-   COMPARTILHADA (VER menu.css) E TAMBÉM É USADA PELO OVERLAY "ANUNCIE", QUE NÃO
-   PODE VIRAR GRID. MOBILE FICA EM COLUNA ÚNICA (O grid PADRÃO), EMPILHANDO. */
 #overlay-sobre .clv-overlay__content {
   display: grid;
   gap: 48px;
 }
 
-/* O VÍDEO É VERTICAL: EM COLUNA ÚNICA ELE NASCERIA ABAIXO DA DOBRA NO DESKTOP,
-   COM OS CONTROLES NATIVOS FORA DE ALCANCE. A PARTIR DE 900px O TEXTO VAI PRA
-   ESQUERDA E O VÍDEO OCUPA A COLUNA DA DIREITA, QUE ANTES FICAVA VAZIA. */
+/* A PARTIR DE 900px: TEXTO À ESQUERDA, VÍDEO VERTICAL À DIREITA */
 @media (min-width: 900px) {
   #overlay-sobre .clv-overlay__content {
     grid-template-columns: minmax(0, 1fr) auto;
@@ -58,6 +54,8 @@
 
 /* ---------- PALAVRA GIRATÓRIA NA HEADLINE ---------- */
 
+/* FLEX COLUMN + align-items: flex-start — CADA PALAVRA ENCOLHE PARA SUA LARGURA
+   DE TEXTO. LARGURA DA "JANELA" CONTROLADA VIA GSAP EM word-flip.js. */
 .clv-sobre__flip {
   display: inline-block;
   position: relative;
@@ -66,19 +64,13 @@
   vertical-align: bottom;
 }
 
-/* FLEX COLUMN + align-items: flex-start FAZ CADA PALAVRA EMPILHADA ENCOLHER PARA
-   SUA PRÓPRIA LARGURA DE TEXTO (EM VEZ DE ESTICAR ATÉ A LARGURA DA MAIS LARGA).
-   A LARGURA DA "JANELA" (.clv-sobre__flip) É CONTROLADA VIA GSAP EM word-flip.js,
-   ACOMPANHANDO A PALAVRA VISÍVEL — SEM ISSO SOBRARIA ESPAÇO ANTES DE "ao público"
-   QUANDO UMA PALAVRA CURTA (EX.: "você") APARECE. */
 .clv-sobre__flip-track {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-/* GRADIENTE DE TEXTO — MESMO PAR DE COR DO GLOW GIRATÓRIO (.clv-spin-blur,
-   .predios__arrow-spin): AZUL #2a7fff → CIANO #22d3ee, PADRÃO DO SITE */
+/* GRADIENTE AZUL #2a7fff → CIANO #22d3ee — PADRÃO DO SITE */
 .clv-sobre__flip-word {
   height: 1.1em;
   line-height: 1.1;
@@ -115,13 +107,8 @@
 
 /* ---------- VÍDEO ---------- */
 
-/* O VÍDEO É VERTICAL (1080x1920). EM 480px DE LARGURA — O VALOR ANTIGO DO
-   CARROSSEL 4:3 — ELE PASSARIA DE 850px DE ALTURA E ESTOURARIA A DOBRA DENTRO
-   DO OVERLAY. 380px MANTÉM ~675px DE ALTURA.
-   O 39vh É O MESMO LIMITE EM ALTURA: COMO 9:16 DÁ altura = largura * 16/9,
-   39vh DE LARGURA ≈ 69vh DE ALTURA — É O QUE SOBRA DEPOIS DO padding DE 6rem
-   DO .clv-overlay__panel. SEM ISSO, NUM NOTEBOOK BAIXO (~800px) O VÍDEO VOLTA
-   A ESTOURAR A DOBRA MESMO EM DUAS COLUNAS. */
+/* VÍDEO VERTICAL (1080x1920): max 380px DE LARGURA → ~675px DE ALTURA.
+   39vh DE LARGURA ≈ 69vh DE ALTURA — CABE DEPOIS DO padding DE 6rem DO PAINEL. */
 .clv-sobre__video-wrap {
   max-width: min(380px, 39vh);
 }
@@ -130,17 +117,9 @@
   aspect-ratio: 9 / 16;
 }
 
-/* O ANEL DO GLOW SÓ EXISTE NA FOLGA ENTRE O CARD E O CONTAINER, E QUEM CRIA ESSA
-   FOLGA É O margin: .125em DO .clv-card (main.css). width/height: 100% MEDEM O
-   CONTAINER INTEIRO (351px), ENTÃO A MARGEM EMPURRAVA O CARD 2px PRA DIREITA E 2px
-   PRA BAIXO E ELE TRANSBORDAVA — O overflow: hidden DO .clv-card-container CORTAVA
-   A SOBRA E O ANEL SUMIA JUSTAMENTE NA DIREITA E EMBAIXO. SOBRAVA GLOW SÓ EM CIMA E
-   À ESQUERDA, QUE É O "BRILHO DESLOCADO PRO CANTO SUPERIOR ESQUERDO".
-
-   DIFERENCIAIS NÃO TEM O PROBLEMA PORQUE LÁ O .clv-card NÃO TEM width/height: FICA
-   auto E O BLOCO SOZINHO SE AJUSTA A container - margens (436px NUM CARD DE 440px),
-   DEIXANDO 2px NOS QUATRO LADOS. O calc AQUI REPRODUZ ISSO NUM CARD QUE PRECISA DE
-   ALTURA EXPLÍCITA: .25em = AS DUAS MARGENS DE .125em. */
+/* calc(100% - .25em) REPRODUZ O COMPORTAMENTO DE auto DOS CARDS DE DIFERENCIAIS:
+   .25em = AS DUAS MARGENS DE .125em DO .clv-card, DEIXANDO 2px NOS QUATRO LADOS
+   PARA O ANEL DO GLOW NÃO SER CORTADO PELO overflow: hidden DO CONTAINER. */
 .clv-sobre__video-card {
   width: calc(100% - .25em);
   height: calc(100% - .25em);
@@ -154,10 +133,8 @@
   display: block;
 }
 
-/* O POSTER É UM <img> POR CIMA DO <video> — E NÃO SÓ O ATRIBUTO poster= —
-   PORQUE O CROSSFADE PRECISA DE DOIS ELEMENTOS SEPARADOS PRA ANIMAR. O
-   ATRIBUTO poster= NO <video> FICA COMO LASTRO ATÉ O PRIMEIRO FRAME PINTAR.
-   autoAlpha/opacity SÃO CONTROLADOS VIA GSAP EM sobre-video.js. */
+/* POSTER É <img> SEPARADO (NÃO APENAS O ATRIBUTO poster=) PARA PERMITIR
+   O CROSSFADE VIA GSAP EM sobre-video.js */
 .clv-sobre__video-poster {
   position: absolute;
   inset: 0;
@@ -173,7 +150,7 @@
   top: 50%;
   left: 50%;
   z-index: 3;
-  /* translate NO CSS SÓ CENTRALIZA O ESTADO BASE; QUALQUER MOVIMENTO É GSAP */
+  /* translate NO CSS SÓ CENTRALIZA O ESTADO BASE — QUALQUER MOVIMENTO É GSAP */
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
@@ -192,6 +169,6 @@
 .clv-sobre__video-play svg {
   width: 30px;
   height: 30px;
-  /* O TRIÂNGULO DE PLAY PARECE DESCENTRALIZADO NUM CÍRCULO SE FICAR NO EIXO */
+  /* TRIÂNGULO DE PLAY PARECE DESCENTRALIZADO SEM ESTA CORREÇÃO */
   margin-left: 3px;
 }

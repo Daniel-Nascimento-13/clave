@@ -2,10 +2,8 @@
    MENU — NAVEGAÇÃO PRINCIPAL
    ============================================ */
 
-/* --menu-y É ANIMADA PELO JS NO :root (VER menu.js). A BARRA DO DESKTOP É FEITA
-   DE TRÊS ELEMENTOS IRMÃOS — HEADER, NAV E CTA — E TODOS LEEM A MESMA VAR, SÓ
-   ASSIM ELES ESCONDEM E APARECEM JUNTOS. NO MOBILE (MAX 860PX) NAV E CTA NÃO
-   HERDAM ESSE transform: O PAINEL EM TELA CHEIA NÃO PODE SAIR DA DOBRA. */
+/* BARRA COMPOSTA DE TRÊS IRMÃOS (HEADER, NAV, CTA) — CADA UM FIXO POR CONTA PRÓPRIA.
+   SEM transform: MENU SEMPRE VISÍVEL, SEM HIDE/SHOW NO SCROLL. */
 
 .clv-menu {
   position: fixed;
@@ -13,8 +11,6 @@
   left: 0;
   width: 100%;
   z-index: 100;
-  transform: translateY(var(--menu-y, 0%));
-  will-change: transform;
 }
 
 .clv-menu::before {
@@ -76,11 +72,14 @@
 
 /* ---------- 3 BARRAS ---------- */
 
+/* GEOMETRIA TODA JUNTA: O X USA AS MESMAS MEDIDAS DO ESTADO FECHADO.
+   BURGER É O ELEMENTO MAIS ALTO DO .clv-menu__inner — DEFINE A ALTURA DA BARRA. */
+
 .clv-menu__burger {
   display: none;
   position: relative;
-  width: 40px;
-  height: 36px;
+  width: 26px;
+  height: 26px;
   background: none;
   border: none;
   cursor: pointer;
@@ -89,42 +88,41 @@
 
 .clv-menu__burger span {
   position: absolute;
-  left: 2.5px;
-  width: 38px;
-  height: 4px;
+  left: 2px;
+  width: 22px;
+  height: 1.5px;
   background: #f1faee;
   border-radius: 100px;
   transition: 0.3s ease;
 }
 
 .clv-menu__burger span:nth-child(1) { top: 5px; }
-.clv-menu__burger span:nth-child(2) { top: 16px; }
+.clv-menu__burger span:nth-child(2) { top: 12.25px; }
 .clv-menu__burger span:nth-child(3) { bottom: 5px; }
 
-/* ---------- ABERTO: AS 3 BARRAS VIRAM UM X ---------- */
+/* ---------- ABERTO — 3 BARRAS VIRAM X ---------- */
 
-/* AS BARRAS GIRAM EM TORNO DO PRÓPRIO CENTRO E SÃO TRAZIDAS PARA O CENTRO
-   DO BOTÃO (22.5, 18). CENTRO FECHADO: BARRA 1 EM Y=7, BARRA 3 EM Y=29,
-   LOGO O DESLOCAMENTO SIMÉTRICO É DE ±11PX. LEFT 1 + WIDTH 43 CENTRA EM X. */
+/* BARRAS GIRAM EM TORNO DO PRÓPRIO CENTRO E CONVERGEM PARA Y=13.
+   DESLOCAMENTO SIMÉTRICO: BARRA 1 EM Y=5.75, BARRA 3 EM Y=20.25 → ±7.25px. */
 
 .clv-menu__burger[aria-expanded="true"] span:nth-child(1),
 .clv-menu__burger[aria-expanded="true"] span:nth-child(3) {
-  width: 43px;
-  left: 1px;
+  width: 25px;
+  left: 0.5px;
   transform-origin: center;
 }
 
 .clv-menu__burger[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(11px) rotate(45deg);
+  transform: translateY(7.25px) rotate(45deg);
 }
 
 .clv-menu__burger[aria-expanded="true"] span:nth-child(2) {
-  transform: translateX(-20px);
+  transform: translateX(-14px);
   opacity: 0;
 }
 
 .clv-menu__burger[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-11px) rotate(-45deg);
+  transform: translateY(-7.25px) rotate(-45deg);
 }
 
 /* ============================================
@@ -132,22 +130,29 @@
    ============================================ */
 
 @media (max-width: 860px) {
-  /* ---------- FECHADO: NAV E CTA SOMEM, SÓ O BURGER FICA ---------- */
-  .clv-menu__nav,
-  .clv-menu__cta {
+  /* BARRA ENXUTA: 26px DE BURGER + 0.75rem DE PADDING = ~50px */
+  .clv-menu__inner {
+    padding: 0.75rem 3rem;
+  }
+
+  .clv-menu__logo img {
+    height: 18px;
+  }
+
+  /* DEGRADÊ ACOMPANHA A ALTURA DA BARRA */
+  .clv-menu::before {
+    height: 50px;
+  }
+
+  .clv-menu__nav {
     display: none;
   }
 
-  /* ---------- ABERTO (.IS-OPEN): O JS ADICIONA A CLASSE ---------- */
-  .clv-menu__nav.is-open,
-  .clv-menu__cta.is-open {
-    display: flex;
-  }
-
   .clv-menu__nav.is-open {
+    display: flex;
     position: fixed;
     inset: 0;
-    z-index: 90; /* ABAIXO DO HEADER (100), PRO BURGER CONTINUAR CLICÁVEL */
+    z-index: 90; /* ABAIXO DO HEADER (100) — BURGER CONTINUA CLICÁVEL */
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -159,56 +164,39 @@
     font-size: 1.5rem;
   }
 
-  .clv-menu__cta.is-open {
-    position: fixed;
-    z-index: 90;
-    bottom: 4rem;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
   .clv-menu__burger {
     display: flex;
     position: relative;
-    z-index: 200; /* SEMPRE ACIMA DO PAINEL, PRA CONTINUAR CLICÁVEL E FECHAR */
+    z-index: 200; /* SEMPRE ACIMA DO PAINEL */
   }
 }
 
 /* ============================================
-   DESKTOP (MIN 861PX) — RECOMPÕE A BARRA DO HEADER
+   DESKTOP (MIN 861PX) — BARRA FIXA
    ============================================ */
 
-/* NAV E CTA SÃO IRMÃOS DO <header>, NÃO FILHOS: SÓ ASSIM O PAINEL MOBILE PODE */
-/* SER position: fixed (O HEADER TEM will-change/transform E VIRARIA CONTAINING */
-/* BLOCK). AQUI A BARRA É RECOMPOSTA COM AS MEDIDAS DO .clv-menu__inner: */
-/* ALTURA 80px (32px DA LOGO + 1.5rem DE PADDING VERTICAL), RECUO LATERAL 3rem, */
-/* GAP DE 2.5rem ENTRE OS LINKS E 2rem ENTRE A NAV E O CTA. */
+/* NAV É IRMÃ DO <header> — PAINEL MOBILE É position: fixed E NÃO DEPENDE DO HEADER.
+   CTA É FILHO DA NAV: ACOMPANHA O FIXO SEM right: PRÓPRIO. */
 
 @media (min-width: 861px) {
-  .clv-menu__nav,
-  .clv-menu__cta {
+  .clv-menu__nav {
     position: fixed;
     top: 0;
     height: 80px;
     display: flex;
     align-items: center;
     z-index: 101;
-    transform: translateY(var(--menu-y, 0%)); /* ACOMPANHA O HEADER NO HIDE/SHOW */
-    will-change: transform;
-  }
-
-  .clv-menu__nav {
     gap: 2.5rem;
-    right: calc(3rem + 101px + 2rem); /* RECUO + LARGURA DO CTA + GAP */
+    right: 3rem;
   }
 
   .clv-menu__cta {
-    right: 3rem;
+    margin-left: 2rem;
   }
 }
 
 /* ============================================
-   OVERLAY — SOBRE / ANUNCIE (BASE COMPARTILHADA)
+   OVERLAY — BASE COMPARTILHADA
    ============================================ */
 
 .clv-overlay {
@@ -221,24 +209,9 @@
   /* clip-path, opacity E visibility CONTROLADOS VIA GSAP */
 }
 
-/* O PAINEL É O CONTAINER DE SCROLL DO OVERLAY (height: 100% + overflow-y: auto).
-   EM FLUXO NORMAL O CONTEÚDO NASCIA COLADO NO TOPO: O padding DE 6rem FIXAVA 96px
-   EM CIMA E TODA A SOBRA IA PRA BAIXO (EM 1920x1080 ERAM 96px EM CIMA CONTRA 308px
-   EMBAIXO). O flex column CENTRA O CONTEÚDO NA ALTURA QUE SOBRA.
-
-   O "safe" NÃO É ENFEITE: É ELE QUE SEPARA ESTE CASO DA REGRA DE NÃO CENTRALIZAR
-   VERTICALMENTE UM CONTAINER DE ALTURA DE VIEWPORT. COM center PURO, ASSIM QUE O
-   CONTEÚDO PASSA DA ALTURA DO PAINEL O EXCEDENTE VAZA PROS DOIS LADOS E O TOPO FICA
-   FORA DO ALCANCE DO SCROLL — INALCANÇÁVEL, PORQUE scrollTop NÃO VAI A NEGATIVO.
-   COM "safe", NO MOMENTO EM QUE HAVERIA OVERFLOW O CENTER É ABANDONADO E O
-   ALINHAMENTO CAI PRA flex-start, DEVOLVENDO O COMPORTAMENTO ATUAL — QUE É
-   EXATAMENTE O QUE O MOBILE E OS NOTEBOOKS BAIXOS PRECISAM.
-
-   SE UM BROWSER NÃO ENTENDER "safe", A DECLARAÇÃO INTEIRA É DESCARTADA E O
-   justify-content VOLTA A flex-start: O PIOR CASO É O LAYOUT DE HOJE, NÃO UM QUEBRADO.
-
-   .clv-overlay__close É position: absolute, ENTÃO FICA FORA DO FLUXO FLEX E NÃO
-   VIRA ITEM FLEX — O BOTÃO NÃO SE MEXE. */
+/* justify-content: safe center — QUANDO O CONTEÚDO PASSA DA ALTURA DO PAINEL,
+   O BROWSER ABANDONA O CENTER E CAI PARA flex-start, EVITANDO QUE O TOPO
+   FIQUE FORA DO ALCANCE DO SCROLL. FALLBACK: flex-start (LAYOUT ATUAL). */
 .clv-overlay__panel {
   position: relative;
   width: 100%;
@@ -269,6 +242,7 @@
   height: 1.5px;
   background: #fff;
 }
+
 .clv-overlay__close span:first-child { transform: rotate(45deg); }
 .clv-overlay__close span:last-child  { transform: rotate(-45deg); }
 

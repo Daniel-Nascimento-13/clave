@@ -1,6 +1,9 @@
 /* ============================================
    SEÇÃO 4 — DIFERENCIAIS — CARDS E GLOW
    ============================================ */
+
+/* ---------- IMPORTS ---------- */
+
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { DIFERENCIAIS } from "../constants/motion.js";
@@ -27,6 +30,7 @@ export function initDiferenciais() {
   }
 
   /* ---------- ROLETA DO TÍTULO ---------- */
+
   if (heading) {
     ScrollTrigger.create({
       trigger: heading,

@@ -1,6 +1,9 @@
 /* ============================================
    OVERLAY — SOBRE
    ============================================ */
+
+/* ---------- IMPORTS ---------- */
+
 import { initWordFlip } from '../../lib/word-flip.js';
 import { initSobreVideo } from './sobre-video.js';
 

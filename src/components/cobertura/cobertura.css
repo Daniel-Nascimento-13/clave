@@ -1,8 +1,8 @@
-/* ============================================ */
-/* OVERLAY — COBERTURA AMPLA                    */
-/* ============================================ */
+/* ============================================
+   OVERLAY — COBERTURA AMPLA
+   ============================================ */
 
-/* ------------ LAYOUT GERAL ------------ */
+/* ---------- LAYOUT GERAL ---------- */
 
 .clv-cobertura__content {
   width: 100%;
@@ -11,7 +11,7 @@
   padding: 2rem 0;
 }
 
-/* ------------ CABEÇALHO ------------ */
+/* ---------- CABEÇALHO ---------- */
 
 .clv-cobertura__head {
   text-align: center;
@@ -46,7 +46,7 @@
   margin: 0 auto;
 }
 
-/* ------------ CAMPOS ------------ */
+/* ---------- CAMPOS ---------- */
 
 .clv-cobertura__fields {
   display: grid;
@@ -90,7 +90,7 @@
   color: rgba(255, 255, 255, 0.2);
 }
 
-/* ------------ SECTION LABEL ------------ */
+/* ---------- SECTION LABEL ---------- */
 
 .clv-cobertura__section-label {
   font-family: var(--font-body);
@@ -101,7 +101,7 @@
   margin-bottom: 16px;
 }
 
-/* ------------ GRID DE LOCAIS ------------ */
+/* ---------- GRID DE LOCAIS ---------- */
 
 .clv-cobertura__grid {
   display: grid;
@@ -110,7 +110,7 @@
   margin-bottom: 24px;
 }
 
-/* ------------ CARD DE LOCAL ------------ */
+/* ---------- CARD DE LOCAL ---------- */
 
 .clv-cobertura__loc {
   position: relative;
@@ -208,7 +208,7 @@
   pointer-events: none;
 }
 
-/* ------------ CONTADOR ------------ */
+/* ---------- CONTADOR ---------- */
 
 .clv-cobertura__counter {
   font-family: var(--font-body);
@@ -224,7 +224,7 @@
   font-weight: 600;
 }
 
-/* ------------ CTA WHATSAPP ------------ */
+/* ---------- CTA WHATSAPP ---------- */
 
 .clv-cobertura__cta {
   display: flex;
@@ -256,7 +256,7 @@
   transform: translateY(-2px);
 }
 
-/* ------------ LINK NO OVERLAY ANUNCIE ------------ */
+/* ---------- LINK NO OVERLAY ANUNCIE ---------- */
 
 .clv-anuncie__multipontos {
   display: flex;
@@ -291,7 +291,7 @@
   opacity: 0.7;
 }
 
-/* ------------ MOBILE ------------ */
+/* ---------- MOBILE ---------- */
 
 @media (max-width: 768px) {
   .clv-cobertura__fields {

@@ -2,6 +2,8 @@
    SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL
    ============================================ */
 
+/* ---------- IMPORTS ---------- */
+
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PREDIOS, slugDaCategoria } from "../data/predios.js";
@@ -10,22 +12,22 @@ import { openOverlay } from "../components/menu/menu.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ------------ CONSTANTES ------------ */
+/* ---------- CONSTANTES ---------- */
 
-const EASE            = "power3.out";
-const DURATION        = 0.9;
-const NOME_DURATION   = 0.8;
-const NOME_EASE       = "expo.out";
+const EASE          = "power3.out";
+const DURATION      = 0.9;
+const NOME_DURATION = 0.8;
+const NOME_EASE     = "expo.out";
 
-/* ------------ INIT ------------ */
+/* ---------- INIT ---------- */
 
 export function initPredios() {
-  const section  = document.querySelector("[data-predios]");
+  const section   = document.querySelector("[data-predios]");
   if (!section) return;
 
-  const stage    = section.querySelector("[data-predios-stage]");
-  const btnPrev  = section.querySelector("[data-predios-prev]");
-  const btnNext  = section.querySelector("[data-predios-next]");
+  const stage     = section.querySelector("[data-predios-stage]");
+  const btnPrev   = section.querySelector("[data-predios-prev]");
+  const btnNext   = section.querySelector("[data-predios-next]");
   const elCurrent = section.querySelector(".predios__counter-current");
   const elTotal   = section.querySelector(".predios__counter-total");
   const heading   = section.querySelector(".predios__heading");
@@ -37,23 +39,17 @@ export function initPredios() {
   let activeIdx = 0;
   let animating = false;
 
-  /* ------------ TOTAL ------------ */
-
   elTotal.textContent = String(PREDIOS.length).padStart(2, "0");
-
-  /* ------------ RENDER INICIAL ------------ */
 
   renderCarousel();
   updateCounter();
 
-  /* ------------ SCROLL TRIGGER DO HEADING ------------ */
+  /* ---------- SCROLL TRIGGER DO HEADING ---------- */
 
-  // O CSS DEIXA O HEADING EM opacity:0. QUEM DEVOLVE A VISIBILIDADE É AQUI — E
-  // TAMBÉM NO BRANCH DE reduced-motion, PORQUE animateRouletteTitle DÁ return
-  // ANTES DE TOCAR NO ELEMENTO E O TÍTULO FICARIA INVISÍVEL PARA SEMPRE.
+  /* O CSS DEIXA O HEADING EM opacity:0 — SEM ISSO O TÍTULO FICARIA
+     INVISÍVEL PARA SEMPRE NO BRANCH DE REDUCED-MOTION */
   if (heading) {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) {
+    if (reduce) {
       gsap.set(heading, { opacity: 1 });
     } else {
       ScrollTrigger.create({
@@ -68,14 +64,13 @@ export function initPredios() {
     }
   }
 
-  /* ------------ NAVEGAÇÃO ------------ */
+  /* ---------- NAVEGAÇÃO ---------- */
 
   btnPrev?.addEventListener("click", () => goTo(activeIdx - 1));
   btnNext?.addEventListener("click", () => goTo(activeIdx + 1));
 
-  /* DELEGAÇÃO — O .predios__card-cta É RECRIADO A CADA goTo(),
-     ENTÃO O bindMenuLinks() DO MENU NÃO COBRE ELE.
-     INTERCEPTAMOS O CLIQUE NA SECTION E ABRIMOS O OVERLAY DIRETAMENTE. */
+  /* .predios__card-cta É RECRIADO A CADA goTo() — DELEGAMOS NA SECTION
+     PARA NÃO PERDER O LISTENER */
   section.addEventListener("click", (e) => {
     const link = e.target.closest("[data-menu-link]");
     if (!link) return;
@@ -85,8 +80,6 @@ export function initPredios() {
     if (target) openOverlay(target, { category, item });
   });
 
-  /* ------------ CLICK NOS CARDS LATERAIS ------------ */
-
   stage.addEventListener("click", (e) => {
     const card = e.target.closest(".predios__card");
     if (!card || card.classList.contains("predios__card--center")) return;
@@ -94,7 +87,7 @@ export function initPredios() {
     if (!isNaN(idx)) goTo(idx);
   });
 
-  /* ------------ FUNÇÕES ------------ */
+  /* ---------- FUNÇÕES ---------- */
 
   function getVisibleIndices(centerIdx) {
     const total = PREDIOS.length;
@@ -108,14 +101,13 @@ export function initPredios() {
   function renderCarousel() {
     stage.innerHTML = "";
     const { left, center, right } = getVisibleIndices(activeIdx);
-
     stage.appendChild(buildCard(left,   "side-left"));
     stage.appendChild(buildCard(center, "center"));
     stage.appendChild(buildCard(right,  "side-right"));
   }
 
   function buildCard(idx, role) {
-    const predio = PREDIOS[idx];
+    const predio  = PREDIOS[idx];
     const isCenter = role === "center";
 
     const card = document.createElement("div");
@@ -124,10 +116,10 @@ export function initPredios() {
     card.dataset.idx = idx;
 
     const img = document.createElement("img");
-    img.className = "predios__card-img";
-    img.src = predio.foto;
-    img.alt = predio.nome.trim();
-    img.loading = "eager";
+    img.className  = "predios__card-img";
+    img.src        = predio.foto;
+    img.alt        = predio.nome.trim();
+    img.loading    = "eager";
 
     const scrim = document.createElement("div");
     scrim.className = "predios__card-scrim";
@@ -140,30 +132,30 @@ export function initPredios() {
       info.className = "predios__card-info";
 
       const nome = document.createElement("p");
-      nome.className = "predios__card-nome";
+      nome.className  = "predios__card-nome";
       nome.textContent = predio.nome.trim();
 
       const cta = document.createElement("button");
-      cta.className = "predios__card-cta";
-      cta.textContent = "Saber mais";
-      cta.dataset.menuLink = "";
-      cta.dataset.action = "overlay";
-      cta.dataset.target = "anuncie";
-      // O OVERLAY "ANUNCIE" VALIDA data-category CONTRA AS CHAVES DE CATEGORIAS,
-      // QUE SÃO SLUGS. MANDAR A LABEL CRUA ("Hotéis") CAI NO FILTRO PADRÃO.
-      cta.dataset.category = slugDaCategoria(predio.categoria) ?? "todos";
-      cta.dataset.item = predio.nome.trim();
+      cta.className       = "predios__card-cta";
+      cta.textContent     = "Saber mais";
+      cta.dataset.menuLink  = "";
+      cta.dataset.action    = "overlay";
+      cta.dataset.target    = "anuncie";
+      /* OVERLAY VALIDA data-category COMO SLUG — LABEL CRUA ("Hotéis")
+         CAIRIA NO FILTRO PADRÃO */
+      cta.dataset.category  = slugDaCategoria(predio.categoria) ?? "todos";
+      cta.dataset.item      = predio.nome.trim();
 
       info.appendChild(nome);
       info.appendChild(cta);
       card.appendChild(info);
 
-      /* REVEAL DO NOME */
       if (reduce) {
         gsap.set(nome, { clipPath: "inset(0 0 0% 0)" });
       } else {
         requestAnimationFrame(() => {
-          gsap.fromTo(nome,
+          gsap.fromTo(
+            nome,
             { clipPath: "inset(0 0 100% 0)", y: 12, autoAlpha: 0 },
             { clipPath: "inset(0 0 0% 0)",   y: 0,  autoAlpha: 1,
               duration: NOME_DURATION, ease: NOME_EASE, delay: 0.15 }
@@ -204,17 +196,18 @@ export function initPredios() {
         updateCounter();
 
         const newCards = stage.querySelectorAll(".predios__card");
-        gsap.fromTo(newCards,
+        gsap.fromTo(
+          newCards,
           { autoAlpha: 0, x: direction === 1 ? 40 : -40 },
           {
             autoAlpha: 1, x: 0,
             duration: DURATION * 0.6,
             ease: EASE,
             stagger: 0.05,
-            onComplete: () => { animating = false; }
+            onComplete: () => { animating = false; },
           }
         );
-      }
+      },
     });
   }
 
@@ -226,8 +219,8 @@ export function initPredios() {
 
   function updateCounter() {
     if (!elCurrent) return;
-    // O TEXTO TROCA ANTES DO TWEEN: SE FIZESSE O CONTRÁRIO, O FADE-IN RODARIA
-    // SOBRE O NÚMERO ANTIGO E O NOVO APARECERIA DE ESTALO NO FIM.
+    /* TEXTO TROCA ANTES DO TWEEN — SE FOSSE O CONTRÁRIO, O FADE-IN
+       RODARIA SOBRE O NÚMERO ANTIGO */
     elCurrent.textContent = String(activeIdx + 1).padStart(2, "0");
     if (reduce) return;
     gsap.fromTo(elCurrent,

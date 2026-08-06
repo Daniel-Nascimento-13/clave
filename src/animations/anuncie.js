@@ -1,24 +1,20 @@
 /* ============================================
    OVERLAY — ANUNCIE — ANIMAÇÕES
    ============================================ */
-import { gsap } from "../lib/gsap.js";
 
-/* O ESTADO/FILTRO VIVE EM components/anuncie/anuncie.js. AQUI FICA SÓ O MOVIMENTO,
-   E TUDO QUE É CRIADO AQUI TEM QUE MORRER EM destroyAnuncie() — O OVERLAY ABRE E
-   FECHA VÁRIAS VEZES NA MESMA SESSÃO E OS TWEENS INFINITOS SE ACUMULARIAM. */
+/* ---------- IMPORTS ---------- */
+
+import { gsap } from "../lib/gsap.js";
 
 const REVEAL_DURATION = 0.8;
 const EASE = "power3.out";
 
-/* ---------- SHIMMER — FAIXA DE LUZ DESLIZANTE ---------- */
-
-// UM TWEEN INFINITO POR VEZ, GUARDADO PRA PODER SER MORTO. O PROJETO SÓ ADMITE O
-// @keyframes clv-speen QUE JÁ EXISTIA, ENTÃO O DESLOCAMENTO DA FAIXA É FEITO AQUI
-// EM GSAP (power1.inOut, O EASE PERMITIDO PARA LOOP CONTÍNUO).
-let shimmerTween = null;
-
 const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- SHIMMER ---------- */
+
+let shimmerTween = null;
 
 export function hideShimmer(glows) {
   shimmerTween?.kill();
@@ -33,7 +29,6 @@ export function playShimmer(glows, target) {
   gsap.set(target, { autoAlpha: 1 });
 
   if (prefersReducedMotion()) {
-    // SEM LOOP: A FAIXA FICA PARADA NO MEIO DO BOTÃO, MARCANDO O ATIVO.
     gsap.set(target, { backgroundPosition: "0px 0" });
     return;
   }
@@ -51,11 +46,8 @@ export function playShimmer(glows, target) {
   );
 }
 
-/* ---------- INDICADOR DE SCROLL (SETA) ---------- */
+/* ---------- INDICADOR DE SCROLL ---------- */
 
-// MESMO PADRÃO DO SHIMMER: TWEEN INFINITO EM GSAP, SEM @keyframes CSS NOVO.
-// UM TWEEN POR SETA — SÃO DUAS AGORA, E ELAS ACENDEM E APAGAM EM MOMENTOS
-// DIFERENTES. UMA VARIÁVEL SÓ FARIA A SEGUNDA MATAR O TWEEN DA PRIMEIRA.
 const hintTweens = new WeakMap();
 
 export function toggleHint(hint, mostrar) {
@@ -64,67 +56,44 @@ export function toggleHint(hint, mostrar) {
   if (!mostrar) {
     hintTweens.get(hint)?.kill();
     hintTweens.delete(hint);
-    gsap.set(hint, { visibility: 'hidden', opacity: 0, x: 0 });
+    gsap.set(hint, { visibility: "hidden", opacity: 0, x: 0 });
     return;
   }
 
-  // O GUARD É O QUE IMPEDE O LOOP DE REINICIAR A CADA EVENTO DE scroll: SEM ELE A
-  // SETA "TRAVA" NO PRIMEIRO FRAME ENQUANTO O DEDO ARRASTA, QUE É JUSTO A HORA EM
-  // QUE ELA PRECISA ESTAR ANIMANDO.
   if (hintTweens.has(hint)) return;
 
-  gsap.set(hint, { visibility: 'visible' });
+  gsap.set(hint, { visibility: "visible" });
 
   if (prefersReducedMotion()) {
     gsap.set(hint, { opacity: 1, x: 0 });
     return;
   }
 
-  // O VAI-E-VOLTA TERMINA EM 0 E COMEÇA "PRA DENTRO", NÃO O CONTRÁRIO: A BORDA DO
-  // MENU É O LIMITE DO MOVIMENTO, NUNCA O PONTO DE PARTIDA — NENHUMA DAS DUAS
-  // ULTRAPASSA O PRÓPRIO CANTO. O SINAL ESPELHA O LADO, ENTÃO CADA SETA ANDA NO
-  // SENTIDO PRA ONDE ELA APONTA. VALORES (4px, 0.35, 1.4s, power1.inOut) SÃO OS
-  // MESMOS JÁ VALIDADOS NA SETA DA DIREITA.
-  const sentido = hint.dataset.anuncieHint === 'prev' ? 4 : -4;
+  const sentido = hint.dataset.anuncieHint === "prev" ? 4 : -4;
 
   hintTweens.set(
     hint,
     gsap.fromTo(
       hint,
       { x: sentido, opacity: 0.35 },
-      { x: 0, opacity: 1, duration: 1.4, ease: 'power1.inOut', repeat: -1, yoyo: true }
+      { x: 0, opacity: 1, duration: 1.4, ease: "power1.inOut", repeat: -1, yoyo: true }
     )
   );
 }
 
-/* ---------- REVELAR A PÍLULA ATIVA (MOBILE) ---------- */
+/* ---------- REVELAR PÍLULA ATIVA ---------- */
 
-/* ABRIR O OVERLAY JÁ FILTRADO PELA SEÇÃO PRÉDIOS PODE DEIXAR A PÍLULA ATIVA FORA DA
-   ÁREA VISÍVEL DO MENU EM TELA ESTREITA ("EVENTOS" É O ÚLTIMO DOS 7): O BRILHO
-   ESTARIA ACESO ONDE NINGUÉM VÊ. AQUI O MENU ROLA ATÉ ELA.
-
-   NÃO USEI scrollIntoView: ELE ROLA O ANCESTRAL MAIS PRÓXIMO TAMBÉM, E O PAINEL DO
-   OVERLAY (data-lenis-prevent, overflow-y: auto) LEVARIA UM PULO VERTICAL NO MEIO
-   DA ABERTURA. O TWEEN MEXE SÓ NO scrollLeft DO MENU, COM O EASE E A DURAÇÃO DO
-   RESTO DO PROJETO. */
 export function revelarPilulaAtiva(menu, pill) {
   if (!pill) return;
 
-  // SEM RANGE DE SCROLL NÃO HÁ O QUE REVELAR — É O QUE DESLIGA ISTO NO DESKTOP,
-  // ONDE OS 7 ITENS CABEM. A CONDIÇÃO REAL É "CABE OU NÃO", NÃO A LARGURA DA TELA.
   const max = menu.scrollWidth - menu.clientWidth;
   if (max <= 1) return;
 
-  // getBoundingClientRect EM VEZ DE offsetLeft: O MENU NÃO É position: relative,
-  // ENTÃO offsetParent SERIA O OVERLAY E offsetLeft NÃO DIRIA NADA SOBRE A POSIÇÃO
-  // DENTRO DA ÁREA ROLÁVEL.
   const areaMenu = menu.getBoundingClientRect();
   const areaPill = pill.getBoundingClientRect();
 
-  // JÁ TOTALMENTE VISÍVEL: NÃO MEXE. A TOLERÂNCIA DE 1px COBRE O SUBPIXEL.
   if (areaPill.left >= areaMenu.left - 1 && areaPill.right <= areaMenu.right + 1) return;
 
-  // CENTRALIZA A PÍLULA NA ÁREA VISÍVEL, SEM PASSAR DAS PONTAS DO SCROLL.
   const alvo = gsap.utils.clamp(
     0,
     max,
@@ -136,8 +105,6 @@ export function revelarPilulaAtiva(menu, pill) {
     return;
   }
 
-  // O FADE SE ATUALIZA SOZINHO: O TWEEN MEXE NO scrollLeft, QUE DISPARA O EVENTO
-  // scroll NATIVO — E É NELE QUE updateFade() ESTÁ PENDURADO (VER anuncie.js).
   gsap.to(menu, {
     scrollTo: { x: alvo },
     duration: 0.8,
@@ -148,9 +115,6 @@ export function revelarPilulaAtiva(menu, pill) {
 
 /* ---------- TROCA DE SLIDE ---------- */
 
-// REVEAL COM clip-path + translateY + autoAlpha (NUNCA FADE PURO). A FOTO ENTRA EM
-// CROSSFADE NO MESMO TEMPO: O src JÁ FOI TROCADO PELO RENDER COM A IMAGEM INVISÍVEL,
-// ENTÃO O QUE SE VÊ É A NOVA APARECENDO, NÃO O SWAP.
 export function revealSlide(textEl, photoEl) {
   gsap.fromTo(
     textEl,
@@ -174,12 +138,8 @@ export function revealSlide(textEl, photoEl) {
 
 /* ---------- LIMPEZA ---------- */
 
-// hideShimmer NÃO É REDUNDANTE COM O killTweensOf ABAIXO: MATAR O TWEEN SOZINHO
-// CONGELARIA A FAIXA ACESA NO MEIO DO PERCURSO, E ELA RESSURGIRIA ASSIM NA PRÓXIMA
-// ABERTURA SE O RESET FALHASSE. FECHAR APAGA.
 export function destroyAnuncie(glows, hints, elements) {
   hideShimmer(glows);
-  // MESMO MOTIVO DO hideShimmer: FECHAR APAGA, NÃO CONGELA.
   hints.forEach((hint) => toggleHint(hint, false));
   gsap.killTweensOf(elements);
 }
