@@ -11,8 +11,13 @@
     <title>CLAVE — Mídia Indoor</title>
     <meta
       name="description"
-      content="Atenção que conecta marcas ao público. Mídia indoor em elevadores e áreas comuns de condomínios."
+      content="DOOH indoor no Vale do Taquari. Presença, frequência e contexto onde a vida acontece."
     />
+
+    <!-- LEAFLET — VIA CDN, FORA DO BUNDLE DO VITE.
+         defer GARANTE EXECUÇÃO ANTES DO MÓDULO /src/main.js (ORDEM DO DOCUMENTO). -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
   </head>
   <body>
 
@@ -23,7 +28,7 @@
       <div class="clv-menu__inner">
 
         <a href="/" class="clv-menu__logo" data-menu-link>
-          <img src="/images/logo/LOGO-BRANCA-CROP.webp" alt="Clave Mídia Indoor" />
+          <img src="/images/clave/logo.webp" alt="Clave Mídia Indoor" />
         </a>
 
         <button type="button" class="clv-menu__burger" data-menu-burger aria-expanded="false" aria-label="Abrir menu">
@@ -36,422 +41,257 @@
          BLOCK, IMPEDINDO O PAINEL MOBILE DE SER position: fixed EM TELA CHEIA.
          CSS RECOMPÕE A BARRA NO DESKTOP (min-width: 861px). -->
     <nav class="clv-menu__nav" data-menu-nav>
-      <button type="button" class="clv-menu__link" data-menu-link data-action="overlay" data-target="sobre">Sobre</button>
-      <button type="button" class="clv-menu__link" data-menu-link data-action="scroll" data-target=".marcas__bar">Anunciantes</button>
-      <button type="button" class="clv-menu__link" data-menu-link data-action="overlay" data-target="anuncie">Anuncie com a Clave</button>
-      <button type="button" class="clv-menu__link" data-menu-link data-action="overlay" data-target="cobertura">Cobertura ampla</button>
-      <button type="button" class="clv-menu__link" data-menu-link data-action="overlay" data-target="planos">Planos</button>
-      <a href="#" class="clv-menu__cta" data-whatsapp-cta>Fale conosco</a>
+      <button type="button" class="clv-menu__link" data-menu-link data-action="scroll" data-target="#sobre">Sobre</button>
+      <button type="button" class="clv-menu__link" data-menu-link data-action="scroll" data-target="#marcas">Anunciantes</button>
+      <button type="button" class="clv-menu__link" data-menu-link data-action="scroll" data-target="#mapa">A Rede</button>
+      <button type="button" class="clv-menu__link" data-menu-link data-action="scroll" data-target="#planos">Planos</button>
+      <button type="button" class="clv-menu__link" data-menu-link data-action="scroll" data-target="#contato">Contato</button>
+      <a href="#contato" class="clv-menu__cta clv-menu__cta--solid" data-menu-link data-action="scroll" data-target="#contato">Quero Anunciar</a>
     </nav>
-
-    <!-- ============================================
-         OVERLAY — SOBRE
-         ============================================ -->
-    <div class="clv-overlay" id="overlay-sobre" data-overlay="sobre" aria-hidden="true">
-      <!-- data-lenis-prevent — LENIS ENGOLE O wheel NA JANELA ANTES DE CHEGAR
-           AQUI. SEM ESTE ATRIBUTO O overflow-y: auto DO PAINEL NÃO ROLA. -->
-      <div class="clv-overlay__panel" data-lenis-prevent>
-        <button type="button" class="clv-overlay__close" data-overlay-close aria-label="Fechar">
-          <span></span><span></span>
-        </button>
-        <div class="clv-overlay__content">
-
-          <!-- ============================================
-               BLOCO DE TEXTO
-               ============================================ -->
-          <div class="clv-sobre__intro">
-            <p class="clv-sobre__eyebrow">Sobre</p>
-            <h1 class="clv-sobre__heading">
-              A Clave conecta<br>
-              <span class="clv-sobre__flip" data-word-flip data-words="marcas,empresas,você">marcas</span> ao público
-            </h1>
-            <p class="clv-sobre__text">Levamos mídia indoor para elevadores e áreas comuns de condomínios residenciais e comerciais, com presença onde as pessoas realmente estão.</p>
-
-            <div class="clv-sobre__stats">
-              <div class="clv-sobre__stat">
-                <span class="clv-sobre__stat-num">+10</span>
-                <span class="clv-sobre__stat-label">LOCAIS</span>
-              </div>
-              <div class="clv-sobre__stat">
-                <span class="clv-sobre__stat-num">2025</span>
-                <span class="clv-sobre__stat-label">DESDE</span>
-              </div>
-              <div class="clv-sobre__stat">
-                <span class="clv-sobre__stat-num">Lajeado</span>
-                <span class="clv-sobre__stat-label">E REGIÃO</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- ============================================
-               VÍDEO — GLOW GIRATÓRIO
-               ============================================ -->
-          <div class="clv-sobre__video-wrap">
-            <article class="clv-card-container clv-sobre__video-container" data-sobre-video>
-              <div class="clv-spin clv-spin-blur"></div>
-              <div class="clv-spin clv-spin-intense"></div>
-              <div class="clv-card-border"><div class="clv-spin clv-spin-inside"></div></div>
-              <div class="clv-card clv-sobre__video-card">
-                <!-- preload="none" — 23MB SÓ CARREGAM QUANDO O OVERLAY ABRE
-                     (sobre-video.js TROCA PARA "metadata") -->
-                <video
-                  class="clv-sobre__video"
-                  data-sobre-video-el
-                  preload="none"
-                  playsinline
-                  poster="/images/sobre/VIDEO-SOBRE-POSTER.jpg"
-                >
-                  <source src="/images/sobre/VIDEO-SOBRE.mp4" type="video/mp4" />
-                </video>
-
-                <img
-                  class="clv-sobre__video-poster"
-                  data-sobre-video-poster
-                  src="/images/sobre/VIDEO-SOBRE-POSTER.jpg"
-                  alt="Tela da Clave instalada no hall de um condomínio"
-                />
-
-                <button
-                  type="button"
-                  class="clv-sobre__video-play"
-                  data-sobre-video-play
-                  aria-label="Reproduzir vídeo sobre a Clave"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M8 5v14l11-7z" fill="currentColor" />
-                  </svg>
-                </button>
-              </div>
-            </article>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- ============================================
-         OVERLAY — COBERTURA AMPLA
-         ============================================ -->
-    <div class="clv-overlay" id="overlay-cobertura" data-overlay="cobertura" aria-hidden="true">
-      <div class="clv-overlay__panel" data-lenis-prevent>
-        <button type="button" class="clv-overlay__close" data-overlay-close aria-label="Fechar">
-          <span></span><span></span>
-        </button>
-        <div class="clv-overlay__content clv-cobertura__content">
-
-          <div class="clv-cobertura__head">
-            <p class="clv-cobertura__label">Cobertura ampla</p>
-            <h2 class="clv-cobertura__heading">Anuncie em mais<br>de um local</h2>
-            <p class="clv-cobertura__subtitle">Selecione os espaços de interesse e entraremos em contato com uma proposta personalizada.</p>
-          </div>
-
-          <div class="clv-cobertura__fields">
-            <div class="clv-cobertura__field">
-              <label class="clv-cobertura__field-label" for="cobertura-nome">Seu nome</label>
-              <input class="clv-cobertura__input" type="text" id="cobertura-nome" data-cobertura-nome placeholder="Como prefere ser chamado?" autocomplete="given-name">
-            </div>
-            <div class="clv-cobertura__field">
-              <label class="clv-cobertura__field-label" for="cobertura-empresa">Empresa</label>
-              <input class="clv-cobertura__input" type="text" id="cobertura-empresa" data-cobertura-empresa placeholder="Nome da sua empresa" autocomplete="organization">
-            </div>
-          </div>
-
-          <p class="clv-cobertura__section-label">Selecione os locais de interesse</p>
-
-          <div class="clv-cobertura__grid" data-cobertura-grid>
-            <!-- POPULADO VIA JS A PARTIR DE PREDIOS -->
-          </div>
-
-          <p class="clv-cobertura__counter" data-cobertura-counter>Nenhum local selecionado</p>
-
-          
-            class="clv-cobertura__cta"
-            data-cobertura-cta
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-disabled="true"
-          >
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.148-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-            Enviar interesse via WhatsApp
-          </a>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- ============================================
-         OVERLAY — PLANOS
-         ============================================ -->
-    <div class="clv-overlay" id="overlay-planos" data-overlay="planos" aria-hidden="true">
-      <!-- data-lenis-prevent — MESMO MOTIVO DOS OVERLAYS ACIMA -->
-      <div class="clv-overlay__panel" data-lenis-prevent>
-        <button type="button" class="clv-overlay__close" data-overlay-close aria-label="Fechar">
-          <span></span><span></span>
-        </button>
-        <div class="clv-overlay__content clv-planos__content">
-
-          <div class="clv-planos__head">
-            <p class="clv-planos__label">Nossos planos</p>
-            <h2 class="clv-planos__heading">Escolha sua cobertura</h2>
-          </div>
-
-          <div class="clv-planos__toggle">
-            <div class="clv-planos__toggle-wrap">
-              <button type="button" class="clv-planos__toggle-btn" data-planos-plan="trimestral">Trimestral</button>
-              <button type="button" class="clv-planos__toggle-btn" data-planos-plan="semestral">Semestral</button>
-              <button type="button" class="clv-planos__toggle-btn clv-planos__toggle-btn--active" data-planos-plan="anual">Anual</button>
-            </div>
-          </div>
-
-          <div class="clv-planos__cards">
-
-            <div class="clv-planos__card" data-planos-card="trimestral">
-              <div class="clv-planos__badge">★ Recomendado</div>
-              <p class="clv-planos__card-name">Trimestral</p>
-              <p class="clv-planos__card-desc">Ideal para conhecer a mídia indoor e testar resultados.</p>
-              <p class="clv-planos__card-period">Contrato de 3 meses</p>
-              <ul class="clv-planos__features">
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Suporte via WhatsApp
-                </li>
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Mídia fixa durante o contrato
-                </li>
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Telas conforme disponibilidade do local
-                </li>
-              </ul>
-              <a class="clv-planos__cta" href="#" data-planos-cta target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.148-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-                Falar no WhatsApp
-              </a>
-            </div>
-
-            <div class="clv-planos__card clv-planos__card--featured" data-planos-card="anual">
-              <div class="clv-planos__badge">★ Recomendado</div>
-              <p class="clv-planos__card-name">Anual</p>
-              <p class="clv-planos__card-desc">A melhor relação custo-benefício para presença contínua.</p>
-              <p class="clv-planos__card-period">Contrato de 12 meses</p>
-              <ul class="clv-planos__features">
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Suporte prioritário
-                </li>
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Atualizações de mídia a qualquer momento
-                </li>
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Acesso a novos espaços em primeira mão
-                </li>
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Relatório de visualizações sob consulta
-                </li>
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Telas conforme disponibilidade do local
-                </li>
-              </ul>
-              <a class="clv-planos__cta" href="#" data-planos-cta target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.148-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-                Falar no WhatsApp
-              </a>
-            </div>
-
-            <div class="clv-planos__card" data-planos-card="semestral">
-              <div class="clv-planos__badge">★ Recomendado</div>
-              <p class="clv-planos__card-name">Semestral</p>
-              <p class="clv-planos__card-desc">Presença consistente com flexibilidade de médio prazo.</p>
-              <p class="clv-planos__card-period">Contrato de 6 meses</p>
-              <ul class="clv-planos__features">
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Suporte via WhatsApp
-                </li>
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  1 atualização de mídia inclusa
-                </li>
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Acesso a novos locais em primeira mão
-                </li>
-                <li class="clv-planos__feature">
-                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                  Telas conforme disponibilidade do local
-                </li>
-              </ul>
-              <a class="clv-planos__cta" href="#" data-planos-cta target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.148-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-                Falar no WhatsApp
-              </a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ============================================
-         OVERLAY — ANUNCIE COM A CLAVE
-         ============================================ -->
-    <div class="clv-overlay" id="overlay-anuncie" data-overlay="anuncie" aria-hidden="true">
-      <!-- data-lenis-prevent — MESMO MOTIVO DOS OVERLAYS ACIMA -->
-      <div class="clv-overlay__panel" data-lenis-prevent>
-        <button type="button" class="clv-overlay__close" data-overlay-close aria-label="Fechar">
-          <span></span><span></span>
-        </button>
-        <div class="clv-overlay__content">
-
-          <!-- ============================================
-               MENU DE FILTROS
-               ============================================ -->
-          <!-- WRAPPER EXISTE SÓ COMO position: relative PARA AS SETAS —
-               ANCORADAS NO <nav> (CONTAINER DE SCROLL), ROLARIAM COM AS PÍLULAS -->
-          <div class="clv-anuncie-menu-wrap">
-
-            <!-- SETAS: AVISO, NÃO BOTÃO — pointer-events: none NO CSS -->
-            <span class="clv-anuncie-menu__hint clv-anuncie-menu__hint--prev" data-anuncie-hint="prev" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-            </span>
-            <span class="clv-anuncie-menu__hint clv-anuncie-menu__hint--next" data-anuncie-hint="next" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-            </span>
-
-            <!-- data-lenis-prevent — LENIS INTERCEPTA touchmove E MATARIA
-                 O ARRASTE LATERAL AQUI DENTRO -->
-            <nav class="clv-anuncie-menu" data-anuncie-menu data-lenis-prevent aria-label="Categorias">
-
-              <!-- GLOW É <span> REAL — GSAP NÃO ALCANÇA PSEUDO-ELEMENTO -->
-              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="home">
-                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
-                <span class="clv-anuncie-menu__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg>
-                </span>
-                <span class="clv-anuncie-menu__label">Home</span>
-              </button>
-              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="todos">
-                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
-                <span class="clv-anuncie-menu__label">Todos</span>
-              </button>
-              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="residencial">
-                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
-                <span class="clv-anuncie-menu__label">Residencial</span>
-              </button>
-              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="comercial">
-                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
-                <span class="clv-anuncie-menu__label">Comercial</span>
-              </button>
-              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="hoteis">
-                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
-                <span class="clv-anuncie-menu__label">Hotéis</span>
-              </button>
-              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="restaurantes">
-                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
-                <span class="clv-anuncie-menu__label">Restaurantes</span>
-              </button>
-              <button type="button" class="clv-anuncie-menu__pill" data-anuncie-filter="eventos">
-                <span class="clv-anuncie-menu__glow" aria-hidden="true"></span>
-                <span class="clv-anuncie-menu__label">Eventos</span>
-              </button>
-            </nav>
-          </div>
-
-          <!-- ============================================
-               CARROSSEL — LAYOUT EDITORIAL
-               ============================================ -->
-          <div class="clv-anuncie__carousel" data-anuncie-carousel>
-            <div class="clv-anuncie__info">
-              <div class="clv-anuncie__text" data-anuncie-text>
-                <p class="clv-anuncie__counter" data-anuncie-counter></p>
-                <h2 class="clv-anuncie__title" data-anuncie-title></h2>
-                <p class="clv-anuncie__tag" data-anuncie-tag></p>
-                <p class="clv-anuncie__desc" data-anuncie-desc></p>
-                <!-- DENTRO DE [data-anuncie-text] — ENTRA NO REVEAL A CADA TROCA -->
-                <div class="clv-anuncie__metrics" data-anuncie-metrics></div>
-
-                <!-- href MONTADO A CADA TROCA EM anuncie.js -->
-                
-                  class="clv-anuncie__whatsapp"
-                  data-anuncie-whatsapp
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Falar no WhatsApp sobre este espaço"
-                >
-                  <div class="clv-anuncie__whatsapp-border"></div>
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" class="clv-anuncie__whatsapp-sparkle">
-                    <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.148-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
-                  </svg>
-                  <span class="clv-anuncie__whatsapp-text">Falar no WhatsApp</span>
-                </a>
-              </div>
-
-              <!-- MESMA CASCA DAS SETAS DE PRÉDIOS — clv-speen COMPARTILHADO -->
-              <div class="clv-anuncie__nav" data-anuncie-nav>
-                <div class="clv-anuncie__arrow-wrap">
-                  <div class="clv-anuncie__arrow-spin"></div>
-                  <button type="button" class="clv-anuncie__arrow" data-anuncie-prev aria-label="Anterior">
-                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
-                  </button>
-                </div>
-                <div class="clv-anuncie__arrow-wrap">
-                  <div class="clv-anuncie__arrow-spin"></div>
-                  <button type="button" class="clv-anuncie__arrow" data-anuncie-next aria-label="Próximo">
-                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="clv-anuncie__media">
-              <img class="clv-anuncie__photo" data-anuncie-photo src="" alt="" />
-            </div>
-          </div>
-
-          <p class="clv-anuncie__empty" data-anuncie-empty>Em breve novos locais nesta categoria.</p>
-
-          <div class="clv-anuncie__multipontos">
-            <p class="clv-anuncie__multipontos-text">Quer anunciar em mais de um local?</p>
-            <button type="button" class="clv-anuncie__multipontos-btn" data-menu-link data-action="overlay" data-target="cobertura">
-              Ver cobertura ampla →
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <main id="app">
 
       <!-- ============================================
-           SEÇÃO 2 — ELEVADOR — ANIMAÇÃO SCRUB
+           SEÇÃO 1 — HERO
            ============================================ -->
-      <section class="elevador" data-elevador>
-        <video class="elevador__video" muted playsinline preload="auto">
-          <source src="/videos/elevador-scrub-mobile.mp4" media="(max-width: 768px)" />
-          <source src="/videos/elevador-scrub.mp4" />
-        </video>
-        <div class="elevador__overlay"></div>
-        <div class="elevador__content">
-          <p class="elevador__label">A experiência</p>
-          <h2 class="elevador__title">Telas no cotidiano das pessoas</h2>
-          <p class="elevador__text">Posicionamos nossos displays no exato ponto onde seu cliente mora, trabalha e transita. Sem interferências, sem dispersão.</p>
+      <section class="clv-hero" id="hero">
+
+        <!-- TEXTO FANTASMA — DECORATIVO, FORA DA ÁRVORE DE ACESSIBILIDADE -->
+        <span class="clv-hero__ghost" aria-hidden="true">CLAVE</span>
+
+        <div class="clv-hero__inner">
+
+          <h1 class="clv-hero__title" data-hero="title">
+            SUA MARCA<br />
+            <span class="clv-hero__title-accent">ALÉM DE ANÚNCIOS.</span>
+          </h1>
+
+          <p class="clv-hero__subtitle" data-hero="subtitle">Presença, frequência e contexto onde a vida acontece.</p>
+
+          <div class="clv-hero__actions" data-hero="actions">
+            <a class="clv-btn clv-btn--solid" href="#contato" data-menu-link data-action="scroll" data-target="#contato">
+              Quero Anunciar
+            </a>
+            <button type="button" class="clv-btn clv-btn--ghost" data-menu-link data-action="scroll" data-target="#planos">
+              Ver Planos
+            </button>
+          </div>
+        </div>
+
+        <div class="clv-hero__scroll" aria-hidden="true" data-hero="scroll">
+          <span class="clv-hero__scroll-label">SCROLL PARA CONHECER</span>
+          <svg class="clv-hero__scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14" /><path d="M19 12l-7 7-7-7" />
+          </svg>
         </div>
       </section>
 
       <!-- ============================================
-           SEÇÃO 3 — MARCAS — CARROSSEL E HEADLINE
+           SEÇÃO 3 — A REDE — NÚMEROS
+           ============================================ -->
+      <section class="clv-rede" id="rede">
+        <div class="clv-shell">
+
+          <div class="clv-rede__stats">
+            <div class="clv-rede__stat">
+              <span class="clv-rede__num" data-roulette>25+</span>
+              <span class="clv-rede__label">Clientes ativos</span>
+            </div>
+            <div class="clv-rede__stat">
+              <span class="clv-rede__num" data-roulette>10+</span>
+              <span class="clv-rede__label">Telas em operação</span>
+            </div>
+            <div class="clv-rede__stat">
+              <span class="clv-rede__num" data-roulette>50.000+</span>
+              <span class="clv-rede__label">Pessoas atingidas / dia</span>
+            </div>
+          </div>
+
+          <div class="clv-rede__divider" data-reveal>
+            <span class="clv-rede__divider-label">Presença por ambiente</span>
+          </div>
+
+          <div class="clv-rede__ambientes">
+            <span class="clv-rede__ambiente-card">Residencial</span>
+            <span class="clv-rede__ambiente-card">Comercial</span>
+            <span class="clv-rede__ambiente-card">Hotéis</span>
+          </div>
+
+          <p class="clv-rede__foot" data-reveal>
+            Mais do que telas, construímos pontos de contato entre marcas e pessoas.
+          </p>
+
+        </div>
+      </section>
+
+      <!-- ============================================
+           SEÇÃO 6 — LOCAIS — ONDE ESTAMOS
+           ============================================ -->
+      <section class="clv-locais" id="locais">
+        <div class="clv-shell">
+
+          <header class="clv-locais__head">
+            <p class="clv-eyebrow" data-reveal>Onde estamos</p>
+            <h2 class="clv-locais__heading" data-reveal="lines">Presente onde a vida acontece.</h2>
+            <p class="clv-locais__subtitle" data-reveal="block">
+              Uma rede pensada por ambiente — cada tipo de espaço entrega um público e
+              um momento de atenção diferentes.
+            </p>
+          </header>
+
+          <div class="clv-locais__carousel">
+            <button class="clv-locais__arrow clv-locais__arrow--prev" aria-label="Anterior">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+
+            <div class="clv-locais__track">
+              <div class="clv-locais__card">
+                <img src="/images/predios/PREDIO-SAO-CRISTOVAO.webp" alt="Residencial" class="clv-locais__img" />
+                <div class="clv-locais__label">Residencial</div>
+              </div>
+              <div class="clv-locais__card">
+                <img src="/images/predios/PREDIO-300.webp" alt="Comercial" class="clv-locais__img" />
+                <div class="clv-locais__label">Comercial</div>
+              </div>
+              <div class="clv-locais__card">
+                <img src="/images/predios/HOTEL-TRIHOTEL-SAOCRISTOVAO.webp" alt="Hotéis" class="clv-locais__img" />
+                <div class="clv-locais__label">Hotéis</div>
+              </div>
+            </div>
+
+            <button class="clv-locais__arrow clv-locais__arrow--next" aria-label="Próximo">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           SEÇÃO 6.5 — MAPA — REDE DE PONTOS
+           ============================================ -->
+      <section class="clv-mapa" id="mapa">
+        <div class="clv-shell">
+
+          <header class="clv-mapa__head">
+            <p class="clv-eyebrow" data-reveal>Nossa presença</p>
+            <h2 class="clv-mapa__heading" data-reveal="lines">Uma rede em movimento.</h2>
+            <p class="clv-mapa__subtitle" data-reveal="block">
+              Cada ponto representa um local de mídia estratégico. A rede cresce a cada
+              novo parceiro.
+            </p>
+          </header>
+
+          <!-- data-reveal FICA NO WRAPPER: UM transform NO PRÓPRIO CONTAINER DO
+               LEAFLET DESALINHA O CÁLCULO DE POSIÇÃO DOS MARCADORES.
+               data-lenis-prevent — LENIS ENGOLE O touchmove NA JANELA E MATARIA
+               O ARRASTE DENTRO DO MAPA. -->
+          <div class="clv-mapa__frame" data-reveal>
+            <div class="clv-mapa__canvas" id="clv-map" data-lenis-prevent></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================
+           SEÇÃO 4 — SOBRE
+           ============================================ -->
+      <section class="clv-sobre" id="sobre">
+        <div class="clv-shell clv-sobre__grid">
+
+          <div class="clv-sobre__content">
+            <p class="clv-eyebrow" data-reveal>Quem somos</p>
+            <h2 class="clv-sobre__heading" data-reveal="lines">Referência no Vale do Taquari.</h2>
+
+            <div class="clv-sobre__stats">
+              <div class="clv-sobre__stat">
+                <span class="clv-sobre__stat-num" data-roulette>25+</span>
+                <span class="clv-sobre__stat-label">Clientes ativos</span>
+              </div>
+              <div class="clv-sobre__stat">
+                <span class="clv-sobre__stat-num" data-roulette>10+</span>
+                <span class="clv-sobre__stat-label">Telas em operação</span>
+              </div>
+            </div>
+
+            <p class="clv-sobre__text" data-reveal="block">
+              Nascemos em Lajeado com uma ideia simples: levar a comunicação das marcas
+              para os lugares onde as pessoas realmente param. Elevadores, halls e áreas
+              de convivência concentram atenção que a mídia tradicional não alcança.
+            </p>
+            <p class="clv-sobre__text" data-reveal="block">
+              Hoje operamos uma rede de telas em condomínios residenciais, torres
+              comerciais e hotéis da região, com gestão remota de conteúdo e campanhas
+              que entram no ar em horas — não em semanas.
+            </p>
+
+            <button type="button" class="clv-btn clv-btn--solid" data-reveal data-menu-link data-action="scroll" data-target="#contato">
+              Conheça a Clave
+            </button>
+          </div>
+
+          <figure class="clv-sobre__media" data-reveal>
+            <img
+              class="clv-sobre__img"
+              src="/images/clave/sobre.webp"
+              alt="Torre residencial em Lajeado onde a Clave opera telas indoor"
+              loading="lazy"
+            />
+            <figcaption class="clv-sobre__badge">
+              <span class="clv-sobre__badge-top">Lajeado · Vale do Taquari · RS</span>
+              <span class="clv-sobre__badge-bottom">Onde a vida acontece.</span>
+            </figcaption>
+          </figure>
+
+          <div class="clv-sobre__origem">
+            <p class="clv-sobre__origem-eyebrow">JOVENS EMPREENDEDORES · RS</p>
+            <p class="clv-sobre__origem-label">Nossa Origem</p>
+            <p class="clv-sobre__origem-text">Nascemos de um grupo de jovens empreendedores do interior do Rio Grande do Sul com um propósito claro: dar visibilidade aos pequenos e médios negócios no cotidiano das pessoas.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================
+           SEÇÃO 2 — EXPERIÊNCIA
+           ============================================ -->
+      <section class="clv-exp" id="experiencia">
+        <div class="clv-shell clv-shell--narrow">
+
+          <header class="clv-exp__head">
+            <p class="clv-eyebrow" data-reveal>Experiência</p>
+            <h2 class="clv-exp__heading clv-heading" data-reveal="lines">Mídia que gera resultado.</h2>
+            <p class="clv-exp__subtitle" data-reveal="block">Sua marca presente onde as pessoas estão.</p>
+          </header>
+
+          <ul class="clv-exp__list" data-reveal>
+            <li class="clv-exp__item">No caminho.</li>
+            <li class="clv-exp__item">No trabalho.</li>
+            <li class="clv-exp__item">No consumo.</li>
+            <li class="clv-exp__item">No lazer.</li>
+            <li class="clv-exp__item">Na rotina.</li>
+          </ul>
+
+          <hr class="clv-rule" />
+
+          <p class="clv-exp__text" data-reveal="block">
+            A Clave opera uma rede de telas digitais instaladas em elevadores e áreas
+            comuns de condomínios residenciais, torres comerciais e hotéis de Lajeado e
+            região. São ambientes de espera — onde a atenção está disponível e a
+            mensagem é vista de perto, todos os dias, pelas mesmas pessoas.
+          </p>
+
+          <hr class="clv-rule" />
+
+        </div>
+      </section>
+
+      <!-- ============================================
+           SEÇÃO 7 — MARCAS — CARROSSEL
            ============================================ -->
       <section class="marcas" id="marcas" data-marcas>
-        <div class="marcas__dots"></div>
         <div class="marcas__intro" data-marcas-intro>
-          <h2 class="marcas__headline" data-marcas-headline>Marcas parceiras</h2>
+          <p class="clv-eyebrow" data-reveal>Anunciantes</p>
+          <h2 class="marcas__headline clv-heading" data-marcas-headline data-reveal="lines">Marcas parceiras</h2>
           <p class="marcas__subtitle" data-marcas-subtitle>Empresas que já confiam na Clave para estar perto do seu público.</p>
         </div>
 
@@ -507,137 +347,80 @@
       </section>
 
       <!-- ============================================
-           SEÇÃO 4 — DIFERENCIAIS — CARDS E GLOW
+           SEÇÃO 5 — DIFERENCIAIS
            ============================================ -->
-      <section class="clv-diferenciais" data-diferenciais>
+      <section class="clv-dif" id="diferenciais">
+        <div class="clv-shell">
 
-        <!-- FILTROS SVG DO GLOW -->
-        <svg class="clv-defs" aria-hidden="true">
-          <filter id="unopaq"  y="-100%" height="300%" x="-100%" width="300%"><feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 5 0"/></filter>
-          <filter id="unopaq2" y="-100%" height="300%" x="-100%" width="300%"><feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 10 0"/></filter>
-          <filter id="unopaq3" y="-100%" height="300%" x="-100%" width="300%"><feColorMatrix values="1 0 0 1 0  0 1 0 1 0  0 0 1 1 0  0 0 0 2 0"/></filter>
-        </svg>
-
-        <div class="clv-dots" aria-hidden="true"></div>
-
-        <div class="clv-inner">
-          <header class="clv-section-head">
-            <p class="clv-section-label">Por que a Clave</p>
-            <h2 class="clv-heading">Diferenciais Clave</h2>
+          <header class="clv-dif__head">
+            <p class="clv-eyebrow" data-reveal>Diferenciais</p>
+            <h2 class="clv-dif__heading" data-reveal="lines">Por que a Clave?</h2>
+            <p class="clv-dif__subtitle" data-reveal="block">
+              Não vendemos espaço em tela. Entregamos atenção qualificada, repetida e
+              medida — no ponto exato em que a decisão de compra começa.
+            </p>
           </header>
 
-          <div class="clv-grid">
+          <div class="clv-dif__grid">
 
-            <!-- 01 — ALTA DEFINIÇÃO -->
-            <article class="clv-card-container" data-diferencial>
-              <div class="clv-spin clv-spin-blur"></div>
-              <div class="clv-spin clv-spin-intense"></div>
-              <div class="clv-card-border"><div class="clv-spin clv-spin-inside"></div></div>
-              <div class="clv-card">
-                <div class="clv-backdrop"></div>
-                <div class="clv-head">
-                  <div class="clv-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
-                  </div>
-                  <div class="clv-head-text">
-                    <div class="clv-title">Alta definição</div>
-                    <div class="clv-sub">Tecnologia de ponta</div>
-                  </div>
-                  <div class="clv-num">01</div>
-                </div>
-                <div class="clv-body">
-                  <p class="clv-desc">Telas Full HD em elevadores e áreas comuns. Imagem nítida, presença premium.</p>
-                  <div class="clv-list">
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Telas Full HD</div>
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Instalação profissional</div>
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Visual premium</div>
-                  </div>
-                </div>
-              </div>
+            <!-- 01 -->
+            <article class="clv-dif__card" data-reveal>
+              <span class="clv-dif__num">01</span>
+              <h3 class="clv-dif__title">Audiência qualificada no ponto certo</h3>
+              <p class="clv-dif__desc">
+                Moradores, profissionais e hóspedes com perfil definido, alcançados em um
+                ambiente fechado onde não há concorrência por atenção.
+              </p>
+              <ul class="clv-dif__chips">
+                <li class="clv-chip">Público cativo</li>
+                <li class="clv-chip">Alta atenção</li>
+                <li class="clv-chip">Baixa dispersão</li>
+              </ul>
             </article>
 
-            <!-- 02 — CONTEÚDO DINÂMICO -->
-            <article class="clv-card-container" data-diferencial>
-              <div class="clv-spin clv-spin-blur"></div>
-              <div class="clv-spin clv-spin-intense"></div>
-              <div class="clv-card-border"><div class="clv-spin clv-spin-inside"></div></div>
-              <div class="clv-card">
-                <div class="clv-backdrop"></div>
-                <div class="clv-head">
-                  <div class="clv-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
-                  </div>
-                  <div class="clv-head-text">
-                    <div class="clv-title">Conteúdo dinâmico</div>
-                    <div class="clv-sub">Atualização em tempo real</div>
-                  </div>
-                  <div class="clv-num">02</div>
-                </div>
-                <div class="clv-body">
-                  <p class="clv-desc">Troque campanhas remotamente quando quiser. Conteúdo sempre novo, sem reimpressão.</p>
-                  <div class="clv-list">
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Atualização remota</div>
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Campanhas dinâmicas</div>
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Sem papel</div>
-                  </div>
-                </div>
-              </div>
+            <!-- 02 -->
+            <article class="clv-dif__card" data-reveal>
+              <span class="clv-dif__num">02</span>
+              <h3 class="clv-dif__title">Frequência que gera lembrança</h3>
+              <p class="clv-dif__desc">
+                A mesma pessoa passa pela tela várias vezes por dia. Repetição natural,
+                sem saturação — o caminho mais curto para o top of mind.
+              </p>
+              <ul class="clv-dif__chips">
+                <li class="clv-chip">Repetição diária</li>
+                <li class="clv-chip">Recall de marca</li>
+                <li class="clv-chip">Top of mind</li>
+              </ul>
             </article>
 
-            <!-- 03 — SEGMENTAÇÃO LOCAL -->
-            <article class="clv-card-container" data-diferencial>
-              <div class="clv-spin clv-spin-blur"></div>
-              <div class="clv-spin clv-spin-intense"></div>
-              <div class="clv-card-border"><div class="clv-spin clv-spin-inside"></div></div>
-              <div class="clv-card">
-                <div class="clv-backdrop"></div>
-                <div class="clv-head">
-                  <div class="clv-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.2"/></svg>
-                  </div>
-                  <div class="clv-head-text">
-                    <div class="clv-title">Segmentação local</div>
-                    <div class="clv-sub">Onde seu público está</div>
-                  </div>
-                  <div class="clv-num">03</div>
-                </div>
-                <div class="clv-body">
-                  <p class="clv-desc">Anuncie exatamente nos condomínios certos de Lajeado e região. Público qualificado.</p>
-                  <div class="clv-list">
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Condomínios estratégicos</div>
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Público qualificado</div>
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Lajeado e região</div>
-                  </div>
-                </div>
-              </div>
+            <!-- 03 -->
+            <article class="clv-dif__card" data-reveal>
+              <span class="clv-dif__num">03</span>
+              <h3 class="clv-dif__title">Tecnologia e dados</h3>
+              <p class="clv-dif__desc">
+                Toda a rede é gerenciada remotamente. Trocamos criativos, ajustamos
+                programação e acompanhamos a veiculação em tempo real.
+              </p>
+              <ul class="clv-dif__chips">
+                <li class="clv-chip">Gestão remota</li>
+                <li class="clv-chip">Dados reais</li>
+                <li class="clv-chip">Campanhas ágeis</li>
+              </ul>
             </article>
 
-            <!-- 04 — CUSTO ZERO P/ CONDOMÍNIO -->
-            <article class="clv-card-container" data-diferencial>
-              <div class="clv-spin clv-spin-blur"></div>
-              <div class="clv-spin clv-spin-intense"></div>
-              <div class="clv-card-border"><div class="clv-spin clv-spin-inside"></div></div>
-              <div class="clv-card">
-                <div class="clv-backdrop"></div>
-                <div class="clv-head">
-                  <div class="clv-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M9 15l6-6"/></svg>
-                  </div>
-                  <div class="clv-head-text">
-                    <div class="clv-title">Custo zero p/ condomínio</div>
-                    <div class="clv-sub">Rede em expansão</div>
-                  </div>
-                  <div class="clv-num">04</div>
-                </div>
-                <div class="clv-body">
-                  <p class="clv-desc">O condomínio recebe a tela sem pagar nada — mais adesões, mais pontos pra sua marca.</p>
-                  <div class="clv-list">
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Sem custo de instalação</div>
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Adesão facilitada</div>
-                    <div class="clv-item"><span class="clv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Rede crescente</div>
-                  </div>
-                </div>
-              </div>
+            <!-- 04 -->
+            <article class="clv-dif__card" data-reveal>
+              <span class="clv-dif__num">04</span>
+              <h3 class="clv-dif__title">Tecnologia a favor da sua marca</h3>
+              <p class="clv-dif__desc">
+                Telas conectadas, conteúdo em alta definição e atualização instantânea.
+                Sua campanha sempre no ar, sempre atual.
+              </p>
+              <ul class="clv-dif__chips">
+                <li class="clv-chip">Conectividade</li>
+                <li class="clv-chip">Atualização remota</li>
+                <li class="clv-chip">Alto impacto</li>
+              </ul>
             </article>
 
           </div>
@@ -645,103 +428,171 @@
       </section>
 
       <!-- ============================================
-           SEÇÃO 5 — PRODUTO — TELA ANIMADA
+           SEÇÃO 8 — PLANOS
            ============================================ -->
-      <section class="produto" data-produto>
-        <div class="produto__dots"></div>
+      <section class="clv-planos" id="planos">
+        <div class="clv-shell">
 
-        <div class="produto__inner">
-          <div class="produto__content">
-            <p class="produto__label">Tecnologia</p>
-            <h2 class="produto__heading">Nosso equipamento</h2>
+          <header class="clv-planos__head">
+            <p class="clv-eyebrow" data-reveal>Planos</p>
+            <h2 class="clv-planos__heading clv-heading" data-reveal="lines">Cobertura e frequência sob medida.</h2>
+            <p class="clv-planos__subtitle" data-reveal="block">
+              Três formatos de contrato para entrar na rede. Quanto maior o período,
+              maior a frequência e melhor a condição.
+            </p>
+          </header>
 
-            <ul class="produto__list">
-              <li class="produto__item">
-                <svg class="produto__chk-svg" viewBox="0 0 64 64">
-                  <path class="produto__chk-path" pathLength="575.0541381835938" d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"/>
-                </svg>
-                Tela profissional 4K
-              </li>
-              <li class="produto__item">
-                <svg class="produto__chk-svg" viewBox="0 0 64 64">
-                  <path class="produto__chk-path" pathLength="575.0541381835938" d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"/>
-                </svg>
-                Processamento de alto desempenho
-              </li>
-              <li class="produto__item">
-                <svg class="produto__chk-svg" viewBox="0 0 64 64">
-                  <path class="produto__chk-path" pathLength="575.0541381835938" d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"/>
-                </svg>
-                Instalação sem obra
-              </li>
-              <li class="produto__item">
-                <svg class="produto__chk-svg" viewBox="0 0 64 64">
-                  <path class="produto__chk-path" pathLength="575.0541381835938" d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"/>
-                </svg>
-                Conectividade remota
-              </li>
-            </ul>
+          <div class="clv-planos__cards">
 
-            <p class="produto__text">Hardware silencioso, resistente e conectado — a tecnologia some, só a mensagem aparece.</p>
+            <!-- ---------- TRIMESTRAL ---------- -->
+            <article class="clv-planos__card" data-reveal>
+              <h3 class="clv-planos__name">Trimestral</h3>
+              <p class="clv-planos__desc">Ideal para conhecer a mídia indoor e testar resultados.</p>
+              <p class="clv-planos__period">Contrato de 3 meses</p>
 
-            <a class="produto__cta" href="#" data-whatsapp-cta target="_blank" rel="noopener noreferrer">
-              <div class="produto__cta-border"></div>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="produto__cta-sparkle" fill="currentColor">
-                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.04 3.67C14.25 3.67 16.32 4.53 17.88 6.09C19.44 7.66 20.29 9.73 20.29 11.92C20.29 16.46 16.58 20.15 12.03 20.15C10.56 20.15 9.12 19.76 7.85 19.03L7.55 18.86L4.43 19.68L5.26 16.65L5.06 16.33C4.26 15 3.83 13.47 3.83 11.91C3.84 7.37 7.5 3.67 12.04 3.67ZM8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7 8.5 7 9.71C7 10.93 7.89 12.1 8 12.27C8.14 12.44 9.76 14.94 12.25 16.05C14.32 16.97 14.74 16.81 15.19 16.77C15.64 16.73 16.65 16.16 16.86 15.58C17.07 15 17.07 14.5 17 14.4C16.94 14.3 16.78 14.24 16.53 14.12C16.28 13.99 15.06 13.39 14.83 13.31C14.6 13.23 14.44 13.19 14.28 13.44C14.11 13.69 13.63 14.24 13.49 14.4C13.34 14.57 13.2 14.59 12.95 14.47C12.7 14.34 11.9 14.08 10.95 13.23C10.21 12.57 9.71 11.75 9.57 11.5C9.42 11.25 9.55 11.12 9.67 10.99C9.79 10.87 9.94 10.68 10.06 10.53C10.19 10.38 10.23 10.27 10.31 10.1C10.4 9.94 10.35 9.79 10.29 9.67C10.23 9.55 9.72 8.33 9.5 7.83C9.28 7.36 9.06 7.33 8.85 7.33H8.53Z"/>
-              </svg>
-              <span class="produto__cta-text">Fale conosco</span>
-            </a>
-          </div>
+              <ul class="clv-planos__features">
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Suporte via WhatsApp
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Mídia fixa durante o contrato
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Telas conforme disponibilidade do local
+                </li>
+              </ul>
 
-          <div class="produto__frame-container">
-            <div class="produto__spin produto__spin-blur"></div>
-            <div class="produto__spin produto__spin-intense"></div>
-            <div class="produto__frame-border"><div class="produto__spin produto__spin-inside"></div></div>
-            <div class="produto__frame">
-              <video class="produto__video" muted playsinline preload="auto">
-                <source src="/videos/tela-scrub.mp4" />
-              </video>
-            </div>
+              <button type="button" class="clv-btn clv-btn--outline clv-planos__cta" data-menu-link data-action="overlay" data-target="form-anunciante" data-contato-plano="trimestral">
+                Quero este plano
+              </button>
+            </article>
+
+            <!-- ---------- SEMESTRAL ---------- -->
+            <article class="clv-planos__card" data-reveal>
+              <h3 class="clv-planos__name">Semestral</h3>
+              <p class="clv-planos__desc">Presença consistente com flexibilidade de médio prazo.</p>
+              <p class="clv-planos__period">Contrato de 6 meses</p>
+
+              <ul class="clv-planos__features">
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Suporte via WhatsApp
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  1 atualização de mídia inclusa
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Acesso a novos locais em primeira mão
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Telas conforme disponibilidade do local
+                </li>
+              </ul>
+
+              <button type="button" class="clv-btn clv-btn--outline clv-planos__cta" data-menu-link data-action="overlay" data-target="form-anunciante" data-contato-plano="semestral">
+                Quero este plano
+              </button>
+            </article>
+
+            <!-- ---------- ANUAL — DESTAQUE ---------- -->
+            <article class="clv-planos__card clv-planos__card--featured" data-reveal data-reveal-bleed>
+              <span class="clv-planos__badge">★ Recomendado</span>
+              <h3 class="clv-planos__name">Anual</h3>
+              <p class="clv-planos__desc">A melhor relação custo-benefício para presença contínua.</p>
+              <p class="clv-planos__period">Contrato de 12 meses</p>
+
+              <ul class="clv-planos__features">
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Suporte prioritário
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Atualizações de mídia a qualquer momento
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Acesso a novos espaços em primeira mão
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Relatório de visualizações sob consulta
+                </li>
+                <li class="clv-planos__feature">
+                  <svg class="clv-planos__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  Telas conforme disponibilidade do local
+                </li>
+              </ul>
+
+              <button type="button" class="clv-btn clv-btn--solid clv-planos__cta" data-menu-link data-action="overlay" data-target="form-anunciante" data-contato-plano="anual">
+                Quero este plano
+              </button>
+            </article>
+
           </div>
         </div>
       </section>
 
       <!-- ============================================
-           SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL
+           SEÇÃO 9 — CONTATO
            ============================================ -->
-      <section class="predios" data-predios>
-        <div class="clv-dots" aria-hidden="true"></div>
-        <div class="predios__inner">
+      <section class="clv-contato" id="contato">
+        <div class="clv-shell">
 
-          <div class="predios__head">
-            <div class="predios__head-text">
-              <p class="predios__label">Nossa presença</p>
-              <h2 class="predios__heading">Onde estamos</h2>
-            </div>
-            <div class="predios__counter">
-              <span class="predios__counter-current">01</span>
-              <span class="predios__counter-sep">de</span>
-              <span class="predios__counter-total">08</span>
-            </div>
-          </div>
+          <header class="clv-contato__head">
+            <p class="clv-eyebrow" data-reveal>Fale com a Clave</p>
+            <h2 class="clv-contato__heading clv-heading" data-reveal="lines">Sua marca além de anúncios.</h2>
+            <p class="clv-contato__subtitle" data-reveal="block">
+              Seja para anunciar ou transformar seu espaço em ponto de mídia,
+              o primeiro passo é uma conversa.
+            </p>
+          </header>
 
-          <div class="predios__stage" data-predios-stage>
-            <!-- POPULADO VIA JS -->
-          </div>
+          <!-- TELA 1 — CARDS -->
+          <div class="clv-contato__cards" id="contatoCards">
 
-          <div class="predios__nav">
-            <div class="predios__arrow-wrap" data-predios-prev>
-              <div class="predios__arrow-spin"></div>
-              <button type="button" class="predios__arrow" aria-label="Anterior">
-                <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
+            <article class="clv-contato__card clv-contato__card--dark" data-reveal>
+              <span class="clv-contato__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="7" width="20" height="14" rx="2"/>
+                  <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                  <line x1="12" y1="12" x2="12" y2="12"/>
+                  <path d="M2 12h20"/>
+                </svg>
+              </span>
+              <h3 class="clv-contato__card-title">Tenho uma marca</h3>
+              <p class="clv-contato__card-desc">
+                Quero colocar minha comunicação na rede Clave e alcançar um público
+                qualificado todos os dias.
+              </p>
+              <button type="button" class="clv-contato__link" data-menu-link data-action="overlay" data-target="form-anunciante">
+                Quero anunciar →
               </button>
-            </div>
-            <div class="predios__arrow-wrap" data-predios-next>
-              <div class="predios__arrow-spin"></div>
-              <button type="button" class="predios__arrow" aria-label="Próximo">
-                <svg viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
+            </article>
+
+            <article class="clv-contato__card clv-contato__card--light" data-reveal>
+              <span class="clv-contato__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z"/>
+                  <circle cx="12" cy="9.5" r="2.4"/>
+                </svg>
+              </span>
+              <h3 class="clv-contato__card-title">Tenho um espaço</h3>
+              <p class="clv-contato__card-desc">
+                Administro um condomínio, prédio comercial ou hotel e quero receber uma
+                tela Clave sem custo.
+              </p>
+              <button type="button" class="clv-contato__link" data-menu-link data-action="overlay" data-target="form-espaco">
+                Quero ser um ponto Clave →
               </button>
-            </div>
+            </article>
+
           </div>
 
         </div>
@@ -749,6 +600,367 @@
 
     </main>
 
+    <!-- ============================================
+         RODAPÉ
+         ============================================ -->
+    <footer class="clv-footer">
+      <img src="/images/clave/logo.webp" alt="Clave Mídia Indoor" class="clv-footer__logo" />
+      <p class="clv-footer__text">© 2025 Clave Mídia Indoor. Todos os direitos reservados.</p>
+    </footer>
+
     <script type="module" src="/src/main.js"></script>
+
+    <!-- ============================================
+         OVERLAY — FORMULÁRIO ANUNCIANTE
+         ============================================ -->
+    <div class="clv-overlay" id="overlay-form-anunciante" data-overlay="form-anunciante" aria-hidden="true">
+      <div class="clv-overlay__panel" data-lenis-prevent>
+        <button type="button" class="clv-overlay__close clv-overlay__close--left" data-overlay-close aria-label="Fechar">
+          <span></span><span></span>
+        </button>
+        <div class="clv-overlay__content clv-form-overlay__content">
+
+          <div class="clv-form-overlay__switcher">
+            <div class="clv-form-overlay__switcher-wrap">
+              <button type="button" class="clv-form-overlay__switcher-btn clv-form-overlay__switcher-btn--active" data-form-tab="anunciante">
+                Quero anunciar
+              </button>
+              <button type="button" class="clv-form-overlay__switcher-btn" data-form-tab="espaco">
+                Tenho um espaço
+              </button>
+            </div>
+          </div>
+
+          <header class="clv-form-overlay__head">
+            <p class="clv-eyebrow">Fale com a Clave</p>
+            <h2 class="clv-form-overlay__heading">Quero anunciar</h2>
+            <p class="clv-form-overlay__subtitle">Preencha os dados e nossa equipe comercial entrará em contato.</p>
+          </header>
+
+          <form class="clv-form-overlay__form clv-form-overlay__form--active" id="formAnunciante" data-form-overlay="anunciante" novalidate>
+            <div class="clv-contato__cols">
+
+              <div class="clv-contato__col clv-contato__col--dark">
+                <p class="clv-contato__col-title">Dados de contato</p>
+
+                <div class="clv-contato__row">
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="an-nome">Nome *</label>
+                    <input class="clv-contato__input" type="text" id="an-nome" name="nome" placeholder="Seu nome" required>
+                  </div>
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="an-empresa">Empresa</label>
+                    <input class="clv-contato__input" type="text" id="an-empresa" name="empresa" placeholder="Empresa">
+                  </div>
+                </div>
+
+                <div class="clv-contato__row">
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="an-whatsapp">WhatsApp *</label>
+                    <input class="clv-contato__input" type="tel" id="an-whatsapp" name="whatsapp" placeholder="(51) 00000-0000" required>
+                  </div>
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="an-cidade">Cidade *</label>
+                    <input class="clv-contato__input" type="text" id="an-cidade" name="cidade" placeholder="Lajeado" required>
+                  </div>
+                </div>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="an-plano">Plano de interesse</label>
+                  <select class="clv-contato__input clv-contato__select" id="an-plano" name="plano">
+                    <option value="">Selecione...</option>
+                    <option value="trimestral">Trimestral</option>
+                    <option value="semestral">Semestral</option>
+                    <option value="anual">Anual</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="clv-contato__col clv-contato__col--light">
+                <p class="clv-contato__col-title">Sobre a campanha</p>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="an-segmento">Segmento</label>
+                  <input class="clv-contato__input" type="text" id="an-segmento" name="segmento" placeholder="Ex: Alimentação, Saúde...">
+                </div>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="an-mensagem">Mensagem</label>
+                  <textarea class="clv-contato__input clv-contato__textarea" id="an-mensagem" name="mensagem" rows="6" placeholder="Conte-nos sobre seu projeto..."></textarea>
+                </div>
+
+                <button type="submit" class="clv-btn clv-btn--solid clv-contato__submit">
+                  Enviar solicitação →
+                </button>
+              </div>
+
+            </div>
+          </form>
+
+
+          <form class="clv-form-overlay__form" id="formEspacoAlt" data-form-overlay="espaco" novalidate>
+            <div class="clv-contato__cols">
+
+              <div class="clv-contato__col clv-contato__col--dark">
+                <p class="clv-contato__col-title">Dados do espaço</p>
+
+                <div class="clv-contato__row">
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="es2-nome">Nome *</label>
+                    <input class="clv-contato__input" type="text" id="es2-nome" name="nome" placeholder="Seu nome" required>
+                  </div>
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="es2-empresa">Empresa (opcional)</label>
+                    <input class="clv-contato__input" type="text" id="es2-empresa" name="empresa" placeholder="Empresa">
+                  </div>
+                </div>
+
+                <div class="clv-contato__row">
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="es2-whatsapp">WhatsApp *</label>
+                    <input class="clv-contato__input" type="tel" id="es2-whatsapp" name="whatsapp" placeholder="(51) 00000-0000" required>
+                  </div>
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="es2-cidade">Cidade *</label>
+                    <input class="clv-contato__input" type="text" id="es2-cidade" name="cidade" placeholder="Lajeado" required>
+                  </div>
+                </div>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="es2-endereco">Endereço</label>
+                  <input class="clv-contato__input" type="text" id="es2-endereco" name="endereco" placeholder="Rua, número, bairro">
+                </div>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="es2-tipo">Tipo de estabelecimento</label>
+                  <input class="clv-contato__input" type="text" id="es2-tipo" name="tipo" placeholder="Ex: Condomínio, Hotel, Torre comercial...">
+                </div>
+              </div>
+
+              <div class="clv-contato__col clv-contato__col--light">
+                <p class="clv-contato__col-title">Sobre o interesse</p>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label">Tenho interesse em</label>
+                  <div class="clv-contato__checks">
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Painéis de LED">
+                      <span>Painéis de LED</span>
+                    </label>
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Telas digitais">
+                      <span>Telas digitais</span>
+                    </label>
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Mídia indoor">
+                      <span>Mídia indoor</span>
+                    </label>
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Eventos">
+                      <span>Eventos</span>
+                    </label>
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Projeto personalizado">
+                      <span>Projeto personalizado</span>
+                    </label>
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Quero conhecer todas as opções">
+                      <span>Quero conhecer todas as opções</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="es2-descricao">Descrição do espaço</label>
+                  <textarea class="clv-contato__input clv-contato__textarea" id="es2-descricao" name="descricao" rows="4" placeholder="Descreva o fluxo de pessoas, localização e características do espaço..."></textarea>
+                </div>
+
+                <button type="submit" class="clv-btn clv-btn--solid clv-contato__submit">
+                  Enviar solicitação →
+                </button>
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         OVERLAY — FORMULÁRIO ESPAÇO
+         ============================================ -->
+    <div class="clv-overlay" id="overlay-form-espaco" data-overlay="form-espaco" aria-hidden="true">
+      <div class="clv-overlay__panel" data-lenis-prevent>
+        <button type="button" class="clv-overlay__close clv-overlay__close--left" data-overlay-close aria-label="Fechar">
+          <span></span><span></span>
+        </button>
+        <div class="clv-overlay__content clv-form-overlay__content">
+
+          <div class="clv-form-overlay__switcher">
+            <div class="clv-form-overlay__switcher-wrap">
+              <button type="button" class="clv-form-overlay__switcher-btn" data-form-tab="anunciante">
+                Quero anunciar
+              </button>
+              <button type="button" class="clv-form-overlay__switcher-btn clv-form-overlay__switcher-btn--active" data-form-tab="espaco">
+                Tenho um espaço
+              </button>
+            </div>
+          </div>
+
+          <header class="clv-form-overlay__head">
+            <p class="clv-eyebrow">Fale com a Clave</p>
+            <h2 class="clv-form-overlay__heading">Quero ser um ponto Clave</h2>
+            <p class="clv-form-overlay__subtitle">Conte-nos sobre seu espaço. Entraremos em contato para avaliar a oportunidade.</p>
+          </header>
+
+          <form class="clv-form-overlay__form" id="formAnuncianteAlt" data-form-overlay="anunciante" novalidate>
+            <div class="clv-contato__cols">
+
+              <div class="clv-contato__col clv-contato__col--dark">
+                <p class="clv-contato__col-title">Dados de contato</p>
+
+                <div class="clv-contato__row">
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="an2-nome">Nome *</label>
+                    <input class="clv-contato__input" type="text" id="an2-nome" name="nome" placeholder="Seu nome" required>
+                  </div>
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="an2-empresa">Empresa</label>
+                    <input class="clv-contato__input" type="text" id="an2-empresa" name="empresa" placeholder="Empresa">
+                  </div>
+                </div>
+
+                <div class="clv-contato__row">
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="an2-whatsapp">WhatsApp *</label>
+                    <input class="clv-contato__input" type="tel" id="an2-whatsapp" name="whatsapp" placeholder="(51) 00000-0000" required>
+                  </div>
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="an2-cidade">Cidade *</label>
+                    <input class="clv-contato__input" type="text" id="an2-cidade" name="cidade" placeholder="Lajeado" required>
+                  </div>
+                </div>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="an2-plano">Plano de interesse</label>
+                  <select class="clv-contato__input clv-contato__select" id="an2-plano" name="plano">
+                    <option value="">Selecione...</option>
+                    <option value="trimestral">Trimestral</option>
+                    <option value="semestral">Semestral</option>
+                    <option value="anual">Anual</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="clv-contato__col clv-contato__col--light">
+                <p class="clv-contato__col-title">Sobre a campanha</p>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="an2-segmento">Segmento</label>
+                  <input class="clv-contato__input" type="text" id="an2-segmento" name="segmento" placeholder="Ex: Alimentação, Saúde...">
+                </div>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="an2-mensagem">Mensagem</label>
+                  <textarea class="clv-contato__input clv-contato__textarea" id="an2-mensagem" name="mensagem" rows="6" placeholder="Conte-nos sobre seu projeto..."></textarea>
+                </div>
+
+                <button type="submit" class="clv-btn clv-btn--solid clv-contato__submit">
+                  Enviar solicitação →
+                </button>
+              </div>
+
+            </div>
+          </form>
+
+          <form class="clv-form-overlay__form clv-form-overlay__form--active" id="formEspaco" data-form-overlay="espaco" novalidate>
+            <div class="clv-contato__cols">
+
+              <div class="clv-contato__col clv-contato__col--dark">
+                <p class="clv-contato__col-title">Dados do espaço</p>
+
+                <div class="clv-contato__row">
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="es-nome">Nome *</label>
+                    <input class="clv-contato__input" type="text" id="es-nome" name="nome" placeholder="Seu nome" required>
+                  </div>
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="es-empresa">Empresa (opcional)</label>
+                    <input class="clv-contato__input" type="text" id="es-empresa" name="empresa" placeholder="Empresa">
+                  </div>
+                </div>
+
+                <div class="clv-contato__row">
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="es-whatsapp">WhatsApp *</label>
+                    <input class="clv-contato__input" type="tel" id="es-whatsapp" name="whatsapp" placeholder="(51) 00000-0000" required>
+                  </div>
+                  <div class="clv-contato__field">
+                    <label class="clv-contato__label" for="es-cidade">Cidade *</label>
+                    <input class="clv-contato__input" type="text" id="es-cidade" name="cidade" placeholder="Lajeado" required>
+                  </div>
+                </div>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="es-endereco">Endereço</label>
+                  <input class="clv-contato__input" type="text" id="es-endereco" name="endereco" placeholder="Rua, número, bairro">
+                </div>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="es-tipo">Tipo de estabelecimento</label>
+                  <input class="clv-contato__input" type="text" id="es-tipo" name="tipo" placeholder="Ex: Condomínio, Hotel, Torre comercial...">
+                </div>
+              </div>
+
+              <div class="clv-contato__col clv-contato__col--light">
+                <p class="clv-contato__col-title">Sobre o interesse</p>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label">Tenho interesse em</label>
+                  <div class="clv-contato__checks">
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Painéis de LED">
+                      <span>Painéis de LED</span>
+                    </label>
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Telas digitais">
+                      <span>Telas digitais</span>
+                    </label>
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Mídia indoor">
+                      <span>Mídia indoor</span>
+                    </label>
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Eventos">
+                      <span>Eventos</span>
+                    </label>
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Projeto personalizado">
+                      <span>Projeto personalizado</span>
+                    </label>
+                    <label class="clv-contato__check-item">
+                      <input type="checkbox" name="interesse" value="Quero conhecer todas as opções">
+                      <span>Quero conhecer todas as opções</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="clv-contato__field">
+                  <label class="clv-contato__label" for="es-descricao">Descrição do espaço</label>
+                  <textarea class="clv-contato__input clv-contato__textarea" id="es-descricao" name="descricao" rows="4" placeholder="Descreva o fluxo de pessoas, localização e características do espaço..."></textarea>
+                </div>
+
+                <button type="submit" class="clv-btn clv-btn--solid clv-contato__submit">
+                  Enviar solicitação →
+                </button>
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
   </body>
 </html>

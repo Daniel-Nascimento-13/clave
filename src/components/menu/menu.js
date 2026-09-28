@@ -76,18 +76,31 @@ function scrollToTarget(target) {
      O SELETOR É SÓ FALLBACK */
   const destination = target === MARCAS_TARGET ? getMarcasRevealY() ?? target : target;
 
-  if (lenis) {
-    lenis.scrollTo(destination, { duration: 1.2 });
-    return;
-  }
+  /* AGUARDA O FECHAMENTO DO BURGER ANTES DE SCROLLAR.
+     A SONDA É is-open NA NAV, NÃO aria-expanded NO BURGER: closeBurgerMenu()
+     RODA ANTES DAQUI E JÁ ZEROU O aria-expanded DE FORMA SÍNCRONA. A CLASSE
+     SÓ CAI NO onComplete DO TWEEN (0.6s), ENTÃO AINDA ESTÁ LÁ NESTE PONTO. */
+  const burgerAberto = document
+    .querySelector('[data-menu-nav]')
+    ?.classList.contains('is-open');
 
-  if (typeof destination === 'number') {
-    window.scrollTo({ top: destination, behavior: 'auto' });
-    return;
-  }
+  const delay = burgerAberto ? 700 : 0;
 
-  const el = document.querySelector(destination);
-  if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
+  setTimeout(() => {
+    if (lenis) {
+      /* offset NEGATIVO — DESCONTA A BARRA FIXA DE 80px */
+      lenis.scrollTo(destination, { duration: 1.2, offset: -80 });
+      return;
+    }
+
+    if (typeof destination === 'number') {
+      window.scrollTo({ top: destination, behavior: 'auto' });
+      return;
+    }
+
+    const el = document.querySelector(destination);
+    if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
+  }, delay);
 }
 
 /* ============================================

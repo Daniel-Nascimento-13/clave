@@ -20,11 +20,7 @@
   height: 70px;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.6) 100%
-  );
+  background: #14001E;
 }
 
 .clv-menu__inner {
@@ -40,7 +36,7 @@
 }
 
 .clv-menu__logo img {
-  height: 25px;
+  height: 44px;
   width: auto;
 }
 
@@ -130,18 +126,25 @@
    ============================================ */
 
 @media (max-width: 860px) {
-  /* BARRA ENXUTA: 26px DE BURGER + 0.75rem DE PADDING = ~50px */
+  /* BARRA DE 80px — ALTURA FIXA CENTRA LOGO (52px) E BURGER (26px)
+     NA MESMA LINHA, SEM DEPENDER DE QUEM FOR MAIS ALTO. */
   .clv-menu__inner {
-    padding: 0.75rem 3rem;
+    padding: 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 1.5rem;
   }
 
   .clv-menu__logo img {
-    height: 18px;
+    height: 52px;
+    width: auto;
   }
 
   /* DEGRADÊ ACOMPANHA A ALTURA DA BARRA */
   .clv-menu::before {
-    height: 50px;
+    height: 80px;
   }
 
   .clv-menu__nav {
@@ -179,6 +182,18 @@
    CTA É FILHO DA NAV: ACOMPANHA O FIXO SEM right: PRÓPRIO. */
 
 @media (min-width: 861px) {
+  /* MESMA CAIXA DE 80px DA NAV — SEM ISSO A LOGO CENTRA NO PADDING DO
+     .clv-menu__inner (y=50) E A NAV NO PRÓPRIO BOX (y=40): 10px DE DESALINHO. */
+  .clv-menu__inner {
+    height: 80px;
+    padding-block: 0;
+  }
+
+  /* DEGRADÊ ACOMPANHA A ALTURA DA BARRA */
+  .clv-menu::before {
+    height: 80px;
+  }
+
   .clv-menu__nav {
     position: fixed;
     top: 0;

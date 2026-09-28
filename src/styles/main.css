@@ -3,10 +3,6 @@
    ============================================ */
 
 @import '../components/menu/menu.css';
-@import '../components/sobre/sobre.css';
-@import '../components/anuncie/anuncie.css';
-@import '../components/planos/planos.css';
-@import '../components/cobertura/cobertura.css';
 @import "@fontsource/bricolage-grotesque/400.css";
 @import "@fontsource/bricolage-grotesque/800.css";
 @import "@fontsource-variable/inter";
@@ -15,196 +11,1115 @@
 @theme {
   --color-paper:   #f4f3f0;
   --color-ink:     #14140f;
-  --color-accent:  #2a7fff;
+  --color-accent:  #811ec1;
   --font-display:  "Bricolage Grotesque", sans-serif;
   --font-body:     "Inter Variable", sans-serif;
 }
 
-/* PALETA DO CARD ESCURO — FICA EM :root PORQUE .clv-card É COMPARTILHADO:
-   O OVERLAY "SOBRE" USA A MESMA CASCA FORA DE .clv-diferenciais */
+/* PALETA CLAVE — FONTE ÚNICA DE COR DAS SEÇÕES */
 :root {
-  --nav:  #060b14;
-  --card: #0b1524;
-  --head: #0a1220;
-  --line: #17233a;
-  --txt:  #e8eef7;
-  --mut:  #8496b3;
-  --acc:  #2a7fff;
+  --clv-purple:        #811EC1;
+  --clv-purple-vivid:  #6817D6;
+  --clv-purple-dark:   #410063;
+  --clv-purple-light:  #A373FF;
+  --clv-purple-pale:   #DAC7FF;
+  --clv-bg-dark:       #14001E;
+  --clv-bg-navy:       #1F2033;
+
+  /* DERIVADOS — SUPERFÍCIES E TEXTO */
+  --clv-bg-soft:  #F5F3FF;
+  --clv-ink:      #14140F;
+  --clv-muted:    #6B6478;
+  --clv-line:     #E4DEF2;
 }
 
 body {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: #fff;
+  color: var(--clv-ink);
   font-family: var(--font-body);
 }
 
 /* ============================================
-   SEÇÃO 2 — ELEVADOR — ANIMAÇÃO SCRUB
+   PRIMITIVAS COMPARTILHADAS
    ============================================ */
 
-.elevador {
+/* ---------- CONTAINER ---------- */
+
+.clv-shell {
   position: relative;
-  height: 100svh;
-  overflow: hidden;
-  background: #000;
-}
-
-.elevador__video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.elevador__overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, rgb(0 0 0 / 0.92) 0%, rgb(0 0 0 / 0.25) 50%, transparent 70%),
-    linear-gradient(to top, rgb(0 0 0 / 0.75) 0%, transparent 40%);
-  pointer-events: none;
   z-index: 1;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-inline: 24px;
 }
 
-.elevador__content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  padding: 6.5rem 6vw 0; /* TOPO LIVRA A BARRA FIXA DE 80px DO MENU */
-  max-width: 640px;
-  color: #fff;
-}
+.clv-shell--narrow { max-width: 800px; }
 
-.elevador__label,
-.elevador__title,
-.elevador__text {
-  opacity: 0;
-  transform: translateY(24px);
-  clip-path: inset(0 0 100% 0);
-  text-shadow: 0 2px 16px rgb(0 0 0 / 0.4);
-}
+/* ---------- EYEBROW ---------- */
 
-.elevador__label {
+.clv-eyebrow {
   font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.3);
-  margin: 0 0 0.75rem;
-}
-
-.elevador__title {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(1.75rem, 5vw, 3.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.02em;
+  color: var(--clv-purple);
   margin: 0 0 1rem;
 }
 
-.elevador__text {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: rgb(255 255 255 / 0.85);
-  max-width: 420px;
+/* ---------- TÍTULO DE SEÇÃO — TIPOGRAFIA COMPARTILHADA ---------- */
+
+/* MESMOS VALORES DE .clv-locais__heading, QUE É O PADRÃO DE REFERÊNCIA.
+   APLICADA POR ORA SÓ EM EXPERIÊNCIA, MARCAS, PLANOS E CONTATO — AS DEMAIS
+   SEÇÕES SEGUEM COM AS REGRAS PRÓPRIAS ATÉ SEREM MIGRADAS. */
+.clv-heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   margin: 0;
+  color: var(--clv-ink);
 }
 
-@media (max-width: 640px) {
-  .elevador__content {
-    padding: 4.5rem 6vw 0; /* TOPO LIVRA A BARRA FIXA DE 50px DO MENU */
+/* ---------- RÉGUA ---------- */
+
+.clv-rule {
+  width: 100%;
+  height: 1px;
+  border: 0;
+  background: var(--clv-line);
+  margin: clamp(32px, 5vw, 56px) 0;
+}
+
+/* ---------- BOTÕES ---------- */
+
+.clv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 1rem 1.75rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.clv-btn--solid {
+  background: var(--clv-purple);
+  color: #fff;
+}
+
+.clv-btn--solid:hover { background: var(--clv-purple-vivid); }
+
+/* GHOST — SOBRE FUNDO ESCURO */
+.clv-btn--ghost {
+  background: transparent;
+  color: #fff;
+  border-color: rgb(255 255 255 / 0.35);
+}
+
+.clv-btn--ghost:hover {
+  background: rgb(255 255 255 / 0.08);
+  border-color: #fff;
+}
+
+/* OUTLINE — SOBRE FUNDO CLARO */
+.clv-btn--outline {
+  background: transparent;
+  color: var(--clv-ink);
+  border-color: var(--clv-line);
+}
+
+.clv-btn--outline:hover {
+  border-color: var(--clv-purple);
+  color: var(--clv-purple);
+}
+
+/* ---------- CHIPS ---------- */
+
+.clv-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clv-purple);
+  background: rgb(129 30 193 / 0.08);
+  border-radius: 999px;
+  padding: 0.4rem 0.75rem;
+}
+
+/* ---------- REVEAL (GSAP APLICA O ESTADO FINAL) ---------- */
+
+/* ESTADO INICIAL NO CSS EVITA FLASH ANTES DO ScrollTrigger MEDIR.
+   OS VALORES ESPELHAM REVEAL.y / REVEAL.clipFrom EM constants/motion.js.
+   reveal.js E hero.js LIMPAM ISTO NO prefers-reduced-motion. */
+/* EM data-hero="actions" QUEM ANIMA SÃO OS BOTÕES — SE O CONTAINER FICASSE
+   COM opacity: 0 ELE NUNCA SERIA LIMPO E OS CTAs NÃO APARECERIAM. */
+[data-reveal],
+[data-hero="title"],
+[data-hero="subtitle"],
+[data-hero="scroll"],
+[data-hero="actions"] > * {
+  opacity: 0;
+  transform: translateY(24px);
+  clip-path: inset(0% 0% 100% 0%);
+}
+
+/* ESPELHA REVEAL.bleed — O RECORTE INICIAL PRECISA JÁ INCLUIR O QUE VAZA
+   ACIMA DA CAIXA, SENÃO O BADGE APARECE FATIADO NO PRIMEIRO FRAME. */
+[data-reveal][data-reveal-bleed] {
+  clip-path: inset(-2em 0% 100% 0%);
+}
+
+/* ENTRADA CONCLUÍDA — clip-path E transform SAEM DE CENA. UM inset(0%) RESIDUAL
+   CONTINUA RECORTANDO TUDO QUE VAZA DA CAIXA (O BADGE "RECOMENDADO", A SOMBRA
+   DO CARD EM DESTAQUE). ESTA REGRA PRECISA VIR ANTES DO clearProps: SEM ELA O
+   clearProps DEVOLVERIA O ELEMENTO AO ESTADO INICIAL DO CSS E O ESCONDERIA. */
+[data-reveal].is-revealed,
+[data-hero].is-revealed,
+[data-hero="actions"] > .is-revealed {
+  opacity: 1;
+  transform: none;
+  clip-path: none;
+}
+
+/* NO "lines" QUEM ANIMA SÃO AS LINHAS, NÃO O ELEMENTO. O ESTADO INICIAL FICA
+   NELE APENAS ATÉ O SplitText RODAR — is-split (POSTO NO onSplit) DEVOLVE O
+   ELEMENTO AO NORMAL, JÁ COM AS LINHAS ESCONDIDAS PELO TWEEN "from". */
+[data-reveal="lines"].is-split,
+[data-hero="title"].is-split {
+  opacity: 1;
+  transform: none;
+  clip-path: none;
+}
+
+/* A MÁSCARA DO SplitText (mask: "lines") PRECISA CONTER O yPercent DA LINHA */
+.clv-line {
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-hero="title"],
+  [data-hero="subtitle"],
+  [data-hero="scroll"],
+  [data-hero="actions"] > * {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
   }
 }
 
-.elevador::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 12rem;
-  background: linear-gradient(to top, #000 0%, rgb(0 0 0 / 0.5) 30%, transparent 100%);
-  pointer-events: none;
-  z-index: 1;
+/* ---------- ROLETA DE NÚMEROS ---------- */
+
+/* A JANELA TEM ALTURA DE 1 LINHA E CORTA A FITA. tabular-nums MANTÉM TODOS OS
+   DÍGITOS COM A MESMA LARGURA — SEM ISSO A COLUNA MUDA DE LARGURA A CADA
+   CÉLULA E O NÚMERO "RESPIRA" DURANTE O GIRO. */
+[data-roulette] {
+  display: inline-flex;
+  align-items: baseline;
+  font-variant-numeric: tabular-nums;
+}
+
+.clv-roulette__col {
+  display: inline-block;
+  overflow: hidden;
+  height: 1em;
+  vertical-align: top;
+}
+
+.clv-roulette__strip {
+  display: flex;
+  flex-direction: column;
+}
+
+.clv-roulette__cell {
+  display: block;
+  height: 1em;
+  line-height: 1;
+}
+
+.clv-roulette__symbol {
+  display: inline-block;
 }
 
 /* ============================================
-   SEÇÃO 3 — MARCAS — CARROSSEL E HEADLINE
+   MENU — CTA SÓLIDO (COMPLEMENTO A menu.css)
+   ============================================ */
+
+/* menu.css SEGUE INTOCADO — O BOTÃO NOVO GANHA PELE AQUI */
+
+.clv-menu__cta--solid {
+  background: var(--clv-purple);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.625rem 1.25rem;
+  border-radius: 999px;
+  transition: background-color 0.25s ease;
+}
+
+.clv-menu__cta--solid:hover { background: var(--clv-purple-vivid); }
+
+@media (min-width: 861px) {
+  /* A REGRA DE menu.css DÁ margin-left: 2rem A TODO .clv-menu__cta —
+     O SÓLIDO VEM COLADO NO "FALE CONOSCO" */
+  .clv-menu__cta--solid { margin-left: 1.25rem; }
+}
+
+/* ============================================
+   MENU — LOGO (COMPLEMENTO A menu.css)
+   ============================================ */
+
+/* logo.webp É ~2:1 (703×355) CONTRA ~3.8:1 DO CROP ANTIGO (309×81) — NA MESMA
+   ALTURA ELE RENDERIZA COM METADE DA LARGURA. A ALTURA COMPENSA A DIFERENÇA.
+   GEOMETRIA DA BARRA (PADDING/DEGRADÊ) SEGUE DE menu.css. */
+
+/* order: 2 VEM DE menu.css E SOBREVIVE — AQUI SÓ ENTRA O ALINHAMENTO */
+
+.clv-menu__logo {
+  display: flex;
+  align-items: center;
+}
+
+/* display: block JÁ ELIMINA O ESPAÇO DE BASELINE DA IMG —
+   COM O PAI EM FLEX, vertical-align SERIA INÓCUO */
+
+.clv-menu__logo img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+
+/* ESTE BLOCO NÃO ESTÁ EM MEDIA QUERY E VEM DEPOIS DO @import DE menu.css —
+   VENCE A REGRA MOBILE DE LÁ POR ORDEM. O BREAKPOINT PRECISA SER REPETIDO. */
+
+@media (max-width: 860px) {
+  .clv-menu__logo img {
+    height: 52px;
+  }
+}
+
+/* ============================================
+   SEÇÃO 1 — HERO
+   ============================================ */
+
+.clv-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  overflow: hidden;
+  padding: 8rem 24px 6rem;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 100%, rgb(65 0 99 / 0.85) 0%, transparent 70%),
+    var(--clv-bg-dark);
+  color: #fff;
+}
+
+/* ---------- TEXTO FANTASMA ---------- */
+
+.clv-hero__ghost {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(8rem, 28vw, 24rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgb(255 255 255 / 0.035);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ---------- CONTEÚDO ---------- */
+
+.clv-hero__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.clv-hero__eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.5);
+  margin: 0 0 1.75rem;
+}
+
+.clv-hero__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.75rem, 9vw, 6.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: #fff;
+}
+
+.clv-hero__title-accent { color: var(--clv-purple); }
+
+.clv-hero__subtitle {
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  line-height: 1.6;
+  color: rgb(255 255 255 / 0.7);
+  max-width: 34rem;
+  margin: 1.75rem 0 0;
+}
+
+.clv-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+/* ---------- INDICADOR DE SCROLL ---------- */
+
+/* CENTRALIZADO POR margin, NÃO POR translateX(-50%): O transform FICA LIVRE
+   PARA A TIMELINE DO HERO — SENÃO O GSAP SOBRESCREVE A CENTRALIZAÇÃO. */
+.clv-hero__scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 0;
+  right: 0;
+  width: max-content;
+  margin-inline: auto;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgb(255 255 255 / 0.45);
+  pointer-events: none;
+}
+
+.clv-hero__scroll-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.clv-hero__scroll-arrow {
+  width: 18px;
+  height: 18px;
+  animation: clv-bob 2.4s ease-in-out infinite;
+}
+
+@keyframes clv-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clv-hero__scroll-arrow { animation: none; }
+}
+
+@media (max-width: 640px) {
+  .clv-hero { padding-top: 6.5rem; }
+  .clv-hero__scroll { bottom: 1.5rem; }
+}
+
+/* ============================================
+   SEÇÃO 2 — EXPERIÊNCIA
+   ============================================ */
+
+.clv-exp {
+  background: var(--clv-bg-soft);
+  padding: clamp(80px, 12vw, 140px) 0;
+  padding-bottom: 5rem;
+  text-align: center;
+}
+
+.clv-exp__subtitle {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--clv-muted);
+  margin: 1.25rem 0 0;
+}
+
+/* ---------- LISTA EMPILHADA ---------- */
+
+.clv-exp__list {
+  list-style: none;
+  margin: clamp(40px, 6vw, 64px) 0 0;
+  padding: 0;
+}
+
+.clv-exp__item {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--clv-purple-light);
+}
+
+/* ---------- TEXTO CORRIDO ---------- */
+
+.clv-exp__text {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--clv-muted);
+  margin: 0;
+}
+
+/* ---------- TAGLINE ---------- */
+
+.clv-exp__tagline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.25rem, 3.2vw, 2rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.clv-exp__tagline-brand  { color: var(--clv-ink); }
+.clv-exp__tagline-accent { color: var(--clv-purple); }
+
+/* ============================================
+   SEÇÃO 3 — A REDE — NÚMEROS
+   ============================================ */
+
+.clv-rede {
+  background: var(--clv-bg-soft);
+  padding: 0 0 clamp(80px, 12vw, 140px);
+  padding-top: 5rem;
+}
+
+.clv-rede__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 4vw, 48px);
+  text-align: center;
+}
+
+.clv-rede__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.clv-rede__num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--clv-purple);
+}
+
+.clv-rede__stats--small .clv-rede__num {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+/* ---------- AMBIENTES — PÍLULAS SEM NÚMERO ---------- */
+
+.clv-rede__ambientes {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.clv-rede__ambiente-card {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--clv-purple);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clv-purple);
+}
+
+.clv-rede__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--clv-muted);
+  max-width: 12rem;
+}
+
+/* ---------- SEPARADOR COM RÓTULO ---------- */
+
+.clv-rede__divider {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: clamp(48px, 7vw, 80px) 0;
+}
+
+.clv-rede__divider::before,
+.clv-rede__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--clv-line);
+}
+
+.clv-rede__divider-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clv-muted);
+  white-space: nowrap;
+}
+
+.clv-rede__foot {
+  margin: clamp(48px, 7vw, 80px) auto 0;
+  max-width: 34rem;
+  text-align: center;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--clv-muted);
+}
+
+@media (max-width: 640px) {
+  .clv-rede__stats {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* ============================================
+   SEÇÃO 4 — SOBRE
+   ============================================ */
+
+.clv-sobre {
+  background: var(--clv-bg-dark);
+  padding: clamp(80px, 12vw, 140px) 0;
+  color: #fff;
+}
+
+.clv-sobre__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+
+.clv-sobre__heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.875rem, 4.5vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: #fff;
+}
+
+/* ---------- NÚMEROS INLINE ---------- */
+
+.clv-sobre__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(24px, 4vw, 48px);
+  margin: 2rem 0;
+}
+
+.clv-sobre__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.clv-sobre__stat-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--clv-purple-light);
+}
+
+.clv-sobre__stat-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.45);
+}
+
+.clv-sobre__text {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgb(255 255 255 / 0.7);
+  margin: 0 0 1.25rem;
+}
+
+.clv-sobre__text + .clv-btn { margin-top: 1rem; }
+
+/* ---------- MÍDIA ---------- */
+
+.clv-sobre__media {
+  position: relative;
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+
+.clv-sobre__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.clv-sobre__badge {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 2.5rem 1.5rem 1.5rem;
+  background: linear-gradient(to top, rgb(20 0 30 / 0.92) 0%, transparent 100%);
+}
+
+.clv-sobre__badge-top {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--clv-purple-light);
+}
+
+.clv-sobre__badge-bottom {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+/* ---------- ORIGEM — CALLOUT COM FILETE ---------- */
+
+.clv-sobre__origem {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border-left: 3px solid var(--clv-purple);
+}
+
+.clv-sobre__origem-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clv-purple-light);
+  margin-bottom: 0.5rem;
+}
+
+.clv-sobre__origem-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffffff60;
+  margin-bottom: 0.25rem;
+}
+
+.clv-sobre__origem-text {
+  font-size: 0.9375rem;
+  color: #ffffffcc;
+  line-height: 1.6;
+}
+
+@media (max-width: 860px) {
+  .clv-sobre__grid { grid-template-columns: 1fr; }
+  .clv-sobre__media { aspect-ratio: 4 / 3; }
+}
+
+/* ============================================
+   SEÇÃO 5 — DIFERENCIAIS
+   ============================================ */
+
+/* FAIXA ESCURA — MESMO FUNDO DO HERO E DO "SOBRE" */
+
+.clv-dif {
+  background: var(--clv-bg-dark);
+  padding: 5rem 1.5rem;
+}
+
+/* ---------- LEGIBILIDADE NO FUNDO ESCURO ---------- */
+
+/* AS CORES BASE DESTES ELEMENTOS SÃO --clv-ink / --clv-muted, PENSADAS PARA
+   FUNDO CLARO — AQUI ELAS SERIAM ILEGÍVEIS. */
+
+.clv-dif .clv-dif__heading,
+.clv-dif .clv-dif__title {
+  color: #ffffff;
+}
+
+.clv-dif .clv-dif__desc,
+.clv-dif .clv-dif__subtitle {
+  color: #ffffffcc;
+}
+
+.clv-dif .clv-dif__num {
+  color: #ffffff50;
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+/* O CHIP É ROXO SOBRE ROXO TRANSLÚCIDO — SOME NO ESCURO */
+
+.clv-dif .clv-chip {
+  color: var(--clv-purple-light);
+  background: rgb(163 115 255 / 0.12);
+}
+
+.clv-dif__head { max-width: 40rem; }
+
+.clv-dif__heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--clv-ink);
+}
+
+.clv-dif__subtitle {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--clv-muted);
+  margin: 1.25rem 0 0;
+}
+
+/* ---------- GRID 2x2 COM DIVISÓRIAS ---------- */
+
+/* AS LINHAS SÃO DESENHADAS POR BORDA DOS CARDS — SEM PSEUDO-ELEMENTOS
+   EXTRAS E SEM VAZAR PARA FORA DO GRID */
+.clv-dif__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: clamp(48px, 7vw, 80px);
+  border-top: 1px solid var(--clv-line);
+}
+
+.clv-dif__card {
+  position: relative;
+  padding: clamp(32px, 4vw, 48px) clamp(24px, 3vw, 40px);
+  border-bottom: 1px solid var(--clv-line);
+}
+
+.clv-dif__card:nth-child(odd)  { border-right: 1px solid var(--clv-line); padding-left: 0; }
+.clv-dif__card:nth-child(even) { padding-right: 0; }
+
+.clv-dif__num {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: rgb(20 20 15 / 0.1);
+  margin-bottom: 1.25rem;
+}
+
+.clv-dif__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.875rem;
+  color: var(--clv-ink);
+}
+
+.clv-dif__desc {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--clv-muted);
+  margin: 0 0 1.5rem;
+}
+
+.clv-dif__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 720px) {
+  .clv-dif__grid { grid-template-columns: 1fr; }
+
+  .clv-dif__card,
+  .clv-dif__card:nth-child(odd),
+  .clv-dif__card:nth-child(even) {
+    border-right: 0;
+    padding-inline: 0;
+  }
+}
+
+/* ============================================
+   SEÇÃO 6 — LOCAIS — ONDE ESTAMOS
+   ============================================ */
+
+.clv-locais {
+  background: #fff;
+  padding: clamp(80px, 12vw, 140px) 0;
+}
+
+.clv-locais__head { max-width: 40rem; }
+
+.clv-locais__heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--clv-ink);
+}
+
+.clv-locais__subtitle {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--clv-muted);
+  margin: 1.25rem 0 0;
+}
+
+/* ---------- CARROSSEL ---------- */
+
+/* QUEM DESLIZA SÃO OS CARDS, NÃO O .clv-locais__track: O TRACK É O RECORTE
+   (overflow: hidden) — TRANSFORMÁ-LO ARRASTARIA A JANELA JUNTO COM O CONTEÚDO
+   E NADA MUDARIA NA TELA. DAÍ A TRANSIÇÃO VIVER NO CARD. */
+
+.clv-locais__carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: clamp(40px, 6vw, 64px);
+}
+
+.clv-locais__track {
+  display: flex;
+  overflow: hidden;
+  border-radius: 16px;
+  flex: 1;
+}
+
+.clv-locais__card {
+  position: relative;
+  min-width: 100%;
+  aspect-ratio: 3 / 4;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  flex-shrink: 0;
+}
+
+.clv-locais__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+.clv-locais__label {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 3rem 1.5rem 1.5rem;
+  background: linear-gradient(to top, rgb(20 0 30 / 0.9) 0%, transparent 100%);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+.clv-locais__arrow {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--clv-purple);
+  background: transparent;
+  color: var(--clv-purple);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.clv-locais__arrow:hover {
+  background: var(--clv-purple);
+  color: #fff;
+}
+
+/* ============================================
+   SEÇÃO 6.5 — MAPA — REDE DE PONTOS
+   ============================================ */
+
+.clv-mapa {
+  background: #fff;
+  padding: 0 0 clamp(80px, 12vw, 140px);
+}
+
+.clv-mapa__head { max-width: 40rem; }
+
+.clv-mapa__heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--clv-ink);
+}
+
+.clv-mapa__subtitle {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--clv-muted);
+  margin: 1.25rem 0 0;
+}
+
+.clv-mapa__frame { margin-top: clamp(32px, 5vw, 56px); }
+
+/* ALTURA EXPLÍCITA É OBRIGATÓRIA — LEAFLET NÃO INFERE A DO CONTAINER */
+.clv-mapa__canvas {
+  height: 480px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--clv-line);
+  background: var(--clv-bg-soft);
+}
+
+/* ---------- TEMA DO LEAFLET ---------- */
+
+/* .leaflet-container CAI NO PRÓPRIO #clv-map — SELETOR COMPOSTO, NÃO DESCENDENTE */
+.clv-mapa__canvas.leaflet-container {
+  font-family: var(--font-body);
+  background: var(--clv-bg-soft);
+}
+
+/* DESSATURA OS TILES PARA O MAPA NÃO BRIGAR COM A PALETA ROXA.
+   SÓ NOS TILES — MARCADORES E POPUP FICAM DE FORA. */
+.clv-mapa__canvas .leaflet-tile-pane {
+  filter: grayscale(30%);
+}
+
+/* ---------- MARCADOR ---------- */
+
+.clv-map-pin {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--clv-purple);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px rgb(129 30 193 / 0.25), 0 4px 10px rgb(20 0 30 / 0.3);
+}
+
+/* ---------- POPUP ---------- */
+
+.clv-mapa__canvas .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgb(20 0 30 / 0.18);
+}
+
+.clv-mapa__canvas .leaflet-popup-content {
+  margin: 14px 16px;
+  min-width: 170px;
+}
+
+.clv-map-popup__nome {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--clv-ink);
+  margin: 0;
+}
+
+.clv-map-popup__tipo {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--clv-purple);
+  margin: 4px 0 12px;
+}
+
+.clv-map-popup__cta {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--clv-purple);
+  border-radius: 999px;
+  padding: 0.5rem 0.875rem;
+  text-decoration: none;
+}
+
+.clv-map-popup__cta:hover { background: var(--clv-purple-vivid); }
+
+@media (max-width: 640px) {
+  .clv-mapa__canvas { height: 360px; }
+}
+
+/* ============================================
+   SEÇÃO 7 — MARCAS — CARROSSEL
    ============================================ */
 
 .marcas {
   position: relative;
-  padding: 6rem 6vw 7rem;
-  background: var(--color-paper);
+  padding: clamp(80px, 12vw, 140px) 6vw;
+  background: #ffffff;
   overflow: hidden;
-}
-
-.marcas::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 6rem;
-  background: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.5) 30%, transparent 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.marcas::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 8rem;
-  background: linear-gradient(to top, #060b14 0%, rgb(6 11 20 / 0.5) 30%, transparent 100%);
-  pointer-events: none;
-  z-index: 1;
 }
 
 .marcas__intro {
   position: relative;
   z-index: 2;
-  min-height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
-  overflow: hidden;
-  padding: 0 6vw;
-}
-
-.marcas__headline {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(1.75rem, 7vw, 6rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  margin: 0;
-  color: var(--color-ink);
-  white-space: nowrap;
-}
-
-.marcas__headline span {
-  display: inline-block;
-  will-change: transform, opacity;
+  margin-bottom: clamp(48px, 7vw, 80px);
 }
 
 .marcas__subtitle {
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 1.0625rem;
+  line-height: 1.6;
   max-width: 32rem;
-  margin: 1.5rem 0 0;
-  color: rgb(20 20 15 / 0.65);
-  opacity: 0;
-  transform: translateY(28px);
+  margin: 1.25rem 0 0;
+  color: var(--clv-muted);
 }
 
 .marcas__track {
@@ -218,42 +1133,6 @@ body {
   width: max-content;
 }
 
-.marcas__marquee span {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 3.5rem;
-  color: rgb(20 20 15 / 0.35);
-  white-space: nowrap;
-}
-
-@media (max-width: 640px) {
-  .marcas__marquee span {
-    font-size: 2rem;
-  }
-
-  .marcas__marquee {
-    gap: 1.5rem;
-  }
-
-  .marcas__intro {
-    padding: 0 6vw;
-  }
-}
-
-.marcas__dots {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    radial-gradient(circle at 50% 0%, #2a7fff0f 0, #0000 55%),
-    radial-gradient(#14140f1a 1px, #0000 1px);
-  background-size: 100% 100%, 12px 12px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
-          mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
-  opacity: .6;
-}
-
 .marcas__logo {
   height: 56px;
   width: auto;
@@ -264,855 +1143,522 @@ body {
   transition: opacity 0.3s;
 }
 
-.marcas__logo:hover {
-  opacity: 1;
-}
+.marcas__logo:hover { opacity: 1; }
 
-/* ============================================
-   SEÇÃO 4 — DIFERENCIAIS — CARDS E GLOW
-   ============================================ */
-
-/* PALETA SUBIU PRO :root — VER TOPO DO ARQUIVO */
-
-.clv-diferenciais {
-  position: relative;
-  overflow-x: clip;
-  background: var(--nav);
-  padding: clamp(64px, 10vw, 120px) 24px;
-  color: var(--txt);
-  /* -1px COBRE A LINHA DE SUBPIXEL NA COSTURA DIFERENCIAIS->PRODUTO */
-  margin-bottom: -1px;
-}
-
-.clv-defs { position: absolute; width: 0; height: 0; }
-
-.clv-dots {
+.marcas__dots {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   background-image:
-    radial-gradient(circle at 50% 0%, #2a7fff14 0, #0000 55%),
-    radial-gradient(#22345a 1px, #0000 1px);
+    radial-gradient(circle at 50% 0%, #811ec114 0, #0000 55%),
+    radial-gradient(#811ec122 1px, #0000 1px);
   background-size: 100% 100%, 12px 12px;
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
           mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
   opacity: .6;
 }
 
-.clv-diferenciais::before,
-.clv-diferenciais::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  z-index: 2;
-  height: clamp(80px, 12vw, 160px);
-  pointer-events: none;
-}
-
-.clv-diferenciais::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--nav) 0%, transparent 100%);
-}
-
-.clv-diferenciais::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--nav) 0%, transparent 100%);
-}
-
-.clv-inner {
-  position: relative;
-  z-index: 1;
-  max-width: 1080px;
-  margin: 0 auto;
-}
-
-/* ---------- CABEÇALHO ---------- */
-
-.clv-section-head { margin-bottom: clamp(32px, 5vw, 56px); }
-
-.clv-section-label {
-  font-family: var(--font-body);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.3);
-  margin-bottom: 8px;
-}
-
-.clv-heading {
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-weight: 800;
-  font-size: clamp(28px, 4vw, 46px);
-  line-height: 1.05;
-  letter-spacing: -.02em;
-  margin: 0;
-  max-width: 16ch;
-}
-
-/* ---------- COLUNA ÚNICA ---------- */
-
-.clv-grid {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(24px, 4vw, 40px);
-  max-width: 440px;
-  margin: 0 auto;
-}
-
-/* ---------- CARD + BORDA ---------- */
-
-/* overflow: hidden CONTÉM O BLUR — isolation: isolate IMPEDE O z-index: -2
-   DO GLOW DE ESCAPAR DO CONTEXTO */
-.clv-card-container {
-  position: relative;
-  border-radius: 1em;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.clv-card-border {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: #0005;
-  border-radius: inherit;
-}
-
-.clv-card {
-  position: relative;
-  z-index: 1;
-  margin: .125em;
-  border-radius: calc(1em - .125em);
-  background: var(--card);
-  display: flex;
-  flex-direction: column;
-  color: var(--txt);
-  overflow: hidden;
-}
-
-.clv-head, .clv-body { position: relative; z-index: 1; }
-
-/* ---------- HEADER DO CARD ---------- */
-
-.clv-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 18px 18px 15px;
-  background: var(--head);
-  border-bottom: 1px solid var(--line);
-}
-
-.clv-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #2a7fff1f;
-  color: var(--acc);
-  flex-shrink: 0;
-}
-
-.clv-icon svg { width: 20px; height: 20px; }
-
-.clv-head-text { flex-grow: 1; line-height: 1.25; }
-.clv-title { font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
-.clv-sub { font-size: 11.5px; color: var(--mut); margin-top: 2px; }
-
-.clv-num {
-  font-size: 13px;
-  font-weight: 700;
-  color: #2a7fff80;
-  font-variant-numeric: tabular-nums;
-}
-
-/* ---------- CORPO DO CARD ---------- */
-
-.clv-body {
-  padding: 16px 18px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.clv-desc {
-  margin: 0;
-  font-size: 12.5px;
-  line-height: 1.55;
-  color: #c2cedf;
-}
-
-.clv-list { display: flex; flex-direction: column; gap: 8px; }
-
-.clv-item {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 12px;
-  color: var(--txt);
-}
-
-.clv-chk {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  border-radius: 5px;
-  background: #2a7fff22;
-  color: var(--acc);
-  flex-shrink: 0;
-}
-
-.clv-chk svg { width: 11px; height: 11px; }
-
-/* ---------- GLOW GIRATÓRIO ---------- */
-
-.clv-spin {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  overflow: hidden;
-  border-radius: inherit;
-}
-
-.clv-spin-blur    { filter: blur(3em) url(#unopaq); }
-.clv-spin-intense { inset: -.125em; filter: blur(.5em) url(#unopaq2); border-radius: .75em; }
-.clv-spin-inside  { inset: -2px; border-radius: inherit; filter: blur(2px) url(#unopaq3); z-index: 0; }
-
-.clv-spin::before {
-  content: "";
-  position: absolute;
-  inset: -30%;
-  animation: clv-speen 8s cubic-bezier(.56, .15, .28, .86) infinite;
-}
-
-.clv-spin-blur::before    { background: linear-gradient(-45deg, #2a7fff, #0000 46% 54%, #22d3ee); }
-.clv-spin-intense::before { background: linear-gradient(-45deg, #5aa0ff, #0000 35% 65%, #5ee6ff); }
-.clv-spin-inside::before  { background: linear-gradient(-45deg, #a9ccff, #0000 35% 65%, #b0f2ff); }
-
-@keyframes clv-speen {
-  0%  { rotate: 10deg; }
-  50% { rotate: 190deg; }
-  to  { rotate: 370deg; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .clv-spin::before { animation: none; rotate: 120deg; }
+@media (max-width: 640px) {
+  .marcas__marquee { gap: 1.5rem; }
+  .marcas__logo    { height: 40px; }
 }
 
 /* ============================================
-   SEÇÃO 5 — PRODUTO — TELA ANIMADA
+   SEÇÃO 8 — PLANOS
    ============================================ */
 
-.produto {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-height: 100svh;
-  padding: clamp(64px, 10vw, 120px) 24px;
-  overflow: hidden;
+.clv-planos {
+  background: var(--clv-bg-soft);
+  padding: clamp(80px, 12vw, 140px) 0;
 }
 
-.produto::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 6rem;
-  background: linear-gradient(to bottom, #060b14 0%, rgb(6 11 20 / 0.5) 30%, transparent 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.produto::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 8rem;
-  background: linear-gradient(to top, #060b14 0%, rgb(6 11 20 / 0.5) 30%, transparent 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.produto__dots {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    radial-gradient(circle at 50% 0%, #2a7fff0f 0, #0000 55%),
-    radial-gradient(#14140f1a 1px, #0000 1px);
-  background-size: 100% 100%, 12px 12px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
-          mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
-  opacity: .6;
-}
-
-.produto__inner {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  gap: clamp(32px, 5vw, 48px);
-  margin: 0 0 24px 32px;
-}
-
-/* DECLARAÇÃO UNIFICADA — max-width + opacity JUNTOS */
-.produto__content {
-  width: 100%;
-  max-width: 480px;
-  margin: 0;
-  text-align: left;
-  opacity: 0;
-}
-
-.produto__list {
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  padding: 0;
-  align-items: flex-start;
-  margin: 0 0 20px 32px;
-  gap: 15px;
-}
-
-.produto__item {
-  justify-content: flex-start;
-}
-
-/* LABEL EM INK TRANSLÚCIDO — FUNDO CLARO, BRANCO A 30% SUMIRIA */
-.produto__label {
-  font-family: var(--font-body);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgb(20 20 15 / 0.6);
-  margin-bottom: 8px;
-}
-
-.produto__heading {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(28px, 4vw, 44px);
-  line-height: 1.05;
-  letter-spacing: -.02em;
-  color: var(--color-ink);
-  margin: 0 0 24px;
-}
-
-.produto__item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-ink);
-}
-
-.produto__chk {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
-  background: #2a7fff1f;
-  color: var(--color-accent);
-  flex-shrink: 0;
-  font-size: 12px;
-}
-
-.produto__text {
-  font-size: 13px;
-  line-height: 1.6;
-  color: rgb(20 20 15 / 0.6);
-  max-width: 32ch;
-  margin: 0 0 24px 32px;
-}
-
-/* ---------- BOTÃO CTA ---------- */
-
-.produto__cta {
-  --border-radius: 9999px;
-  --transition: .3s ease-in-out;
-  cursor: pointer;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .875rem 1.75rem;
-  background: transparent;
-  border: none;
-  border-radius: var(--border-radius);
-  text-decoration: none;
-  transform: scale(calc(1 + (var(--active, 0) * .06)));
-  transition: transform var(--transition);
-}
-
-.produto__cta::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--color-ink);
-  border-radius: var(--border-radius);
-  box-shadow:
-    inset 0 .5px hsl(0 0% 100% / .15),
-    0 4px 10px -4px hsl(0 0% 0% / calc(1 - var(--active, 0))),
-    0 0 0 calc(var(--active, 0) * .3rem) #2a7fff55;
-  transition: box-shadow var(--transition);
-  z-index: 0;
-}
-
-.produto__cta:is(:hover, :focus-visible) { --active: 1; }
-.produto__cta:active { transform: scale(1); }
-
-.produto__cta-border {
-  --size: calc(100% + 2px);
-  overflow: hidden;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: var(--size);
-  height: var(--size);
-  border-radius: var(--border-radius);
-  z-index: -1;
-}
-
-.produto__cta-border::before {
-  content: "";
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  width: 100%;
-  height: 2rem;
-  background: var(--color-accent);
-  mask: linear-gradient(transparent 0%, white 120%);
-  animation: produto-cta-rotate 2s linear infinite;
-}
-
-@keyframes produto-cta-rotate {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-.produto__cta-sparkle {
-  position: relative;
-  z-index: 1;
-  width: 1.15rem;
-  height: 1.15rem;
-  color: #15cc12;
-}
-
-.produto__cta-text {
-  position: relative;
-  z-index: 1;
-  font-size: 13px;
-  font-weight: 500;
-  color: #fff;
-}
-
-/* ---------- CHECKBOX ANIMADO ---------- */
-
-.produto__chk-svg {
-  width: 20px;
-  height: 20px;
-  overflow: visible;
-  flex-shrink: 0;
-}
-
-.produto__chk-path {
-  fill: none;
-  stroke: var(--color-accent);
-  stroke-width: 6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: stroke-dasharray .5s ease, stroke-dashoffset .5s ease;
-  stroke-dasharray: 241 9999999;
-  stroke-dashoffset: 0;
-}
-
-.produto__item.is-checked .produto__chk-path {
-  stroke-dasharray: 70.5096664428711 9999999;
-  stroke-dashoffset: -262.2723388671875;
-}
-
-/* ---------- QUADRO DO VÍDEO ---------- */
-
-.produto__frame-container {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  isolation: isolate;
-  height: min(384px, 38vh);
-  width: auto;
-  aspect-ratio: 5 / 6;
+.clv-planos__head {
+  max-width: 40rem;
   margin: 0 auto;
+  text-align: center;
 }
 
-.produto__frame-border {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: #0005;
-  border-radius: inherit;
-}
-
-.produto__frame {
-  position: absolute;
-  inset: .125em;
-  z-index: 1;
-  border-radius: calc(16px - .125em);
-  background: #0b1524;
-  overflow: hidden;
-  opacity: 0;
-  transform: scale(.96);
-}
-
-.produto__video {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  border-radius: inherit;
-}
-
-.produto__spin {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  overflow: hidden;
-  border-radius: inherit;
-}
-
-.produto__spin-blur    { filter: blur(3em) url(#unopaq); }
-.produto__spin-intense { inset: -.125em; filter: blur(.5em) url(#unopaq2); border-radius: 12px; }
-.produto__spin-inside  { inset: -2px; border-radius: inherit; filter: blur(2px) url(#unopaq3); z-index: 0; }
-
-.produto__spin::before {
-  content: "";
-  position: absolute;
-  inset: -30%;
-  animation: clv-speen 8s cubic-bezier(.56, .15, .28, .86) infinite;
-}
-
-.produto__spin-blur::before    { background: linear-gradient(-45deg, #2a7fff, #0000 46% 54%, #22d3ee); }
-.produto__spin-intense::before { background: linear-gradient(-45deg, #5aa0ff, #0000 35% 65%, #5ee6ff); }
-.produto__spin-inside::before  { background: linear-gradient(-45deg, #a9ccff, #0000 35% 65%, #b0f2ff); }
-
-/* ============================================
-   SEÇÃO 6 — PRÉDIOS E CONDOMÍNIOS — CARROSSEL
-   ============================================ */
-
-.predios {
-  position: relative;
-  background: var(--nav);
-  padding: 80px 0 72px;
-  overflow: hidden;
-  /* -1px COBRE A LINHA DE SUBPIXEL NA COSTURA PRODUTO->PRÉDIOS */
-  margin-top: -1px;
-}
-
-.predios::before,
-.predios::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  z-index: 2;
-  height: clamp(80px, 12vw, 160px);
-  pointer-events: none;
-}
-
-.predios::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--nav) 0%, transparent 100%);
-}
-
-.predios::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--nav) 0%, transparent 100%);
-}
-
-/* ---------- INNER ---------- */
-
-.predios__inner {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 48px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ---------- CABEÇALHO ---------- */
-
-.predios__head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 56px;
-  position: relative;
-}
-
-.predios__head-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.predios__label {
-  font-family: var(--font-body);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.3);
-  margin-bottom: 8px;
-}
-
-.predios__heading {
-  font-family: var(--font-display);
-  font-size: clamp(32px, 4vw, 52px);
-  font-weight: 800;
-  color: var(--color-paper);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  opacity: 0;
-}
-
-/* ---------- CONTADOR ---------- */
-
-.predios__counter {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  line-height: 1;
-  align-self: flex-start;
-}
-
-.predios__counter-current {
-  font-family: var(--font-display);
-  font-size: clamp(48px, 6vw, 72px);
-  font-weight: 800;
-  color: var(--color-paper);
-  letter-spacing: -0.04em;
-  line-height: 1;
-  transition: opacity 0.3s ease;
-}
-
-.predios__counter-sep {
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.05em;
-}
-
-.predios__counter-total {
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.02em;
-}
-
-/* ---------- STAGE DO CARROSSEL ---------- */
-
-.predios__stage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  perspective: 1200px;
-  margin-bottom: 48px;
-  min-height: 420px;
+/* O EYEBROW É O TÍTULO DA SEÇÃO AQUI — GANHA CORPO DE DISPLAY */
+.clv-planos__subtitle {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--clv-muted);
+  margin: 1.25rem 0 0;
 }
 
 /* ---------- CARDS ---------- */
 
-.predios__card {
+.clv-planos__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.5vw, 28px);
+  align-items: stretch;
+  margin-top: clamp(48px, 7vw, 72px);
+}
+
+.clv-planos__card {
   position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-  flex-shrink: 0;
-  cursor: pointer;
-  will-change: transform, opacity;
-}
-
-.predios__card--side {
-  width: 180px;
-  height: 300px;
-  opacity: 0.4;
-  transform: scale(0.92);
-}
-
-.predios__card--side-left  { transform: scale(0.92) rotateY(6deg); }
-.predios__card--side-right { transform: scale(0.92) rotateY(-6deg); }
-
-.predios__card--center {
-  width: 280px;
-  height: 400px;
-  opacity: 1;
-  transform: scale(1);
-  z-index: 2;
-}
-
-.predios__card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.predios__card-scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.88) 0%,
-    rgba(0, 0, 0, 0.08) 55%,
-    transparent 100%
-  );
-  pointer-events: none;
-}
-
-.predios__card--side .predios__card-scrim {
-  background: rgba(0, 0, 0, 0.45);
-}
-
-/* ---------- INFO DO CARD CENTRAL ---------- */
-
-.predios__card-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 24px 20px 20px;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.5s, transform 0.5s;
-}
-
-.predios__card--center .predios__card-info {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.predios__card-nome {
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--color-paper);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  margin-bottom: 12px;
-  clip-path: inset(0 0 100% 0);
-}
-
-.predios__card-cta {
-  display: inline-block;
-  font-family: var(--font-body);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-paper);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 40px;
-  padding: 6px 16px;
-  background: rgba(255, 255, 255, 0.06);
-  cursor: pointer;
-  transition: border-color 0.3s, background 0.3s;
-}
-
-.predios__card-cta:hover {
-  border-color: rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.12);
-}
-
-/* ---------- NAVEGAÇÃO (SETAS) ---------- */
-
-.predios__nav {
   display: flex;
-  justify-content: center;
-  gap: 12px;
+  flex-direction: column;
+  padding: clamp(28px, 3.5vw, 40px);
+  border: 1px solid var(--clv-line);
+  border-radius: 20px;
+  background: #fff;
 }
 
-.predios__arrow-wrap {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  overflow: hidden;
-  isolation: isolate;
+.clv-planos__card--featured {
+  border-color: var(--clv-purple);
+  box-shadow: 0 16px 40px rgb(129 30 193 / 0.12);
+}
+
+.clv-planos__badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--clv-purple);
+  border-radius: 999px;
+  padding: 0.4rem 0.875rem;
+  white-space: nowrap;
+}
+
+.clv-planos__name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--clv-ink);
+}
+
+.clv-planos__desc {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--clv-muted);
+  margin: 0.75rem 0 0;
+}
+
+.clv-planos__period {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--clv-purple);
+  margin: 1.25rem 0 0;
+}
+
+.clv-planos__features {
+  list-style: none;
+  margin: 1.5rem 0 2rem;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--clv-line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  /* EMPURRA O CTA PARA A BASE — CARDS COM Nº DIFERENTE DE ITENS ALINHAM */
+  flex: 1;
+}
+
+.clv-planos__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--clv-ink);
+}
+
+.clv-planos__check {
   flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  color: var(--clv-purple);
 }
 
-.predios__arrow-spin {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  border-radius: inherit;
+.clv-planos__cta { width: 100%; }
+
+@media (max-width: 860px) {
+  .clv-planos__cards { grid-template-columns: 1fr; }
+  .clv-planos__card--featured { margin-top: 1rem; }
 }
 
-.predios__arrow-spin::before {
-  content: "";
-  position: absolute;
-  inset: -30%;
-  animation: clv-speen 8s cubic-bezier(.56, .15, .28, .86) infinite;
-  background: linear-gradient(-45deg, #2a7fff, #0000 46% 54%, #22d3ee);
+/* ============================================
+   SEÇÃO 9 — CONTATO
+   ============================================ */
+
+.clv-contato {
+  padding: 6rem 0;
+  background: #ffffff;
 }
 
-.predios__arrow {
-  position: relative;
-  z-index: 1;
-  margin: 1.5px;
-  width: calc(100% - 3px);
-  height: calc(100% - 3px);
-  border-radius: 50%;
-  background: #0a0d12;
-  border: none;
+/* ---------- CABEÇALHO ---------- */
+
+.clv-contato__head {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.clv-contato__subtitle {
+  font-size: 1rem;
+  color: var(--clv-muted);
+  max-width: 520px;
+  margin: 1.25rem auto 0;
+  line-height: 1.6;
+}
+
+/* ---------- CARDS (TELA 1) ---------- */
+
+.clv-contato__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.clv-contato__card {
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.clv-contato__card--dark {
+  background: #14001E;
+}
+
+.clv-contato__card--light {
+  background: var(--clv-bg-soft);
+}
+
+.clv-contato__icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-paper);
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(129, 30, 193, 0.15);
+  color: var(--clv-purple-light);
+}
+
+.clv-contato__card--light .clv-contato__icon {
+  background: rgba(163, 115, 255, 0.1);
+}
+
+.clv-contato__icon svg { width: 22px; height: 22px; }
+
+.clv-contato__card-title {
+  font-family: var(--clv-font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--clv-bg-dark);
+}
+
+.clv-contato__card--dark .clv-contato__card-title {
+  color: #fff;
+}
+
+.clv-contato__card-desc {
+  font-size: 0.9rem;
+  color: var(--clv-purple-dark);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.clv-contato__card--dark .clv-contato__card-desc {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.clv-contato__link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--clv-purple-light);
+  padding: 0;
+  text-align: left;
+  transition: color 0.3s;
+}
+
+.clv-contato__link:hover { color: #fff; }
+.clv-contato__card--dark .clv-contato__link:hover { color: #fff; }
+
+/* ---------- FORMULÁRIOS (TELA 2) ---------- */
+
+.clv-contato__forms[hidden] {
+  display: none;
+}
+
+.clv-contato__forms-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.clv-contato__back {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--clv-muted);
+  padding: 0;
+  transition: color 0.3s;
+}
+
+.clv-contato__back:hover { color: #fff; }
+
+/* ---------- SWITCHER ---------- */
+
+.clv-contato__switcher {
+  display: flex;
+  justify-content: center;
+}
+
+.clv-contato__switcher-wrap {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.clv-contato__switcher-btn {
+  padding: 8px 24px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: transparent;
+  color: var(--clv-muted);
+  transition: background 0.3s, color 0.3s;
+}
+
+.clv-contato__switcher-btn--active {
+  background: var(--clv-purple);
+  color: #fff;
+}
+
+/* ---------- COLS ---------- */
+
+.clv-contato__form { display: none; }
+.clv-contato__form--active { display: block; }
+
+.clv-contato__cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.clv-contato__col {
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.clv-contato__col--dark { background: rgba(129, 30, 193, 0.08); }
+.clv-contato__col--light { background: rgba(255, 255, 255, 0.03); }
+
+.clv-contato__col-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- CAMPOS ---------- */
+
+.clv-contato__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.clv-contato__field {
+  margin-bottom: 0.875rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.clv-contato__label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--clv-muted);
+  margin-bottom: 5px;
+}
+
+.clv-contato__input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #fff;
+  font-size: 0.875rem;
+  font-family: var(--clv-font-body);
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.clv-contato__input::placeholder { color: rgba(255, 255, 255, 0.25); }
+.clv-contato__input:focus { border-color: var(--clv-purple-light); }
+
+.clv-contato__select { appearance: auto; cursor: pointer; }
+.clv-contato__textarea { resize: none; line-height: 1.6; }
+
+/* ---------- CHECKBOXES ---------- */
+
+.clv-contato__checks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  margin-top: 4px;
+}
+
+.clv-contato__check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
 }
 
-/* ---------- MOBILE ---------- */
-
-@media (max-width: 768px) {
-  .predios {
-    padding: 64px 0 56px;
-  }
-
-  .predios__inner {
-    padding: 0 24px;
-  }
-
-  .predios__head {
-    margin-bottom: 40px;
-  }
-
-  .predios__stage {
-    gap: 12px;
-    min-height: 340px;
-  }
-
-  .predios__card--side {
-    width: 100px;
-    height: 240px;
-  }
-
-  .predios__card--center {
-    width: 200px;
-    height: 320px;
-  }
+.clv-contato__check-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--clv-purple);
+  cursor: pointer;
+  flex-shrink: 0;
 }
+
+.clv-contato__check-item span {
+  font-size: 0.82rem;
+  color: var(--clv-muted);
+  line-height: 1.4;
+}
+
+/* ---------- SUBMIT ---------- */
+
+.clv-contato__submit { width: 100%; margin-top: 1rem; }
+
+/* ---------- RESPONSIVO ---------- */
+
+@media (max-width: 860px) {
+  .clv-contato__cards { grid-template-columns: 1fr; }
+  .clv-contato__cols { grid-template-columns: 1fr; }
+  .clv-contato__row { grid-template-columns: 1fr; }
+  .clv-contato__checks { grid-template-columns: 1fr; }
+  .clv-contato__forms-header { flex-direction: column; align-items: flex-start; }
+}
+
+/* ---------- OVERLAY FORMULÁRIOS ---------- */
+
+.clv-form-overlay__content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.clv-form-overlay__head {
+  margin-bottom: 2.5rem;
+}
+
+.clv-form-overlay__heading {
+  font-family: var(--clv-font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.clv-form-overlay__subtitle {
+  font-size: 1rem;
+  color: var(--clv-muted);
+  line-height: 1.6;
+}
+
+/* ---------- X À ESQUERDA ---------- */
+
+.clv-overlay__close--left {
+  right: auto;
+  left: 2rem;
+}
+
+/* ---------- SWITCHER DOS FORMULÁRIOS ---------- */
+
+.clv-form-overlay__switcher {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.clv-form-overlay__switcher-wrap {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.clv-form-overlay__switcher-btn {
+  padding: 8px 24px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: transparent;
+  color: var(--clv-muted);
+  transition: background 0.3s, color 0.3s;
+}
+
+.clv-form-overlay__switcher-btn--active {
+  background: var(--clv-purple);
+  color: #fff;
+}
+
+.clv-form-overlay__form { display: none; }
+.clv-form-overlay__form--active { display: block; }
+
+/* ============================================
+   RODAPÉ
+   ============================================ */
+
+.clv-footer {
+  background: var(--clv-bg-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2.5rem 1.5rem;
+}
+
+.clv-footer__logo {
+  height: 32px;
+  width: auto;
+  opacity: 0.85;
+}
+
+.clv-footer__text {
+  font-size: 0.75rem;
+  color: #ffffff50;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+/* .clv-no-scroll VIVE EM menu.css — TRAVA DE SCROLL É RESPONSABILIDADE DO MENU */
