@@ -992,9 +992,13 @@ body {
   transition: background 0.2s, color 0.2s;
 }
 
-.clv-locais__arrow:hover {
-  background: var(--clv-purple);
-  color: #fff;
+/* SÓ EM DISPOSITIVO COM HOVER REAL — NO TOQUE O :hover FICA "PRESO"
+   APÓS O TAP E A SETA CONTINUA ROXA */
+@media (hover: hover) {
+  .clv-locais__arrow:hover {
+    background: var(--clv-purple);
+    color: #fff;
+  }
 }
 
 /* DESKTOP — O 3:4 A 100% DO TRACK (~1000px) GERAVA UM CARD DE ~1300px.
@@ -1028,6 +1032,13 @@ body {
 
   .clv-locais__arrow--prev { left: 12px; }
   .clv-locais__arrow--next { right: 12px; }
+
+  /* TABLET — EM 768px O 3:4 DAVA 960px DE ALTURA, MAIOR QUE A TELA.
+     max-height SÓ ATUA QUANDO O 3:4 PASSA DE 75% DA VIEWPORT; NO CELULAR
+     (375×812 → 436px) NADA MUDA. */
+  .clv-locais__card {
+    max-height: 75svh;
+  }
 }
 
 /* ============================================
