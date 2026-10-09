@@ -4,7 +4,7 @@
 
 /* ---------- IMPORTS ---------- */
 
-import { gsap } from "../lib/gsap.js";
+import { gsap, ScrollTrigger } from "../lib/gsap.js";
 
 /* ---------- ALVO DE SCROLL DO MENU ---------- */
 
@@ -18,19 +18,19 @@ export function getMarcasRevealY() {
 /* ---------- MARQUEE — LOOP INFINITO, DUAS DIREÇÕES ---------- */
 
 function initMarquee(track, direction, reduce) {
-  if (!track || reduce) return;
+  if (!track || reduce) return null;
 
   const duration = direction === "right" ? 26 : 22;
 
   if (direction === "right") {
-    gsap.fromTo(
+    return gsap.fromTo(
       track,
       { xPercent: -50 },
-      { xPercent: 0, duration, ease: "none", repeat: -1 }
+      { xPercent: 0, duration, ease: "none", repeat: -1, paused: true }
     );
-  } else {
-    gsap.to(track, { xPercent: -50, duration, ease: "none", repeat: -1 });
   }
+
+  return gsap.to(track, { xPercent: -50, duration, ease: "none", repeat: -1, paused: true });
 }
 
 /* ---------- BOOT DA SEÇÃO ---------- */
@@ -42,8 +42,21 @@ export function initMarcas() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const tracks = section.querySelectorAll("[data-marquee]");
-  tracks.forEach((track) => {
-    const direction = track.dataset.direction || "left";
-    initMarquee(track, direction, reduce);
+
+  /* ---------- PAUSA FORA DA TELA ---------- */
+
+  /* UM TRIGGER PARA A SEÇÃO INTEIRA, NÃO UM POR TRACK. OS TWEENS NASCEM
+     PAUSADOS E SÓ RODAM ENQUANTO ALGUM PIXEL DA SEÇÃO ESTÁ NA VIEWPORT. */
+  const tweens = [...tracks]
+    .map((track) => initMarquee(track, track.dataset.direction || "left", reduce))
+    .filter(Boolean);
+
+  if (!tweens.length) return;
+
+  ScrollTrigger.create({
+    trigger: section,
+    start:   "top bottom",
+    end:     "bottom top",
+    onToggle: (self) => tweens.forEach((t) => (self.isActive ? t.play() : t.pause())),
   });
 }
