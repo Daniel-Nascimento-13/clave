@@ -7,14 +7,13 @@
 import { gsap } from '../../lib/gsap.js';
 import { getLenis } from '../../lib/smooth-scroll.js';
 import { getMarcasRevealY } from '../../animations/marcas.js';
+import { EASE, MENU, SCROLL } from '../../constants/motion.js';
 
 /* ============================================
    CONSTANTES
    ============================================ */
 
-const MARCAS_TARGET   = '.marcas__bar';
-const REVEAL_DURATION = 0.8;
-const EASE            = 'power3.out';
+const MARCAS_TARGET = '.marcas__bar';
 
 /* ============================================
    ESTADO
@@ -90,12 +89,12 @@ function scrollToTarget(target) {
     .querySelector('[data-menu-nav]')
     ?.classList.contains('is-open');
 
-  const delay = burgerAberto ? 700 : 0;
+  const delay = burgerAberto ? MENU.burgerWaitMs : 0;
 
   setTimeout(() => {
     if (lenis) {
       /* offset NEGATIVO — DESCONTA A BARRA FIXA DE 80px */
-      lenis.scrollTo(destination, { duration: 1.2, offset: -80 });
+      lenis.scrollTo(destination, { duration: SCROLL.duration, offset: SCROLL.offset });
       return;
     }
 
@@ -149,8 +148,8 @@ export function openOverlay(id, params = {}) {
   gsap.to(el, {
     clipPath: 'inset(0 0 0% 0)',
     autoAlpha: 1,
-    duration: REVEAL_DURATION,
-    ease: 'expo.out',
+    duration: MENU.overlayIn,
+    ease: EASE.expo,
   });
 }
 
@@ -167,8 +166,8 @@ export function closeOverlay(immediate = false) {
   gsap.to(el, {
     clipPath: 'inset(0 0 100% 0)',
     autoAlpha: 0,
-    duration: immediate ? 0.3 : REVEAL_DURATION,
-    ease: EASE,
+    duration: immediate ? MENU.overlaySwap : MENU.overlayOut,
+    ease: EASE.primary,
     onComplete: () => {
       /* GUARDA CONTRA RACE CONDITION: NOVO OVERLAY ABERTO DURANTE O TWEEN */
       if (openOverlayId === closingId) return;
@@ -216,8 +215,8 @@ function closeBurgerMenu() {
   gsap.to(nav, {
     clipPath: 'inset(0 0 100% 0)',
     autoAlpha: 0,
-    duration: 0.6,
-    ease: EASE,
+    duration: MENU.burger,
+    ease: EASE.primary,
     onComplete: () => {
       nav.classList.remove('is-open');
       gsap.set(nav, { clearProps: 'opacity,visibility,clipPath' });
@@ -237,14 +236,14 @@ function bindBurger() {
       nav.classList.add('is-open');
       lockScroll();
       gsap.set(nav, { clipPath: 'inset(0 0 100% 0)', autoAlpha: 0 });
-      gsap.to(nav, { clipPath: 'inset(0 0 0% 0)', autoAlpha: 1, duration: 0.6, ease: EASE });
+      gsap.to(nav, { clipPath: 'inset(0 0 0% 0)', autoAlpha: 1, duration: MENU.burger, ease: EASE.primary });
     } else {
       unlockScroll();
       gsap.to(nav, {
         clipPath: 'inset(0 0 100% 0)',
         autoAlpha: 0,
-        duration: 0.6,
-        ease: EASE,
+        duration: MENU.burger,
+        ease: EASE.primary,
         onComplete: () => {
           nav.classList.remove('is-open');
           gsap.set(nav, { clearProps: 'opacity,visibility,clipPath' });

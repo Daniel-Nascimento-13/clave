@@ -48,20 +48,22 @@ export const ROULETTE = {
   extraTurns:   3,
 };
 
-/* ---------- DIFERENCIAIS — CARDS E GLOW ---------- */
-
-export const DIFERENCIAIS = {
-  revealX:  70,
-  duration: 0.9,
-  ease:     "power3.out",
-  start:    "top 85%",
+/* ---------- MENU E OVERLAYS ---------- */
+export const MENU = {
+  overlayIn:    DURATIONS.sm,  // abertura do overlay
+  overlayOut:   DURATIONS.sm,  // fechamento normal
+  overlaySwap:  0.3,           // fecha um overlay para abrir outro (troca, não saída)
+  burger:       0.6,
+  burgerWaitMs: 700,           // espera o burger fechar antes de rolar
 };
 
-/* ---------- PRODUTO — TELA ANIMADA ---------- */
-
-export const PRODUTO = {
-  revealDuration: 0.9,
-  revealEase:     "power3.out",
-  revealStart:    "top 80%",
-  scrubDistance:  "+=200%",
+/* ---------- SCROLL PROGRAMÁTICO (LENIS) ---------- */
+export const SCROLL = {
+  duration: DURATIONS.lg,
+  offset:   -80,               // altura da barra fixa (menu.css: 80px)
+  vvSettleMs: 180,             // iOS: espera a toolbar assentar antes do refresh
 };
+
+/* ---------- MARCAS — MARQUEE ---------- */
+/* ease "none" É INTENCIONAL: VELOCIDADE CONSTANTE EM LOOP */
+export const MARQUEE = { left: 22, right: 26, ease: "none" };

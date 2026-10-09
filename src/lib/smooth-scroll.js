@@ -6,6 +6,7 @@
 
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "./gsap.js";
+import { SCROLL } from "../constants/motion.js";
 
 let lenis = null;
 
@@ -18,7 +19,7 @@ export function initSmoothScroll() {
   if (reduce) return null;
 
   lenis = new Lenis({
-    duration:    1.2,
+    duration:    SCROLL.duration,
     easing:      (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
   });
@@ -43,7 +44,7 @@ export function initSmoothScroll() {
       clearTimeout(settleTimer);
       settleTimer = setTimeout(() => {
         requestAnimationFrame(() => ScrollTrigger.refresh());
-      }, 180);
+      }, SCROLL.vvSettleMs);
     });
   }
 

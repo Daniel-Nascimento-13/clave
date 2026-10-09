@@ -5,6 +5,7 @@
 /* ---------- IMPORTS ---------- */
 
 import { gsap, ScrollTrigger } from "../lib/gsap.js";
+import { MARQUEE } from "../constants/motion.js";
 
 /* ---------- ALVO DE SCROLL DO MENU ---------- */
 
@@ -20,17 +21,17 @@ export function getMarcasRevealY() {
 function initMarquee(track, direction, reduce) {
   if (!track || reduce) return null;
 
-  const duration = direction === "right" ? 26 : 22;
+  const duration = direction === "right" ? MARQUEE.right : MARQUEE.left;
 
   if (direction === "right") {
     return gsap.fromTo(
       track,
       { xPercent: -50 },
-      { xPercent: 0, duration, ease: "none", repeat: -1, paused: true }
+      { xPercent: 0, duration, ease: MARQUEE.ease, repeat: -1, paused: true }
     );
   }
 
-  return gsap.to(track, { xPercent: -50, duration, ease: "none", repeat: -1, paused: true });
+  return gsap.to(track, { xPercent: -50, duration, ease: MARQUEE.ease, repeat: -1, paused: true });
 }
 
 /* ---------- BOOT DA SEÇÃO ---------- */
