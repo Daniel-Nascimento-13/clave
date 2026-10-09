@@ -3,7 +3,7 @@
    ============================================ */
 
 export const DURATIONS = { sm: 0.8, md: 1.0, lg: 1.2 };
-export const EASE      = { primary: "power3.out", expo: "expo.out" };
+export const EASE      = { primary: "power3.out", expo: "expo.out", inOut: "power3.inOut" };
 
 /* ---------- REVEAL — ENTRADA PADRÃO DAS SEÇÕES ---------- */
 
@@ -34,6 +34,8 @@ export const HERO = {
   stepGap:      0.2,
   scrollHideAt: 8,
   scrollHideY:  12,
+  arrowBobY:        6,   /* px — OSCILAÇÃO DA SETA DO INDICADOR */
+  arrowBobDuration: DURATIONS.lg,
 };
 
 /* ---------- ROLETA DE NÚMEROS ---------- */

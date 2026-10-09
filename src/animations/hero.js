@@ -98,6 +98,21 @@ export function initHero() {
   addStep(document.querySelectorAll(`${ACTIONS} > *`));
   addStep(document.querySelector(SCROLL));
 
+  /* ---------- SETA — OSCILAÇÃO CONTÍNUA ---------- */
+
+  /* ANIMA A SETA (FILHA), NÃO O INDICADOR: O y DO INDICADOR PERTENCE À
+     ENTRADA E AO FADE DE SAÍDA — DOIS TWEENS NO MESMO y BRIGARIAM. */
+  const arrow = document.querySelector(`${SCROLL} .clv-hero__scroll-arrow`);
+  const bob = arrow
+    ? gsap.to(arrow, {
+        y:        HERO.arrowBobY,
+        duration: HERO.arrowBobDuration,
+        ease:     EASE.inOut,
+        repeat:   -1,
+        yoyo:     true,
+      })
+    : null;
+
   /* ---------- INDICADOR — SOME NO PRIMEIRO SCROLL ---------- */
 
   /* UM ÚNICO TRIGGER POR POSIÇÃO ABSOLUTA, once: SEM ELEMENTO-GATILHO, SEM
@@ -117,6 +132,7 @@ export function initHero() {
           duration:  DURATIONS.sm,
           ease:      EASE.primary,
           overwrite: true,
+          onComplete: () => bob?.kill(),
         });
       },
     });

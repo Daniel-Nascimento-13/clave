@@ -426,16 +426,6 @@ body {
 .clv-hero__scroll-arrow {
   width: 18px;
   height: 18px;
-  animation: clv-bob 2.4s ease-in-out infinite;
-}
-
-@keyframes clv-bob {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(6px); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .clv-hero__scroll-arrow { animation: none; }
 }
 
 @media (max-width: 640px) {
@@ -932,7 +922,7 @@ body {
 
 /* QUEM DESLIZA SÃO OS CARDS, NÃO O .clv-locais__track: O TRACK É O RECORTE
    (overflow: hidden) — TRANSFORMÁ-LO ARRASTARIA A JANELA JUNTO COM O CONTEÚDO
-   E NADA MUDARIA NA TELA. DAÍ A TRANSIÇÃO VIVER NO CARD. */
+   E NADA MUDARIA NA TELA. DAÍ O GSAP ANIMAR O CARD. */
 
 .clv-locais__carousel {
   position: relative;
@@ -953,7 +943,6 @@ body {
   position: relative;
   min-width: 100%;
   aspect-ratio: 3 / 4;
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   flex-shrink: 0;
 }
 
