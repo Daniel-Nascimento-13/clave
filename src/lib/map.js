@@ -1,9 +1,10 @@
 /* ============================================
-   MAPA — REDE DE PONTOS (LEAFLET VIA CDN)
+   MAPA — REDE DE PONTOS (LEAFLET VIA NPM, SOB DEMANDA)
    ============================================ */
 
 /* ---------- IMPORTS ---------- */
 
+import { ScrollTrigger } from "./gsap.js";
 import { getWhatsappLink } from "./whatsapp.js";
 
 /* ============================================
@@ -18,6 +19,9 @@ const ZOOM   = 14;
 const TILE_URL  = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 const TILE_MAX  = 19;
+
+/* CARREGA ~1 TELA ANTES DE O MAPA APARECER — CHEGA PRONTO, SEM FLASH */
+const PRELOAD_START = "top bottom+=100%";
 
 /* ---------- PONTOS ---------- */
 
@@ -68,11 +72,23 @@ export function initMap() {
   const el = document.getElementById("clv-map");
   if (!el) return;
 
-  /* LEAFLET VEM DO <script> CDN EM index.html — SE O CDN FALHAR, A SEÇÃO
-     APENAS NÃO RENDERIZA O MAPA, SEM DERRUBAR O RESTO DO BOOT */
-  const L = window.L;
-  if (!L) return;
+  /* LEAFLET SÓ ENTRA QUANDO A SEÇÃO SE APROXIMA: TIRA ~150 KB E UM CSS
+     BLOQUEANTE DO CARREGAMENTO INICIAL. once — O TRIGGER SE DESTRÓI. */
+  ScrollTrigger.create({
+    trigger: el,
+    start:   PRELOAD_START,
+    once:    true,
+    onEnter: async () => {
+      const [{ default: L }] = await Promise.all([
+        import("leaflet"),
+        import("leaflet/dist/leaflet.css"),
+      ]);
+      buildMap(L, el);
+    },
+  });
+}
 
+function buildMap(L, el) {
   const map = L.map(el, {
     center: CENTRO,
     zoom:   ZOOM,
