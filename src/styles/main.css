@@ -539,20 +539,36 @@ body {
 
 .clv-rede__ambientes {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 1rem);
   margin-top: 1.5rem;
 }
 
+/* MOBILE: 3 PÍLULAS NA MESMA LINHA, LARGURAS IGUAIS. min-width: 0 PERMITE
+   ENCOLHER ABAIXO DO CONTEÚDO; O clamp DO font-size GARANTE QUE CAIBA EM 320px. */
 .clv-rede__ambiente-card {
-  padding: 0.5rem 1.25rem;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 11rem;
+  padding: 0.625rem 0.5rem;
   border: 1px solid var(--clv-purple);
   border-radius: 999px;
-  font-size: 0.8125rem;
+  font-size: clamp(0.6875rem, 3vw, 0.8125rem);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
+  text-align: center;
+  white-space: nowrap;
   text-transform: uppercase;
   color: var(--clv-purple);
+}
+
+/* DESKTOP: VOLTA À LARGURA NATURAL E AO TRACKING ORIGINAL */
+@media (min-width: 641px) {
+  .clv-rede__ambiente-card {
+    flex: 0 0 auto;
+    padding: 0.5rem 1.25rem;
+    letter-spacing: 0.08em;
+  }
 }
 
 .clv-rede__label {
