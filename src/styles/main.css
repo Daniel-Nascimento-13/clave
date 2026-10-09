@@ -1571,6 +1571,10 @@ body {
 
 /* ---------- CHECKBOXES ---------- */
 
+/* FIELDSET SEMÂNTICO, VISUAL DO .clv-contato__field */
+.clv-contato__fieldset { border: 0; padding: 0; min-width: 0; }
+.clv-contato__fieldset > legend { padding: 0; width: 100%; }
+
 .clv-contato__checks {
   display: grid;
   grid-template-columns: 1fr 1fr;
