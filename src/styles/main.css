@@ -1096,6 +1096,7 @@ body {
 /* ---------- MARCADOR ---------- */
 
 .clv-map-pin {
+  display: block; /* <span> INLINE IGNORA width/height — VIRAVA ELIPSE 6×21 */
   width: 18px;
   height: 18px;
   border-radius: 50%;
