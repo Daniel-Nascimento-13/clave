@@ -1524,7 +1524,7 @@ body {
   border-radius: 8px;
   padding: 10px 14px;
   color: #fff;
-  font-size: 0.875rem;
+  font-size: 1rem; /* 16px — ABAIXO DISSO O iOS SAFARI DÁ ZOOM AO FOCAR O CAMPO */
   font-family: var(--clv-font-body);
   outline: none;
   transition: border-color 0.3s;
