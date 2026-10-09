@@ -996,6 +996,16 @@ body {
   color: #fff;
 }
 
+/* DESKTOP — O 3:4 A 100% DO TRACK (~1000px) GERAVA UM CARD DE ~1300px.
+   NO DESKTOP A ALTURA PASSA A SEGUIR A VIEWPORT; A IMAGEM JÁ É
+   absolute + object-fit: cover, ENTÃO SÓ O ENQUADRAMENTO MUDA. */
+@media (min-width: 861px) {
+  .clv-locais__card {
+    aspect-ratio: auto;
+    height: clamp(420px, 70svh, 640px);
+  }
+}
+
 /* ============================================
    SEÇÃO 6.5 — MAPA — REDE DE PONTOS
    ============================================ */
