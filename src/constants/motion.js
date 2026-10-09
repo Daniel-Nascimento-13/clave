@@ -27,7 +27,14 @@ export const REVEAL = {
 
 /* stepGap — MESMA CADÊNCIA DO stagger DE LINHAS: O SUBTÍTULO, OS CTAs E O
    INDICADOR CONTINUAM A CONTAGEM INICIADA PELAS LINHAS DO H1. */
-export const HERO = { stepGap: 0.2 };
+/* scrollHideAt — px DE SCROLL QUE CONTAM COMO "PRIMEIRO MOVIMENTO";
+   UM VALOR > 0 EVITA DISPARO PELO BOUNCE DO iOS.
+   scrollHideY — O INDICADOR DESCE UM POUCO ENQUANTO SOME. */
+export const HERO = {
+  stepGap:      0.2,
+  scrollHideAt: 8,
+  scrollHideY:  12,
+};
 
 /* ---------- ROLETA DE NÚMEROS ---------- */
 

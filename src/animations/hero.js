@@ -4,7 +4,7 @@
 
 /* ---------- IMPORTS ---------- */
 
-import { gsap, SplitText } from "../lib/gsap.js";
+import { gsap, ScrollTrigger, SplitText } from "../lib/gsap.js";
 import { DURATIONS, EASE, HERO, REVEAL } from "../constants/motion.js";
 import { settleReveal } from "./reveal.js";
 
@@ -97,4 +97,28 @@ export function initHero() {
   addStep(document.querySelector(SUBTITLE));
   addStep(document.querySelectorAll(`${ACTIONS} > *`));
   addStep(document.querySelector(SCROLL));
+
+  /* ---------- INDICADOR — SOME NO PRIMEIRO SCROLL ---------- */
+
+  /* UM ÚNICO TRIGGER POR POSIÇÃO ABSOLUTA, once: SEM ELEMENTO-GATILHO, SEM
+     REVERSÃO. killTweensOf CANCELA A ENTRADA SE O USUÁRIO ROLAR ANTES DELA
+     TERMINAR — SENÃO A TIMELINE DEVOLVERIA O INDICADOR DEPOIS DO FADE. */
+  const indicator = document.querySelector(SCROLL);
+
+  if (indicator) {
+    ScrollTrigger.create({
+      start: HERO.scrollHideAt,
+      once:  true,
+      onEnter() {
+        gsap.killTweensOf(indicator);
+        gsap.to(indicator, {
+          autoAlpha: 0,
+          y:         HERO.scrollHideY,
+          duration:  DURATIONS.sm,
+          ease:      EASE.primary,
+          overwrite: true,
+        });
+      },
+    });
+  }
 }
