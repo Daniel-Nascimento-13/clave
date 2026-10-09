@@ -650,38 +650,6 @@ body {
   color: #fff;
 }
 
-/* ---------- NÚMEROS INLINE ---------- */
-
-.clv-sobre__stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(24px, 4vw, 48px);
-  margin: 2rem 0;
-}
-
-.clv-sobre__stat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-}
-
-.clv-sobre__stat-num {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--clv-purple-light);
-}
-
-.clv-sobre__stat-label {
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgb(255 255 255 / 0.45);
-}
-
 .clv-sobre__text {
   font-size: 1rem;
   line-height: 1.75;
@@ -690,6 +658,9 @@ body {
 }
 
 .clv-sobre__text + .clv-btn { margin-top: 1rem; }
+
+/* MESMO RESPIRO h2→TEXTO DAS OUTRAS SEÇÕES (SUBTÍTULOS: 1.25rem) */
+.clv-sobre__heading + .clv-sobre__text { margin-top: 1.25rem; }
 
 /* ---------- MÍDIA ---------- */
 
