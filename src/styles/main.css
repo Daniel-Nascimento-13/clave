@@ -1372,7 +1372,7 @@ body {
 .clv-contato__icon svg { width: 22px; height: 22px; }
 
 .clv-contato__card-title {
-  font-family: var(--clv-font-display);
+  font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 800;
   color: var(--clv-bg-dark);
@@ -1525,7 +1525,7 @@ body {
   padding: 10px 14px;
   color: #fff;
   font-size: 1rem; /* 16px — ABAIXO DISSO O iOS SAFARI DÁ ZOOM AO FOCAR O CAMPO */
-  font-family: var(--clv-font-body);
+  font-family: var(--font-body);
   outline: none;
   transition: border-color 0.3s;
 }
@@ -1593,7 +1593,7 @@ body {
 }
 
 .clv-form-overlay__heading {
-  font-family: var(--clv-font-display);
+  font-family: var(--font-display);
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 800;
   color: #fff;
