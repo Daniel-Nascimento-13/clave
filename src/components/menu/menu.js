@@ -113,8 +113,9 @@ function unlockScroll() {
    OVERLAYS
    ============================================ */
 
-/* EXPORTADA PARA MÓDULOS EXTERNOS — TRAVA E EVENTO
-   PRECISAM SAIR DE UM LUGAR SÓ */
+/* PONTO ÚNICO DE ABERTURA — HOJE CHAMADA PELOS GATILHOS data-action="overlay"
+   (bindMenuLinks). TRAVA DE SCROLL E EVENTO clv:overlay-open SAEM DAQUI;
+   A EXPORT DEIXA OUTRO MÓDULO ABRIR UM OVERLAY SEM DUPLICAR ISSO. */
 export function openOverlay(id, params = {}) {
   const el = document.getElementById(`overlay-${id}`);
   if (!el || openOverlayId === id) return;
@@ -135,12 +136,14 @@ export function openOverlay(id, params = {}) {
   });
 }
 
-/* EXPORTADA PARA O ITEM "HOME" DO FILTRO DO "ANUNCIE" */
+/* PONTO ÚNICO DE FECHAMENTO — X, ESC, LINKS DE SCROLL E A TROCA DE OVERLAY
+   (immediate) PASSAM POR AQUI */
 export function closeOverlay(immediate = false) {
   if (!openOverlayId) return;
   const el = document.getElementById(`overlay-${openOverlayId}`);
 
-  /* EMIT ANTES DO TWEEN — CONTEÚDO (EX.: VÍDEO DO "SOBRE") PARA NO CLIQUE */
+  /* EMIT ANTES DO TWEEN — QUEM OUVIR clv:overlay-close REAGE NO CLIQUE,
+     NÃO NO FIM DA ANIMAÇÃO */
   emitOverlayEvent('close', openOverlayId);
 
   const closingId = openOverlayId;

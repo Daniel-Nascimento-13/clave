@@ -32,9 +32,10 @@
       </div>
     </header>
 
-    <!-- IRMÃ DO <header> — HEADER TEM will-change/transform E VIRARIA CONTAINING
-         BLOCK, IMPEDINDO O PAINEL MOBILE DE SER position: fixed EM TELA CHEIA.
-         CSS RECOMPÕE A BARRA NO DESKTOP (min-width: 861px). -->
+    <!-- IRMÃ DO <header>, NÃO FILHA — SE O HEADER GANHAR transform/will-change ELE
+         VIRA CONTAINING BLOCK E PRENDE O PAINEL MOBILE (position: fixed EM TELA
+         CHEIA). FORA DELE O PAINEL NÃO DEPENDE DISSO. CSS RECOMPÕE A BARRA NO
+         DESKTOP (min-width: 861px). -->
     <nav class="clv-menu__nav" data-menu-nav>
       <button type="button" class="clv-menu__link" data-menu-link data-action="scroll" data-target="#sobre">Sobre</button>
       <button type="button" class="clv-menu__link" data-menu-link data-action="scroll" data-target="#marcas">Anunciantes</button>
@@ -82,7 +83,7 @@
       </section>
 
       <!-- ============================================
-           SEÇÃO 3 — A REDE — NÚMEROS
+           SEÇÃO 2 — A REDE — NÚMEROS
            ============================================ -->
       <section class="clv-rede" id="rede">
         <div class="clv-shell">
@@ -120,7 +121,7 @@
       </section>
 
       <!-- ============================================
-           SEÇÃO 6 — LOCAIS — ONDE ESTAMOS
+           SEÇÃO 3 — LOCAIS — ONDE ESTAMOS
            ============================================ -->
       <section class="clv-locais" id="locais">
         <div class="clv-shell">
@@ -162,7 +163,7 @@
       </section>
 
       <!-- ============================================
-           SEÇÃO 6.5 — MAPA — REDE DE PONTOS
+           SEÇÃO 4 — MAPA — REDE DE PONTOS
            ============================================ -->
       <section class="clv-mapa" id="mapa">
         <div class="clv-shell">
@@ -188,7 +189,7 @@
       </section>
 
       <!-- ============================================
-           SEÇÃO 4 — SOBRE
+           SEÇÃO 5 — SOBRE
            ============================================ -->
       <section class="clv-sobre" id="sobre">
         <div class="clv-shell clv-sobre__grid">
@@ -236,7 +237,7 @@
       </section>
 
       <!-- ============================================
-           SEÇÃO 2 — EXPERIÊNCIA
+           SEÇÃO 6 — EXPERIÊNCIA
            ============================================ -->
       <section class="clv-exp" id="experiencia">
         <div class="clv-shell clv-shell--narrow">
@@ -331,7 +332,7 @@
       </section>
 
       <!-- ============================================
-           SEÇÃO 5 — DIFERENCIAIS
+           SEÇÃO 8 — DIFERENCIAIS
            ============================================ -->
       <section class="clv-dif" id="diferenciais">
         <div class="clv-shell">
@@ -412,7 +413,7 @@
       </section>
 
       <!-- ============================================
-           SEÇÃO 8 — PLANOS
+           SEÇÃO 9 — PLANOS
            ============================================ -->
       <section class="clv-planos" id="planos">
         <div class="clv-shell">
@@ -524,7 +525,7 @@
       </section>
 
       <!-- ============================================
-           SEÇÃO 9 — CONTATO
+           SEÇÃO 10 — CONTATO
            ============================================ -->
       <section class="clv-contato" id="contato">
         <div class="clv-shell">
@@ -538,7 +539,7 @@
             </p>
           </header>
 
-          <!-- TELA 1 — CARDS -->
+          <!-- CARDS -->
           <div class="clv-contato__cards" id="contatoCards">
 
             <article class="clv-contato__card clv-contato__card--dark" data-reveal>

@@ -82,8 +82,8 @@ body {
 /* ---------- TÍTULO DE SEÇÃO — TIPOGRAFIA COMPARTILHADA ---------- */
 
 /* MESMOS VALORES DE .clv-locais__heading, QUE É O PADRÃO DE REFERÊNCIA.
-   APLICADA POR ORA SÓ EM EXPERIÊNCIA, MARCAS, PLANOS E CONTATO — AS DEMAIS
-   SEÇÕES SEGUEM COM AS REGRAS PRÓPRIAS ATÉ SEREM MIGRADAS. */
+   APLICADA EM EXPERIÊNCIA, MARCAS, PLANOS E CONTATO. LOCAIS, MAPA, SOBRE E
+   DIFERENCIAIS AINDA USAM O PRÓPRIO __heading. */
 .clv-heading {
   font-family: var(--font-display);
   font-weight: 800;
@@ -173,7 +173,8 @@ body {
 
 /* ESTADO INICIAL NO CSS EVITA FLASH ANTES DO ScrollTrigger MEDIR.
    OS VALORES ESPELHAM REVEAL.y / REVEAL.clipFrom EM constants/motion.js.
-   reveal.js E hero.js LIMPAM ISTO NO prefers-reduced-motion. */
+   NO prefers-reduced-motion O @media MAIS ABAIXO NEUTRALIZA ESTE ESTADO
+   (reveal.js E hero.js NÃO ANIMAM NESSE CASO). */
 /* EM data-hero="actions" QUEM ANIMA SÃO OS BOTÕES — SE O CONTAINER FICASSE
    COM opacity: 0 ELE NUNCA SERIA LIMPO E OS CTAs NÃO APARECERIAM. */
 [data-reveal],
@@ -269,7 +270,7 @@ body {
    MENU — CTA SÓLIDO (COMPLEMENTO A menu.css)
    ============================================ */
 
-/* menu.css SEGUE INTOCADO — O BOTÃO NOVO GANHA PELE AQUI */
+/* menu.css DEFINE SÓ O .clv-menu__cta BASE — A PELE DO BOTÃO SÓLIDO VIVE AQUI */
 
 .clv-menu__cta--solid {
   background: var(--clv-purple);
@@ -285,7 +286,7 @@ body {
 
 @media (min-width: 861px) {
   /* A REGRA DE menu.css DÁ margin-left: 2rem A TODO .clv-menu__cta —
-     O SÓLIDO VEM COLADO NO "FALE CONOSCO" */
+     O SÓLIDO FICA MAIS PRÓXIMO DO ÚLTIMO LINK DA NAV */
   .clv-menu__cta--solid { margin-left: 1.25rem; }
 }
 
@@ -293,9 +294,9 @@ body {
    MENU — LOGO (COMPLEMENTO A menu.css)
    ============================================ */
 
-/* logo.webp É ~2:1 (703×355) CONTRA ~3.8:1 DO CROP ANTIGO (309×81) — NA MESMA
-   ALTURA ELE RENDERIZA COM METADE DA LARGURA. A ALTURA COMPENSA A DIFERENÇA.
-   GEOMETRIA DA BARRA (PADDING/DEGRADÊ) SEGUE DE menu.css. */
+/* logo.webp É ~2:1 (703×355) — PROPORCIONALMENTE ESTREITO PARA UM LOGO DE
+   BARRA, POR ISSO A ALTURA É GENEROSA (44px; 52px NO MOBILE).
+   GEOMETRIA DA BARRA (PADDING/FUNDO) SEGUE DE menu.css. */
 
 /* order: 2 VEM DE menu.css E SOBREVIVE — AQUI SÓ ENTRA O ALINHAMENTO */
 
@@ -434,7 +435,7 @@ body {
 }
 
 /* ============================================
-   SEÇÃO 2 — EXPERIÊNCIA
+   SEÇÃO 6 — EXPERIÊNCIA
    ============================================ */
 
 .clv-exp {
@@ -478,7 +479,7 @@ body {
 }
 
 /* ============================================
-   SEÇÃO 3 — A REDE — NÚMEROS
+   SEÇÃO 2 — A REDE — NÚMEROS
    ============================================ */
 
 .clv-rede {
@@ -598,7 +599,7 @@ body {
 }
 
 /* ============================================
-   SEÇÃO 4 — SOBRE
+   SEÇÃO 5 — SOBRE
    ============================================ */
 
 .clv-sobre {
@@ -718,7 +719,7 @@ body {
 }
 
 /* ============================================
-   SEÇÃO 5 — DIFERENCIAIS
+   SEÇÃO 8 — DIFERENCIAIS
    ============================================ */
 
 /* FAIXA ESCURA — MESMO FUNDO DO HERO E DO "SOBRE" */
@@ -844,7 +845,7 @@ body {
 }
 
 /* ============================================
-   SEÇÃO 6 — LOCAIS — ONDE ESTAMOS
+   SEÇÃO 3 — LOCAIS — ONDE ESTAMOS
    ============================================ */
 
 .clv-locais {
@@ -987,7 +988,7 @@ body {
 }
 
 /* ============================================
-   SEÇÃO 6.5 — MAPA — REDE DE PONTOS
+   SEÇÃO 4 — MAPA — REDE DE PONTOS
    ============================================ */
 
 .clv-mapa {
@@ -1158,7 +1159,7 @@ body {
 }
 
 /* ============================================
-   SEÇÃO 8 — PLANOS
+   SEÇÃO 9 — PLANOS
    ============================================ */
 
 .clv-planos {
@@ -1172,7 +1173,7 @@ body {
   text-align: center;
 }
 
-/* O EYEBROW É O TÍTULO DA SEÇÃO AQUI — GANHA CORPO DE DISPLAY */
+/* SUBTÍTULO SOB O h2 — MESMO RESPIRO (1.25rem) DAS OUTRAS SEÇÕES */
 .clv-planos__subtitle {
   font-size: 1.0625rem;
   line-height: 1.7;
@@ -1283,7 +1284,7 @@ body {
 }
 
 /* ============================================
-   SEÇÃO 9 — CONTATO
+   SEÇÃO 10 — CONTATO
    ============================================ */
 
 .clv-contato {
@@ -1306,7 +1307,7 @@ body {
   line-height: 1.6;
 }
 
-/* ---------- CARDS (TELA 1) ---------- */
+/* ---------- CARDS ---------- */
 
 .clv-contato__cards {
   display: grid;

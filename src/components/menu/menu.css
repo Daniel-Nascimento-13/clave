@@ -2,8 +2,8 @@
    MENU — NAVEGAÇÃO PRINCIPAL
    ============================================ */
 
-/* BARRA COMPOSTA DE TRÊS IRMÃOS (HEADER, NAV, CTA) — CADA UM FIXO POR CONTA PRÓPRIA.
-   SEM transform: MENU SEMPRE VISÍVEL, SEM HIDE/SHOW NO SCROLL. */
+/* BARRA COMPOSTA DE DOIS IRMÃOS (HEADER E NAV) — CADA UM FIXO POR CONTA PRÓPRIA;
+   O CTA É FILHO DA NAV. SEM transform: MENU SEMPRE VISÍVEL, SEM HIDE/SHOW NO SCROLL. */
 
 .clv-menu {
   position: fixed;
@@ -142,7 +142,7 @@
     width: auto;
   }
 
-  /* DEGRADÊ ACOMPANHA A ALTURA DA BARRA */
+  /* FUNDO ACOMPANHA A ALTURA DA BARRA */
   .clv-menu::before {
     height: 80px;
   }
@@ -189,7 +189,7 @@
     padding-block: 0;
   }
 
-  /* DEGRADÊ ACOMPANHA A ALTURA DA BARRA */
+  /* FUNDO ACOMPANHA A ALTURA DA BARRA */
   .clv-menu::before {
     height: 80px;
   }

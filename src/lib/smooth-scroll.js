@@ -29,7 +29,7 @@ export function initSmoothScroll() {
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 
-  /* iOS SAFARI — RE-SYNC DEBOUNCED DO PIN QUANDO A TOOLBAR APARECE/SOME.
+  /* iOS SAFARI — RE-SYNC DEBOUNCED DOS ScrollTriggers QUANDO A TOOLBAR APARECE/SOME.
      ignoreMobileResize (EM gsap.js) IGNORA O resize; AQUI RE-MEDIMOS
      PONTUALMENTE APÓS A TOOLBAR ASSENTAR, SEM "JUMP" NO MEIO DO GESTO.
      SÓ EM TOUCH — NO-OP NO DESKTOP. */

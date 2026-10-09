@@ -12,8 +12,8 @@ import { SplitText } from "gsap/SplitText";
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, SplitText);
 
 /* iOS SAFARI DISPARA resize A CADA TOGGLE DA BARRA DE ENDEREÇO — SEM ISTO
-   O ScrollTrigger DÁ refresh() NO MEIO DO GESTO E O PIN DE .produto ENTRA
-   CORTADO AO VOLTAR. ignoreMobileResize É NO-OP NO DESKTOP. */
+   O ScrollTrigger DÁ refresh() NO MEIO DO GESTO E REMEDE OS TRIGGERS COM O
+   LAYOUT EM MOVIMENTO (SALTOS DE POSIÇÃO). ignoreMobileResize É NO-OP NO DESKTOP. */
 ScrollTrigger.config({ ignoreMobileResize: true });
 
 export { gsap, ScrollTrigger, SplitText };
