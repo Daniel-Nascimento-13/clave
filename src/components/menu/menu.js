@@ -64,8 +64,14 @@ function bindMenuLinks() {
 
       if (action === 'overlay') {
         e.preventDefault();
-        /* data-category/data-item REPASSADOS CRUS — QUEM INTERPRETA É O OVERLAY */
-        openOverlay(target, { category: link.dataset.category, item: link.dataset.item });
+        /* data-* REPASSADOS CRUS — OS PARAMS CHEGAM AO OVERLAY PELO EVENTO
+           clv:overlay-open, E QUEM INTERPRETA É O MÓDULO DO OVERLAY */
+        openOverlay(target, {
+          category: link.dataset.category,
+          item:     link.dataset.item,
+          form:     link.dataset.form,
+          plano:    link.dataset.contatoPlano,
+        });
       }
     });
   });
