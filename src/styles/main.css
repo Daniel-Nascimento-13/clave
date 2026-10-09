@@ -31,6 +31,9 @@
   --clv-ink:      #14140F;
   --clv-muted:    #6B6478;
   --clv-line:     #E4DEF2;
+
+  /* TEXTO SECUNDÁRIO SOBRE FUNDO ESCURO — --clv-muted SÓ SERVE NO CLARO */
+  --clv-muted-dark: rgb(255 255 255 / 0.62);
 }
 
 body {
@@ -1707,6 +1710,27 @@ body {
 
 .clv-form-overlay__form { display: none; }
 .clv-form-overlay__form--active { display: block; }
+
+/* OVERLAYS SÃO ESCUROS — TEXTOS SECUNDÁRIOS TROCAM PARA A VARIANTE CLARA */
+.clv-overlay .clv-contato__label,
+.clv-overlay .clv-form-overlay__subtitle,
+.clv-overlay .clv-form-overlay__switcher-btn,
+.clv-overlay .clv-contato__check-item span {
+  color: var(--clv-muted-dark);
+}
+
+.clv-overlay .clv-form-overlay__switcher-btn--active {
+  color: #fff;
+}
+
+.clv-overlay .clv-contato__input::placeholder {
+  color: rgb(255 255 255 / 0.47);
+}
+
+/* O ROXO BASE (#811EC1) DÁ 2.7:1 SOBRE O FUNDO DO OVERLAY */
+.clv-overlay .clv-eyebrow {
+  color: var(--clv-purple-light);
+}
 
 /* ============================================
    RODAPÉ
