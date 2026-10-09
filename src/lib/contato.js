@@ -11,6 +11,12 @@ const OVERLAY_ID  = "form-contato";
 const DEFAULT_TAB = "anunciante";
 const REQUIRED    = ["nome", "whatsapp", "cidade"];
 
+const MIN_PHONE_DIGITS = 10; // DDD + número
+const ERRORS = {
+  required: "Campo obrigatório",
+  whatsapp: "Informe o WhatsApp com DDD",
+};
+
 const PLANO_LABEL = {
   trimestral: "Trimestral (3 meses)",
   semestral:  "Semestral (6 meses)",
@@ -75,6 +81,49 @@ function buildMessage(type, form) {
   return [intro, "", ...linhas].join("\n");
 }
 
+/* ---------- VALIDAÇÃO ---------- */
+
+/* UM ERRO POR CAMPO, NA ORDEM DE REQUIRED — O PRIMEIRO RECEBE O FOCO.
+   WHATSAPP VAZIO É "OBRIGATÓRIO"; PREENCHIDO, PRECISA DE DDD + NÚMERO. */
+function validate(form) {
+  return REQUIRED.flatMap((name) => {
+    const field = form.elements[name];
+    const value = valueOf(form, name);
+
+    if (!value) return [{ field, msg: ERRORS.required }];
+
+    if (name === "whatsapp" && value.replace(/\D/g, "").length < MIN_PHONE_DIGITS) {
+      return [{ field, msg: ERRORS.whatsapp }];
+    }
+
+    return [];
+  });
+}
+
+/* O <p> NASCE LOGO APÓS O CAMPO E É LIGADO POR aria-describedby —
+   LEITOR DE TELA ANUNCIA A MENSAGEM JUNTO COM O CAMPO */
+function showError(field, msg) {
+  const id = `${field.id}-erro`;
+  let p = document.getElementById(id);
+
+  if (!p) {
+    p = document.createElement("p");
+    p.className = "clv-contato__error";
+    p.id = id;
+    field.insertAdjacentElement("afterend", p);
+  }
+
+  p.textContent = msg;
+  field.setAttribute("aria-invalid", "true");
+  field.setAttribute("aria-describedby", id);
+}
+
+function clearError(field) {
+  field.removeAttribute("aria-invalid");
+  field.removeAttribute("aria-describedby");
+  document.getElementById(`${field.id}-erro`)?.remove();
+}
+
 /* ---------- INIT ---------- */
 
 export function initContato() {
@@ -97,11 +146,18 @@ export function initContato() {
     btn.addEventListener("click", () => setTab(overlay, btn.dataset.formTab)));
 
   overlay.querySelectorAll("[data-whatsapp-form]").forEach((form) => {
+    [...form.elements].forEach((field) =>
+      field.addEventListener("input", () => clearError(field)));
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      if (REQUIRED.some((n) => !valueOf(form, n))) {
-        alert("Preencha os campos obrigatórios: Nome, WhatsApp e Cidade.");
+      REQUIRED.forEach((name) => clearError(form.elements[name]));
+
+      const errors = validate(form);
+      if (errors.length) {
+        errors.forEach(({ field, msg }) => showError(field, msg));
+        errors[0].field.focus();
         return;
       }
 
