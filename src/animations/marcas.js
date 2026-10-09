@@ -7,15 +7,6 @@
 import { gsap, ScrollTrigger } from "../lib/gsap.js";
 import { MARQUEE } from "../constants/motion.js";
 
-/* ---------- ALVO DE SCROLL DO MENU ---------- */
-
-/* A INTRO NÃO É MAIS PINADA — O TÍTULO ENTRA PELO reveal GENÉRICO.
-   SEM PIN NÃO HÁ OFFSET A CALCULAR, ENTÃO O MENU CAI NO SELETOR DIRETO.
-   A EXPORT PERMANECE PORQUE menu.js CONSOME ESTE CONTRATO. */
-export function getMarcasRevealY() {
-  return null;
-}
-
 /* ---------- MARQUEE — LOOP INFINITO, DUAS DIREÇÕES ---------- */
 
 function initMarquee(track, direction, reduce) {

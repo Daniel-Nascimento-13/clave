@@ -369,15 +369,6 @@ body {
   margin: 0 auto;
 }
 
-.clv-hero__eyebrow {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgb(255 255 255 / 0.5);
-  margin: 0 0 1.75rem;
-}
-
 .clv-hero__title {
   font-family: var(--font-display);
   font-weight: 800;
@@ -486,20 +477,6 @@ body {
   margin: 0;
 }
 
-/* ---------- TAGLINE ---------- */
-
-.clv-exp__tagline {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(1.25rem, 3.2vw, 2rem);
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-
-.clv-exp__tagline-brand  { color: var(--clv-ink); }
-.clv-exp__tagline-accent { color: var(--clv-purple); }
-
 /* ============================================
    SEÇÃO 3 — A REDE — NÚMEROS
    ============================================ */
@@ -531,10 +508,6 @@ body {
   line-height: 1;
   letter-spacing: -0.03em;
   color: var(--clv-purple);
-}
-
-.clv-rede__stats--small .clv-rede__num {
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
 }
 
 /* ---------- AMBIENTES — PÍLULAS SEM NÚMERO ---------- */
@@ -1179,20 +1152,6 @@ body {
 
 .marcas__logo:hover { opacity: 1; }
 
-.marcas__dots {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    radial-gradient(circle at 50% 0%, #811ec114 0, #0000 55%),
-    radial-gradient(#811ec122 1px, #0000 1px);
-  background-size: 100% 100%, 12px 12px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
-          mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 55%, #0000 100%);
-  opacity: .6;
-}
-
 @media (max-width: 640px) {
   .marcas__marquee { gap: 1.5rem; }
   .marcas__logo    { height: 40px; }
@@ -1439,70 +1398,7 @@ body {
   color: var(--clv-purple-dark);
 }
 
-/* ---------- FORMULÁRIOS (TELA 2) ---------- */
-
-.clv-contato__forms[hidden] {
-  display: none;
-}
-
-.clv-contato__forms-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.clv-contato__back {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 0.875rem;
-  color: var(--clv-muted);
-  padding: 0;
-  transition: color 0.3s;
-}
-
-.clv-contato__back:hover { color: #fff; }
-
-/* ---------- SWITCHER ---------- */
-
-.clv-contato__switcher {
-  display: flex;
-  justify-content: center;
-}
-
-.clv-contato__switcher-wrap {
-  display: inline-flex;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  padding: 4px;
-  gap: 4px;
-}
-
-.clv-contato__switcher-btn {
-  padding: 8px 24px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  background: transparent;
-  color: var(--clv-muted);
-  transition: background 0.3s, color 0.3s;
-}
-
-.clv-contato__switcher-btn--active {
-  background: var(--clv-purple);
-  color: #fff;
-}
-
 /* ---------- COLS ---------- */
-
-.clv-contato__form { display: none; }
-.clv-contato__form--active { display: block; }
 
 .clv-contato__cols {
   display: grid;
@@ -1614,7 +1510,6 @@ body {
   .clv-contato__cols { grid-template-columns: 1fr; }
   .clv-contato__row { grid-template-columns: 1fr; }
   .clv-contato__checks { grid-template-columns: 1fr; }
-  .clv-contato__forms-header { flex-direction: column; align-items: flex-start; }
 }
 
 /* ---------- OVERLAY FORMULÁRIOS ---------- */

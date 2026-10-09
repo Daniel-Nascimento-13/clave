@@ -6,14 +6,7 @@
 
 import { gsap } from '../../lib/gsap.js';
 import { getLenis } from '../../lib/smooth-scroll.js';
-import { getMarcasRevealY } from '../../animations/marcas.js';
 import { EASE, MENU, SCROLL } from '../../constants/motion.js';
-
-/* ============================================
-   CONSTANTES
-   ============================================ */
-
-const MARCAS_TARGET = '.marcas__bar';
 
 /* ============================================
    ESTADO
@@ -66,8 +59,6 @@ function bindMenuLinks() {
         /* data-* REPASSADOS CRUS — OS PARAMS CHEGAM AO OVERLAY PELO EVENTO
            clv:overlay-open, E QUEM INTERPRETA É O MÓDULO DO OVERLAY */
         openOverlay(target, {
-          category: link.dataset.category,
-          item:     link.dataset.item,
           form:     link.dataset.form,
           plano:    link.dataset.contatoPlano,
         });
@@ -77,10 +68,6 @@ function bindMenuLinks() {
 }
 
 function scrollToTarget(target) {
-  /* "ANUNCIANTES" APONTA PARA UM PONTO NO MEIO DO PIN DE MARCAS —
-     O SELETOR É SÓ FALLBACK */
-  const destination = target === MARCAS_TARGET ? getMarcasRevealY() ?? target : target;
-
   /* AGUARDA O FECHAMENTO DO BURGER ANTES DE SCROLLAR.
      A SONDA É is-open NA NAV, NÃO aria-expanded NO BURGER: closeBurgerMenu()
      RODA ANTES DAQUI E JÁ ZEROU O aria-expanded DE FORMA SÍNCRONA. A CLASSE
@@ -94,16 +81,11 @@ function scrollToTarget(target) {
   setTimeout(() => {
     if (lenis) {
       /* offset NEGATIVO — DESCONTA A BARRA FIXA DE 80px */
-      lenis.scrollTo(destination, { duration: SCROLL.duration, offset: SCROLL.offset });
+      lenis.scrollTo(target, { duration: SCROLL.duration, offset: SCROLL.offset });
       return;
     }
 
-    if (typeof destination === 'number') {
-      window.scrollTo({ top: destination, behavior: 'auto' });
-      return;
-    }
-
-    const el = document.querySelector(destination);
+    const el = document.querySelector(target);
     if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
   }, delay);
 }
@@ -131,7 +113,7 @@ function unlockScroll() {
    OVERLAYS
    ============================================ */
 
-/* EXPORTADA PARA MÓDULOS EXTERNOS (EX.: predios.js) — TRAVA E EVENTO
+/* EXPORTADA PARA MÓDULOS EXTERNOS — TRAVA E EVENTO
    PRECISAM SAIR DE UM LUGAR SÓ */
 export function openOverlay(id, params = {}) {
   const el = document.getElementById(`overlay-${id}`);
