@@ -6,6 +6,7 @@
 @import "@fontsource/bricolage-grotesque/400.css";
 @import "@fontsource/bricolage-grotesque/800.css";
 @import "@fontsource-variable/inter";
+@import "lenis/dist/lenis.css";
 @import "tailwindcss";
 
 @theme {
@@ -34,6 +35,12 @@
 
   /* TEXTO SECUNDÁRIO SOBRE FUNDO ESCURO — --clv-muted SÓ SERVE NO CLARO */
   --clv-muted-dark: rgb(255 255 255 / 0.62);
+}
+
+/* RESERVA A CALHA DA BARRA: QUANDO O LENIS TRAVA O <html> (overflow: clip)
+   A BARRA SOME E, SEM ISTO, O LAYOUT PULARIA ~15px NO WINDOWS */
+html {
+  scrollbar-gutter: stable;
 }
 
 body {

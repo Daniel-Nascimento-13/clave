@@ -113,8 +113,10 @@ function scrollToTarget(target) {
    TRAVA DE SCROLL
    ============================================ */
 
-/* FONTE ÚNICA DA TRAVA — NUNCA COMBINAR lenis.stop() COM overflow: hidden:
-   O LENIS PERDE SINCRONIA E REPROJEITA O SCROLL AO RETOMAR. */
+/* FONTE ÚNICA DA TRAVA: lenis.stop()/start(). O overflow do <html> é
+   aplicado pelo CSS OFICIAL DO LENIS (lenis.css, .lenis-stopped), que o
+   próprio Lenis liga e desliga — NUNCA aplicar overflow manualmente:
+   o Lenis perde sincronia e reprojeita o scroll ao retomar. */
 
 function lockScroll() {
   if (lenis) lenis.stop();
