@@ -1007,6 +1007,29 @@ body {
   }
 }
 
+/* MOBILE/TABLET — SETAS SOBRE A FOTO. AO LADO DO TRACK ELAS COMIAM ~40% DA
+   LARGURA EM 375px. O transform AQUI É SÓ DE CENTRALIZAÇÃO — AS SETAS NÃO
+   SÃO ANIMADAS PELO GSAP, ENTÃO NÃO HÁ CONFLITO. */
+@media (max-width: 860px) {
+  .clv-locais__carousel {
+    display: block;
+  }
+
+  .clv-locais__arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    transform: translateY(-50%);
+    border: 0;
+    background: rgb(255 255 255 / 0.9);
+    color: var(--clv-purple);
+    box-shadow: 0 4px 14px rgb(20 0 30 / 0.25);
+  }
+
+  .clv-locais__arrow--prev { left: 12px; }
+  .clv-locais__arrow--next { right: 12px; }
+}
+
 /* ============================================
    SEÇÃO 6.5 — MAPA — REDE DE PONTOS
    ============================================ */
