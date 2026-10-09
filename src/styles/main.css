@@ -1639,7 +1639,11 @@ body {
 
 /* ---------- OVERLAY FORMULÁRIOS ---------- */
 
+/* O PAINEL É FLEX EM COLUNA: COM margin auto O ITEM NÃO ESTICA E TRAVA NO
+   min-content. width 100% + max-width 900px DÁ A LARGURA CERTA E MANTÉM
+   A CENTRALIZAÇÃO NO DESKTOP. */
 .clv-form-overlay__content {
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
   padding: 2rem 0;
@@ -1743,6 +1747,11 @@ body {
   .clv-form-overlay__content { padding-block: 0; }
 
   .clv-overlay .clv-contato__col { padding: 1.25rem; }
+
+  .clv-form-overlay__switcher-btn {
+    padding-inline: 14px;
+    font-size: 0.8125rem;
+  }
 }
 
 /* ============================================
