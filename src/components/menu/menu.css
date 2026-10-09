@@ -242,18 +242,19 @@
   position: absolute;
   top: 2rem;
   right: 3rem;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   background: none;
   border: none;
   cursor: pointer;
 }
 
+/* ÁREA DE TOQUE 44px, DESENHO DO X CONTINUA COM 24px */
 .clv-overlay__close span {
   position: absolute;
   top: 50%;
-  left: 0;
-  width: 100%;
+  left: 10px;
+  width: 24px;
   height: 1.5px;
   background: #fff;
 }

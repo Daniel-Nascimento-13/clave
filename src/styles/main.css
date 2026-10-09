@@ -1728,6 +1728,23 @@ body {
   color: var(--clv-purple-light);
 }
 
+/* MOBILE — PAINEL E COLUNAS COM RESPIRO PROPORCIONAL À TELA.
+   O TOPO MAIOR QUE AS LATERAIS DEIXA O X FORA DO CAMINHO DO SWITCHER. */
+@media (max-width: 640px) {
+  .clv-overlay__panel {
+    padding: 4.5rem 1.25rem 2.5rem;
+  }
+
+  .clv-overlay__close--left {
+    top: 1rem;
+    left: 1rem;
+  }
+
+  .clv-form-overlay__content { padding-block: 0; }
+
+  .clv-overlay .clv-contato__col { padding: 1.25rem; }
+}
+
 /* ============================================
    RODAPÉ
    ============================================ */
