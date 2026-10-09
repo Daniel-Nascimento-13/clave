@@ -1405,8 +1405,21 @@ body {
   transition: color 0.3s;
 }
 
-.clv-contato__link:hover { color: #fff; }
-.clv-contato__card--dark .clv-contato__link:hover { color: #fff; }
+/* CARD ESCURO — LILÁS CLARO, BRANCO NO HOVER */
+.clv-contato__card--dark .clv-contato__link:hover,
+.clv-contato__card--dark .clv-contato__link:focus-visible {
+  color: #fff;
+}
+
+/* CARD CLARO — ROXO DA MARCA, ESCURECE NO HOVER */
+.clv-contato__card--light .clv-contato__link {
+  color: var(--clv-purple);
+}
+
+.clv-contato__card--light .clv-contato__link:hover,
+.clv-contato__card--light .clv-contato__link:focus-visible {
+  color: var(--clv-purple-dark);
+}
 
 /* ---------- FORMULÁRIOS (TELA 2) ---------- */
 
