@@ -60,9 +60,13 @@ export function buildRoulette(el) {
   const value = el.textContent.trim();
   if (!value || !DIGIT.test(value)) return null;
 
-  /* O VALOR FINAL VIRA aria-label ANTES DE O TEXTO SER TROCADO PELAS COLUNAS */
-  el.setAttribute("aria-label", value);
+  /* O VALOR FINAL FICA EM UM .sr-only — É O ÚNICO TEXTO EXPOSTO A LEITOR DE TELA */
   el.textContent = "";
+
+  const sr = document.createElement("span");
+  sr.className   = "sr-only";   // utilitário do Tailwind v4
+  sr.textContent = value;
+  el.appendChild(sr);
 
   const strips = [];
 
@@ -71,6 +75,7 @@ export function buildRoulette(el) {
       const symbol = document.createElement("span");
       symbol.className   = "clv-roulette__symbol";
       symbol.textContent = char;
+      symbol.setAttribute("aria-hidden", "true");
       el.appendChild(symbol);
       return;
     }

@@ -240,6 +240,7 @@ body {
   display: inline-flex;
   align-items: baseline;
   font-variant-numeric: tabular-nums;
+  user-select: none; /* A FITA NÃO DEVE IR PARA A ÁREA DE TRANSFERÊNCIA */
 }
 
 .clv-roulette__col {
