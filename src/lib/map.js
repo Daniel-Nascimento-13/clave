@@ -30,11 +30,27 @@ const HINT_HIDE_MS = 1500;
 
 /* ---------- PONTOS ---------- */
 
-/* PLACEHOLDER — SUBSTITUIR PELAS COORDENADAS REAIS DOS LOCAIS */
+/* COORDENADAS COPIADAS DO GOOGLE MAPS — UM PINO POR LOCAL */
 const PONTOS = [
-  { lat: -29.4678, lng: -51.9614, nome: "Local 1", tipo: "Residencial" },
-  { lat: -29.4710, lng: -51.9580, nome: "Local 2", tipo: "Comercial" },
-  { lat: -29.4650, lng: -51.9640, nome: "Local 3", tipo: "Hotéis" },
+  { lat: -29.445946, lng: -51.962542, nome: "Le Blanc",                   tipo: "Residencial" },
+  { lat: -29.443924, lng: -51.966352, nome: "Ed. Manhattan",              tipo: "Residencial" },
+  { lat: -29.436647, lng: -51.963981, nome: "Ed. Amazon",                 tipo: "Residencial" },
+  { lat: -29.462476, lng: -51.967271, nome: "Ed. Diamond Tower",          tipo: "Comercial" },
+  { lat: -29.460795, lng: -51.968108, nome: "Diamond Center",             tipo: "Comercial" },
+  { lat: -29.457690, lng: -51.972855, nome: "Ed. W. Tower",               tipo: "Comercial" },
+  { lat: -29.443239, lng: -51.954882, nome: "Condomínio Villa Allegra",   tipo: "Residencial" },
+  { lat: -29.457647, lng: -51.963875, nome: "Residencial Mont Blanc",     tipo: "Residencial" },
+  { lat: -29.446550, lng: -51.966204, nome: "Restaurante Meu Escritório", tipo: "Comercial" },
+  { lat: -29.459510, lng: -51.960889, nome: "Clube de Tiro e Caça",       tipo: "Comercial" },
+  { lat: -29.465763, lng: -51.977383, nome: "Vivance Moinhos",            tipo: "Residencial" },
+  { lat: -29.449767, lng: -51.967378, nome: "Tri Hotel Executive",        tipo: "Hotéis" },
+  { lat: -29.454415, lng: -51.970399, nome: "TRI Hotel Lajeado",          tipo: "Hotéis" },
+  { lat: -29.456997, lng: -51.966522, nome: "Diamond Life",               tipo: "Residencial" },
+  { lat: -29.467453, lng: -51.971831, nome: "Residencial do Parque",      tipo: "Residencial" },
+  { lat: -29.446301, lng: -51.967308, nome: "Centro Comercial 300",       tipo: "Comercial" },
+  { lat: -29.447105, lng: -51.966079, nome: "Res. São Cristóvão",         tipo: "Residencial" },
+  { lat: -29.451961, lng: -51.972869, nome: "Edifício Scartezini",        tipo: "Residencial" },
+  { lat: -29.446023, lng: -51.967719, nome: "Line Tower",                 tipo: "Residencial" },
 ];
 
 /* ============================================
@@ -113,6 +129,8 @@ function buildMap(L, el) {
       .addTo(map)
       .bindPopup(criarPopup(ponto));
   });
+
+  map.fitBounds(L.latLngBounds(PONTOS.map((p) => [p.lat, p.lng])), { padding: [40, 40] });
 
   /* O CONTAINER ENTRA COM reveal NO WRAPPER — REMEDIMOS APÓS O PRIMEIRO
      FRAME PARA O LEAFLET NÃO GUARDAR UM TAMANHO ANTIGO */
