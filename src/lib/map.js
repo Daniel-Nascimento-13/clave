@@ -5,7 +5,7 @@
 /* ---------- IMPORTS ---------- */
 
 import { ScrollTrigger } from "./gsap.js";
-import { getWhatsappLink } from "./whatsapp.js";
+import { WHATSAPP_GREETING, getWhatsappLink } from "./whatsapp.js";
 
 /* ============================================
    CONSTANTES
@@ -51,10 +51,7 @@ function criarIcone(L) {
    PELA VARREDURA DE [data-whatsapp-cta] DO main.js */
 function criarPopup(ponto) {
   const href = getWhatsappLink(
-    "Olá! Espero que esteja tudo bem.\n\n" +
-    `Vi o ponto "${ponto.nome}" (${ponto.tipo}) no mapa da Clave e gostaria de ` +
-    "receber mais informações sobre anunciar nele.\n\n" +
-    "Aguardo seu retorno. Obrigado!"
+    `${WHATSAPP_GREETING}\n\nVi o ponto "${ponto.nome}" no mapa da CLAVE e gostaria de saber mais sobre anunciar nele.`
   );
 
   return (

@@ -4,10 +4,12 @@
 
 export const WHATSAPP_NUMBER = "5551993607042";
 
+export const WHATSAPP_CONTACT = "Artur"; // quem atende — troque aqui
+
+export const WHATSAPP_GREETING = `Olá, ${WHATSAPP_CONTACT}! Tudo bem?`;
+
 export const WHATSAPP_MESSAGE =
-  "Olá! Espero que esteja tudo bem.\n\n" +
-  "Tenho interesse em anunciar com a Clave e gostaria de receber mais informações sobre as opções de divulgação disponíveis.\n\n" +
-  "Aguardo seu retorno. Obrigado!";
+  `${WHATSAPP_GREETING}\n\nGostaria de saber mais sobre como anunciar com a CLAVE.`;
 
 export function getWhatsappLink(message = WHATSAPP_MESSAGE) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;

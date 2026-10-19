@@ -3,7 +3,7 @@
    OVERLAY ÚNICO COM 2 FORMULÁRIOS → WHATSAPP
    ============================================ */
 
-import { WHATSAPP_NUMBER } from "./whatsapp.js";
+import { WHATSAPP_GREETING, WHATSAPP_NUMBER } from "./whatsapp.js";
 
 /* ---------- CONSTANTES ---------- */
 
@@ -28,18 +28,22 @@ const HEADINGS = {
   espaco:     { title: "Quero ser um ponto Clave", sub: "Conte-nos sobre seu espaço. Entraremos em contato para avaliar a oportunidade." },
 };
 
-/* CAMPO → RÓTULO, NA ORDEM DA MENSAGEM. CAMPOS VAZIOS SÃO OMITIDOS. */
+/* BLOCO → [TÍTULO, [CAMPO, RÓTULO]], NA ORDEM DA MENSAGEM. CAMPOS VAZIOS SÃO
+   OMITIDOS; BLOCO SEM NENHUM CAMPO PREENCHIDO SAI INTEIRO. */
 const MESSAGES = {
   anunciante: {
-    intro:  "Olá! Tenho interesse em anunciar com a Clave.",
-    fields: [["nome", "Nome"], ["empresa", "Empresa"], ["whatsapp", "WhatsApp"], ["cidade", "Cidade"],
-             ["plano", "Plano"], ["segmento", "Segmento"], ["mensagem", "Mensagem"]],
+    intro: "Gostaria de anunciar com a CLAVE.",
+    blocks: [
+      ["Meus dados", [["nome", "Nome"], ["empresa", "Empresa"], ["whatsapp", "WhatsApp"], ["cidade", "Cidade"]]],
+      ["Sobre a campanha", [["plano", "Plano de interesse"], ["segmento", "Segmento"], ["mensagem", "Mensagem"]]],
+    ],
   },
   espaco: {
-    intro:  "Olá! Tenho interesse em ser um ponto Clave.",
-    fields: [["nome", "Nome"], ["empresa", "Empresa"], ["whatsapp", "WhatsApp"], ["cidade", "Cidade"],
-             ["endereco", "Endereço"], ["tipo", "Tipo de espaço"], ["interesse", "Interesse em"],
-             ["descricao", "Descrição"]],
+    intro: "Gostaria de transformar meu espaço em um ponto CLAVE.",
+    blocks: [
+      ["Meus dados", [["nome", "Nome"], ["empresa", "Empresa"], ["whatsapp", "WhatsApp"], ["cidade", "Cidade"]]],
+      ["Sobre o espaço", [["endereco", "Endereço"], ["tipo", "Tipo"], ["interesse", "Interesse em"], ["descricao", "Descrição"]]],
+    ],
   },
 };
 
@@ -71,14 +75,18 @@ function valueOf(form, name) {
 }
 
 function buildMessage(type, form) {
-  const { intro, fields } = MESSAGES[type];
+  const { intro, blocks } = MESSAGES[type];
 
-  const linhas = fields
-    .map(([name, label]) => [label, valueOf(form, name)])
-    .filter(([, v]) => v)
-    .map(([label, v]) => `*${label}:* ${v}`);
+  const blocos = blocks.flatMap(([title, fields]) => {
+    const linhas = fields
+      .map(([name, label]) => [label, valueOf(form, name)])
+      .filter(([, v]) => v)
+      .map(([label, v]) => `${label}: ${v}`);
 
-  return [intro, "", ...linhas].join("\n");
+    return linhas.length ? ["", `*${title}*`, ...linhas] : [];
+  });
+
+  return [WHATSAPP_GREETING, "", intro, ...blocos].join("\n");
 }
 
 /* ---------- VALIDAÇÃO ---------- */
