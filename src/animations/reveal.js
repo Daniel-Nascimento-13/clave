@@ -160,7 +160,7 @@ export function initReveal() {
     }
 
     const group = el.closest(GROUP);
-    entry.delay = group && group.querySelector('[data-reveal="lines"]') ? REVEAL.blockOffset : 0;
+    entry.delay = group && group.querySelector(`[data-reveal="lines"]`) ? REVEAL.blockOffset : 0;
   });
 
   /* ---------- UM ÚNICO BATCH PARA TODAS AS VARIANTES ---------- */

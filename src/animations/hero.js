@@ -14,10 +14,10 @@ import { settleReveal } from "./reveal.js";
 
 /* O HERO ESTÁ ACIMA DA DOBRA — ENTRA NO LOAD, SEM ScrollTrigger.
    ATRIBUTO PRÓPRIO (data-hero) PARA NÃO SER CAPTURADO PELO BATCH DE reveal.js. */
-const TITLE    = '[data-hero="title"]';
-const SUBTITLE = '[data-hero="subtitle"]';
-const ACTIONS  = '[data-hero="actions"]';
-const SCROLL   = '[data-hero="scroll"]';
+const TITLE    = `[data-hero="title"]`;
+const SUBTITLE = `[data-hero="subtitle"]`;
+const ACTIONS  = `[data-hero="actions"]`;
+const SCROLL   = `[data-hero="scroll"]`;
 
 /* ============================================
    INIT

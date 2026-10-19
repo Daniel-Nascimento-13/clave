@@ -4,9 +4,9 @@
 
 /* ---------- IMPORTS ---------- */
 
-import { gsap } from '../../lib/gsap.js';
-import { getLenis } from '../../lib/smooth-scroll.js';
-import { EASE, MENU, SCROLL } from '../../constants/motion.js';
+import { gsap } from "../../lib/gsap.js";
+import { getLenis } from "../../lib/smooth-scroll.js";
+import { EASE, MENU, SCROLL } from "../../constants/motion.js";
 
 /* ============================================
    ESTADO
@@ -20,14 +20,14 @@ let lenis = null; /* null EM prefers-reduced-motion — TODO USO ABAIXO TRATA IS
    ============================================ */
 
 export function initMenu() {
-  const menuEl = document.querySelector('[data-menu]');
-  gsap.set(menuEl, { y: 0, clearProps: 'transform' });
+  const menuEl = document.querySelector("[data-menu]");
+  gsap.set(menuEl, { y: 0, clearProps: "transform" });
 
-  overlays = document.querySelectorAll('[data-overlay]');
+  overlays = document.querySelectorAll("[data-overlay]");
   lenis    = getLenis();
 
   overlays.forEach((el) => {
-    gsap.set(el, { clipPath: 'inset(0 0 100% 0)', autoAlpha: 0 });
+    gsap.set(el, { clipPath: "inset(0 0 100% 0)", autoAlpha: 0 });
   });
 
   bindMenuLinks();
@@ -41,20 +41,20 @@ export function initMenu() {
    ============================================ */
 
 function bindMenuLinks() {
-  document.querySelectorAll('[data-menu-link]').forEach((link) => {
-    link.addEventListener('click', (e) => {
+  document.querySelectorAll("[data-menu-link]").forEach((link) => {
+    link.addEventListener("click", (e) => {
       closeBurgerMenu();
 
       const action = link.dataset.action;
       const target = link.dataset.target;
 
-      if (action === 'scroll') {
+      if (action === "scroll") {
         e.preventDefault();
         closeOverlay();
         scrollToTarget(target);
       }
 
-      if (action === 'overlay') {
+      if (action === "overlay") {
         e.preventDefault();
         /* data-* REPASSADOS CRUS — OS PARAMS CHEGAM AO OVERLAY PELO EVENTO
            clv:overlay-open, E QUEM INTERPRETA É O MÓDULO DO OVERLAY */
@@ -73,8 +73,8 @@ function scrollToTarget(target) {
      RODA ANTES DAQUI E JÁ ZEROU O aria-expanded DE FORMA SÍNCRONA. A CLASSE
      SÓ CAI NO onComplete DO TWEEN (0.6s), ENTÃO AINDA ESTÁ LÁ NESTE PONTO. */
   const burgerAberto = document
-    .querySelector('[data-menu-nav]')
-    ?.classList.contains('is-open');
+    .querySelector("[data-menu-nav]")
+    ?.classList.contains("is-open");
 
   const delay = burgerAberto ? MENU.burgerWaitMs : 0;
 
@@ -86,7 +86,7 @@ function scrollToTarget(target) {
     }
 
     const el = document.querySelector(target);
-    if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
+    if (el) el.scrollIntoView({ behavior: "auto", block: "start" });
   }, delay);
 }
 
@@ -101,12 +101,12 @@ function scrollToTarget(target) {
 
 function lockScroll() {
   if (lenis) lenis.stop();
-  else document.documentElement.classList.add('clv-no-scroll');
+  else document.documentElement.classList.add("clv-no-scroll");
 }
 
 function unlockScroll() {
   if (lenis) lenis.start();
-  else document.documentElement.classList.remove('clv-no-scroll');
+  else document.documentElement.classList.remove("clv-no-scroll");
 }
 
 /* ============================================
@@ -123,13 +123,13 @@ export function openOverlay(id, params = {}) {
   if (openOverlayId) closeOverlay(true);
 
   openOverlayId = id;
-  el.setAttribute('aria-hidden', 'false');
-  el.style.pointerEvents = 'auto';
+  el.setAttribute("aria-hidden", "false");
+  el.style.pointerEvents = "auto";
   lockScroll();
-  emitOverlayEvent('open', id, params);
+  emitOverlayEvent("open", id, params);
 
   gsap.to(el, {
-    clipPath: 'inset(0 0 0% 0)',
+    clipPath: "inset(0 0 0% 0)",
     autoAlpha: 1,
     duration: MENU.overlayIn,
     ease: EASE.expo,
@@ -144,20 +144,20 @@ export function closeOverlay(immediate = false) {
 
   /* EMIT ANTES DO TWEEN — QUEM OUVIR clv:overlay-close REAGE NO CLIQUE,
      NÃO NO FIM DA ANIMAÇÃO */
-  emitOverlayEvent('close', openOverlayId);
+  emitOverlayEvent("close", openOverlayId);
 
   const closingId = openOverlayId;
 
   gsap.to(el, {
-    clipPath: 'inset(0 0 100% 0)',
+    clipPath: "inset(0 0 100% 0)",
     autoAlpha: 0,
     duration: immediate ? MENU.overlaySwap : MENU.overlayOut,
     ease: EASE.primary,
     onComplete: () => {
       /* GUARDA CONTRA RACE CONDITION: NOVO OVERLAY ABERTO DURANTE O TWEEN */
       if (openOverlayId === closingId) return;
-      el.setAttribute('aria-hidden', 'true');
-      el.style.pointerEvents = 'none';
+      el.setAttribute("aria-hidden", "true");
+      el.style.pointerEvents = "none";
     },
   });
 
@@ -173,14 +173,14 @@ function emitOverlayEvent(action, id, params = {}) {
 }
 
 function bindOverlayClose() {
-  document.querySelectorAll('[data-overlay-close]').forEach((btn) => {
-    btn.addEventListener('click', () => closeOverlay());
+  document.querySelectorAll("[data-overlay-close]").forEach((btn) => {
+    btn.addEventListener("click", () => closeOverlay());
   });
 }
 
 function bindEscKey() {
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeOverlay();
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeOverlay();
   });
 }
 
@@ -189,49 +189,49 @@ function bindEscKey() {
    ============================================ */
 
 function closeBurgerMenu() {
-  const burger = document.querySelector('[data-menu-burger]');
-  const nav    = document.querySelector('[data-menu-nav]');
+  const burger = document.querySelector("[data-menu-burger]");
+  const nav    = document.querySelector("[data-menu-nav]");
 
-  if (burger.getAttribute('aria-expanded') !== 'true') return;
+  if (burger.getAttribute("aria-expanded") !== "true") return;
 
-  burger.setAttribute('aria-expanded', 'false');
+  burger.setAttribute("aria-expanded", "false");
   unlockScroll();
 
   gsap.to(nav, {
-    clipPath: 'inset(0 0 100% 0)',
+    clipPath: "inset(0 0 100% 0)",
     autoAlpha: 0,
     duration: MENU.burger,
     ease: EASE.primary,
     onComplete: () => {
-      nav.classList.remove('is-open');
-      gsap.set(nav, { clearProps: 'opacity,visibility,clipPath' });
+      nav.classList.remove("is-open");
+      gsap.set(nav, { clearProps: "opacity,visibility,clipPath" });
     },
   });
 }
 
 function bindBurger() {
-  const burger = document.querySelector('[data-menu-burger]');
-  const nav    = document.querySelector('[data-menu-nav]');
+  const burger = document.querySelector("[data-menu-burger]");
+  const nav    = document.querySelector("[data-menu-nav]");
 
-  burger.addEventListener('click', () => {
-    const isOpen = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', String(!isOpen));
+  burger.addEventListener("click", () => {
+    const isOpen = burger.getAttribute("aria-expanded") === "true";
+    burger.setAttribute("aria-expanded", String(!isOpen));
 
     if (!isOpen) {
-      nav.classList.add('is-open');
+      nav.classList.add("is-open");
       lockScroll();
-      gsap.set(nav, { clipPath: 'inset(0 0 100% 0)', autoAlpha: 0 });
-      gsap.to(nav, { clipPath: 'inset(0 0 0% 0)', autoAlpha: 1, duration: MENU.burger, ease: EASE.primary });
+      gsap.set(nav, { clipPath: "inset(0 0 100% 0)", autoAlpha: 0 });
+      gsap.to(nav, { clipPath: "inset(0 0 0% 0)", autoAlpha: 1, duration: MENU.burger, ease: EASE.primary });
     } else {
       unlockScroll();
       gsap.to(nav, {
-        clipPath: 'inset(0 0 100% 0)',
+        clipPath: "inset(0 0 100% 0)",
         autoAlpha: 0,
         duration: MENU.burger,
         ease: EASE.primary,
         onComplete: () => {
-          nav.classList.remove('is-open');
-          gsap.set(nav, { clearProps: 'opacity,visibility,clipPath' });
+          nav.classList.remove("is-open");
+          gsap.set(nav, { clearProps: "opacity,visibility,clipPath" });
         },
       });
     }

@@ -17,7 +17,7 @@ const ZOOM   = 14;
 
 /* OPENSTREETMAP — SEM CHAVE DE API */
 const TILE_URL  = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+const TILE_ATTR = `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>`;
 const TILE_MAX  = 19;
 
 /* CARREGA ~1 TELA ANTES DE O MAPA APARECER — CHEGA PRONTO, SEM FLASH */
@@ -40,7 +40,7 @@ const PONTOS = [
 function criarIcone(L) {
   return L.divIcon({
     className:   "",
-    html:        '<span class="clv-map-pin"></span>',
+    html:        `<span class="clv-map-pin"></span>`,
     iconSize:    [18, 18],
     iconAnchor:  [9, 9],
     popupAnchor: [0, -12],

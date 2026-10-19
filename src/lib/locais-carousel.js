@@ -8,10 +8,10 @@ import { DURATIONS, EASE } from "../constants/motion.js";
 export function initLocaisCarousel() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const track   = document.querySelector('.clv-locais__track');
-  const cards   = document.querySelectorAll('.clv-locais__card');
-  const btnPrev = document.querySelector('.clv-locais__arrow--prev');
-  const btnNext = document.querySelector('.clv-locais__arrow--next');
+  const track   = document.querySelector(".clv-locais__track");
+  const cards   = document.querySelectorAll(".clv-locais__card");
+  const btnPrev = document.querySelector(".clv-locais__arrow--prev");
+  const btnNext = document.querySelector(".clv-locais__arrow--next");
 
   if (!track || !cards.length || !btnPrev || !btnNext) return;
 
@@ -32,6 +32,6 @@ export function initLocaisCarousel() {
     });
   }
 
-  btnPrev.addEventListener('click', () => goTo(current - 1));
-  btnNext.addEventListener('click', () => goTo(current + 1));
+  btnPrev.addEventListener("click", () => goTo(current - 1));
+  btnNext.addEventListener("click", () => goTo(current + 1));
 }
