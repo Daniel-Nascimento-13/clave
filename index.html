@@ -179,10 +179,10 @@
 
           <!-- data-reveal FICA NO WRAPPER: UM transform NO PRÓPRIO CONTAINER DO
                LEAFLET DESALINHA O CÁLCULO DE POSIÇÃO DOS MARCADORES.
-               data-lenis-prevent — LENIS ENGOLE O touchmove NA JANELA E MATARIA
-               O ARRASTE DENTRO DO MAPA. -->
+               SEM data-lenis-prevent: NO TOQUE, 1 DEDO ROLA A PÁGINA PELO LENIS
+               E 2 DEDOS MOVEM O MAPA (map.js). -->
           <div class="clv-mapa__frame" data-reveal>
-            <div class="clv-mapa__canvas" id="clv-map" data-lenis-prevent></div>
+            <div class="clv-mapa__canvas" id="clv-map"></div>
           </div>
 
         </div>

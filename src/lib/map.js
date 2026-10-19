@@ -4,7 +4,8 @@
 
 /* ---------- IMPORTS ---------- */
 
-import { ScrollTrigger } from "./gsap.js";
+import { gsap, ScrollTrigger } from "./gsap.js";
+import { DURATIONS, EASE } from "../constants/motion.js";
 import { WHATSAPP_GREETING, getWhatsappLink } from "./whatsapp.js";
 
 /* ============================================
@@ -22,6 +23,10 @@ const TILE_MAX  = 19;
 
 /* CARREGA ~1 TELA ANTES DE O MAPA APARECER — CHEGA PRONTO, SEM FLASH */
 const PRELOAD_START = "top bottom+=100%";
+
+/* AVISO DO GESTO — QUANTO TEMPO FICA NA TELA APÓS O ÚLTIMO MOVIMENTO */
+const HINT_TEXT    = "Use dois dedos para mover o mapa";
+const HINT_HIDE_MS = 1500;
 
 /* ---------- PONTOS ---------- */
 
@@ -92,7 +97,12 @@ function buildMap(L, el) {
     /* A RODA PERTENCE AO LENIS — HABILITADA, O MAPA SEQUESTRARIA O SCROLL
        DA PÁGINA AO PASSAR POR CIMA DELE */
     scrollWheelZoom: false,
+    /* TOQUE: 1 DEDO ROLA A PÁGINA, 2 DEDOS MOVEM O MAPA */
+    dragging: !L.Browser.mobile,
+    tap:      !L.Browser.mobile,
   });
+
+  if (L.Browser.mobile) initTouchGesture(map, el);
 
   L.tileLayer(TILE_URL, { attribution: TILE_ATTR, maxZoom: TILE_MAX }).addTo(map);
 
@@ -107,4 +117,49 @@ function buildMap(L, el) {
   /* O CONTAINER ENTRA COM reveal NO WRAPPER — REMEDIMOS APÓS O PRIMEIRO
      FRAME PARA O LEAFLET NÃO GUARDAR UM TAMANHO ANTIGO */
   requestAnimationFrame(() => map.invalidateSize());
+}
+
+/* ============================================
+   GESTO DE TOQUE — SÓ MOBILE
+   ============================================ */
+
+/* COM dragging DESLIGADO O CONTAINER FICA EM touch-action: pan-x pan-y — UM
+   DEDO ROLA A PÁGINA NATIVAMENTE. DOIS DEDOS LIGAM O ARRASTE; O AVISO EXPLICA
+   O GESTO A QUEM TENTA COM UM SÓ. */
+function initTouchGesture(map, el) {
+  const hint = document.createElement("div");
+  hint.className   = "clv-mapa__hint";
+  hint.textContent = HINT_TEXT;
+  hint.setAttribute("aria-hidden", "true");
+  el.appendChild(hint);
+
+  let hideTimer = 0;
+
+  const fade = (autoAlpha) =>
+    gsap.to(hint, { autoAlpha, duration: DURATIONS.sm, ease: EASE.primary, overwrite: true });
+
+  const hideHint = () => {
+    clearTimeout(hideTimer);
+    fade(0);
+  };
+
+  const onTouch = (e) => {
+    if (e.touches.length >= 2) {
+      map.dragging.enable();
+      hideHint();
+      return;
+    }
+
+    if (e.type !== "touchmove") return;
+
+    fade(1);
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hideHint, HINT_HIDE_MS);
+  };
+
+  el.addEventListener("touchstart", onTouch, { passive: true });
+  el.addEventListener("touchmove",  onTouch, { passive: true });
+  el.addEventListener("touchend", (e) => {
+    if (e.touches.length < 2) map.dragging.disable();
+  }, { passive: true });
 }

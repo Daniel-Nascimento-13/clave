@@ -1019,11 +1019,32 @@ body {
 
 /* ALTURA EXPLÍCITA É OBRIGATÓRIA — LEAFLET NÃO INFERE A DO CONTAINER */
 .clv-mapa__canvas {
+  position: relative;
   height: 480px;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--clv-line);
   background: var(--clv-bg-soft);
+}
+
+/* AVISO "DOIS DEDOS" — SÓ MOBILE, CRIADO EM map.js. z-index ACIMA DOS TILES;
+   pointer-events: none PARA NÃO ROUBAR O GESTO. ENTRA/SAI VIA GSAP (autoAlpha). */
+.clv-mapa__hint {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgb(20 0 30 / 0.55);
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* ---------- TEMA DO LEAFLET ---------- */
