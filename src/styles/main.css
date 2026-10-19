@@ -1073,6 +1073,22 @@ body {
   box-shadow: 0 0 0 2px rgb(129 30 193 / 0.25), 0 4px 10px rgb(20 0 30 / 0.3);
 }
 
+/* CLUSTER — MESMO VOCABULÁRIO DO PINO, MAIOR E COM A CONTAGEM.
+   SEM MarkerCluster.Default.css: O VISUAL É ESTE. */
+.clv-map-cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--clv-purple);
+  color: #fff;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px rgb(129 30 193 / 0.25), 0 4px 10px rgb(20 0 30 / 0.3);
+  font: 700 0.8125rem var(--font-body);
+}
+
 /* ---------- POPUP ---------- */
 
 .clv-mapa__canvas .leaflet-popup-content-wrapper {

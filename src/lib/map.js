@@ -101,6 +101,14 @@ export function initMap() {
         import("leaflet"),
         import("leaflet/dist/leaflet.css"),
       ]);
+
+      /* O PLUGIN SE PENDURA NO L GLOBAL — PRECISA EXISTIR ANTES DO IMPORT */
+      window.L = L;
+      await Promise.all([
+        import("leaflet.markercluster"),
+        import("leaflet.markercluster/dist/MarkerCluster.css"),
+      ]);
+
       buildMap(L, el);
     },
   });
@@ -110,6 +118,10 @@ function buildMap(L, el) {
   const map = L.map(el, {
     center: CENTRO,
     zoom:   ZOOM,
+    /* ZOOM FRACIONADO — O fitBounds PREENCHE O MAPA EM VEZ DE PARAR NO
+       INTEIRO ABAIXO */
+    zoomSnap:  0.25,
+    zoomDelta: 0.5,
     /* A RODA PERTENCE AO LENIS — HABILITADA, O MAPA SEQUESTRARIA O SCROLL
        DA PÁGINA AO PASSAR POR CIMA DELE */
     scrollWheelZoom: false,
@@ -124,11 +136,27 @@ function buildMap(L, el) {
 
   const icone = criarIcone(L);
 
+  /* PINOS PRÓXIMOS VIRAM UM CÍRCULO COM A CONTAGEM — CLICAR APROXIMA; NO
+     ZOOM MÁXIMO, ABRE EM LEQUE */
+  const grupo = L.markerClusterGroup({
+    maxClusterRadius:    40,
+    showCoverageOnHover: false,
+    spiderfyOnMaxZoom:   true,
+    iconCreateFunction: (c) => L.divIcon({
+      className:  "",
+      html:       `<span class="clv-map-cluster">${c.getChildCount()}</span>`,
+      iconSize:   [36, 36],
+      iconAnchor: [18, 18],
+    }),
+  });
+
   PONTOS.forEach((ponto) => {
     L.marker([ponto.lat, ponto.lng], { icon: icone, title: ponto.nome })
-      .addTo(map)
+      .addTo(grupo)
       .bindPopup(criarPopup(ponto));
   });
+
+  map.addLayer(grupo);
 
   map.fitBounds(L.latLngBounds(PONTOS.map((p) => [p.lat, p.lng])), { padding: [40, 40] });
 
