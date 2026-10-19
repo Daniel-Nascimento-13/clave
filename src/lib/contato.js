@@ -81,9 +81,9 @@ function buildMessage(type, form) {
     const linhas = fields
       .map(([name, label]) => [label, valueOf(form, name)])
       .filter(([, v]) => v)
-      .map(([label, v]) => `${label}: ${v}`);
+      .map(([label, v]) => `• ${label}: ${v}`);
 
-    return linhas.length ? ["", `*${title}*`, ...linhas] : [];
+    return linhas.length ? ["", `*${title}*`, "", ...linhas] : [];
   });
 
   return [WHATSAPP_GREETING, "", intro, ...blocos].join("\n");
