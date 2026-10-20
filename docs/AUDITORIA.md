@@ -1,5 +1,7 @@
 # Auditoria — Clave Mídia Indoor
 
+> **Nota:** Números de linha de main.css são históricos (antes da reorganização de out/2026) — use os cabeçalhos de seção.
+
 > Varredura somente leitura em 2026-10-09, sobre o commit `1ea645f` (branch `main`, árvore limpa).
 > Stack: Vite 8 · HTML/CSS/JS vanilla · Tailwind v4 (`@tailwindcss/vite`) · GSAP 3.15 (ScrollTrigger, ScrollToPlugin, SplitText) · Lenis 1.3 · Leaflet 1.9.4 via CDN.
 > Toda referência segue o formato `arquivo:linha`.

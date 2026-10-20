@@ -38,6 +38,10 @@
   --clv-error: #FF8FA3; /* ERRO SOBRE FUNDO ESCURO */
 }
 
+/* ============================================
+   BASE
+   ============================================ */
+
 /* RESERVA A CALHA DA BARRA: QUANDO O LENIS TRAVA O <html> (overflow: clip)
    A BARRA SOME E, SEM ISTO, O LAYOUT PULARIA ~15px NO WINDOWS */
 html {
@@ -417,53 +421,11 @@ body {
   height: 18px;
 }
 
+/* ---------- RESPONSIVO ---------- */
+
 @media (max-width: 640px) {
   .clv-hero { padding-top: 6.5rem; }
   .clv-hero__scroll { bottom: 1.5rem; }
-}
-
-/* ============================================
-   SEÇÃO 6 — EXPERIÊNCIA
-   ============================================ */
-
-.clv-exp {
-  background: var(--clv-bg-soft);
-  padding: clamp(80px, 12vw, 140px) 0;
-  padding-bottom: 5rem;
-  text-align: center;
-}
-
-.clv-exp__subtitle {
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  color: var(--clv-muted);
-  margin: 1.25rem 0 0;
-}
-
-/* ---------- LISTA EMPILHADA ---------- */
-
-.clv-exp__list {
-  list-style: none;
-  margin: clamp(40px, 6vw, 64px) 0 0;
-  padding: 0;
-}
-
-.clv-exp__item {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  color: var(--clv-purple-light);
-}
-
-/* ---------- TEXTO CORRIDO ---------- */
-
-.clv-exp__text {
-  font-size: 1.0625rem;
-  line-height: 1.75;
-  color: var(--clv-muted);
-  margin: 0;
 }
 
 /* ============================================
@@ -579,256 +541,12 @@ body {
   color: var(--clv-muted);
 }
 
+/* ---------- RESPONSIVO ---------- */
+
 @media (max-width: 640px) {
   .clv-rede__stats {
     grid-template-columns: 1fr;
     gap: 40px;
-  }
-}
-
-/* ============================================
-   SEÇÃO 5 — SOBRE
-   ============================================ */
-
-.clv-sobre {
-  background: var(--clv-bg-dark);
-  padding: clamp(80px, 12vw, 140px) 0;
-  color: #fff;
-}
-
-.clv-sobre__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 6vw, 80px);
-  align-items: center;
-}
-
-.clv-sobre__heading {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(1.875rem, 4.5vw, 3rem);
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  margin: 0;
-  color: #fff;
-}
-
-.clv-sobre__text {
-  font-size: 1rem;
-  line-height: 1.75;
-  color: rgb(255 255 255 / 0.7);
-  margin: 0 0 1.25rem;
-}
-
-.clv-sobre__text + .clv-btn { margin-top: 1rem; }
-
-/* MESMO RESPIRO h2→TEXTO DAS OUTRAS SEÇÕES (SUBTÍTULOS: 1.25rem) */
-.clv-sobre__heading + .clv-sobre__text { margin-top: 1.25rem; }
-
-/* ---------- MÍDIA ---------- */
-
-.clv-sobre__media {
-  position: relative;
-  margin: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
-}
-
-.clv-sobre__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.clv-sobre__badge {
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-  padding: 2.5rem 1.5rem 1.5rem;
-  background: linear-gradient(to top, rgb(20 0 30 / 0.92) 0%, transparent 100%);
-}
-
-.clv-sobre__badge-top {
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--clv-purple-light);
-}
-
-.clv-sobre__badge-bottom {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.125rem;
-  letter-spacing: -0.01em;
-  color: #fff;
-}
-
-/* ---------- ORIGEM — CALLOUT COM FILETE ---------- */
-
-.clv-sobre__origem {
-  margin-top: 1.5rem;
-  padding: 1.25rem;
-  border-left: 3px solid var(--clv-purple);
-}
-
-.clv-sobre__origem-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--clv-purple-light);
-  margin-bottom: 0.5rem;
-}
-
-.clv-sobre__origem-eyebrow {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #ffffff60;
-  margin-bottom: 0.25rem;
-}
-
-.clv-sobre__origem-text {
-  font-size: 0.9375rem;
-  color: #ffffffcc;
-  line-height: 1.6;
-}
-
-@media (max-width: 860px) {
-  .clv-sobre__grid { grid-template-columns: 1fr; }
-  .clv-sobre__media { aspect-ratio: 4 / 3; }
-}
-
-/* ============================================
-   SEÇÃO 8 — DIFERENCIAIS
-   ============================================ */
-
-/* FAIXA ESCURA — MESMO FUNDO DO HERO E DO "SOBRE" */
-
-.clv-dif {
-  background: var(--clv-bg-dark);
-  padding: 5rem 1.5rem;
-}
-
-/* ---------- LEGIBILIDADE NO FUNDO ESCURO ---------- */
-
-/* AS CORES BASE DESTES ELEMENTOS SÃO --clv-ink / --clv-muted, PENSADAS PARA
-   FUNDO CLARO — AQUI ELAS SERIAM ILEGÍVEIS. */
-
-.clv-dif .clv-dif__heading,
-.clv-dif .clv-dif__title {
-  color: #ffffff;
-}
-
-.clv-dif .clv-dif__desc,
-.clv-dif .clv-dif__subtitle {
-  color: #ffffffcc;
-}
-
-.clv-dif .clv-dif__num {
-  color: #ffffff50;
-  font-size: 4rem;
-  font-weight: 800;
-}
-
-/* O CHIP É ROXO SOBRE ROXO TRANSLÚCIDO — SOME NO ESCURO */
-
-.clv-dif .clv-chip {
-  color: var(--clv-purple-light);
-  background: rgb(163 115 255 / 0.12);
-}
-
-.clv-dif__head { max-width: 40rem; }
-
-.clv-dif__heading {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  margin: 0;
-  color: var(--clv-ink);
-}
-
-.clv-dif__subtitle {
-  font-size: 1.0625rem;
-  line-height: 1.7;
-  color: var(--clv-muted);
-  margin: 1.25rem 0 0;
-}
-
-/* ---------- GRID 2x2 COM DIVISÓRIAS ---------- */
-
-/* AS LINHAS SÃO DESENHADAS POR BORDA DOS CARDS — SEM PSEUDO-ELEMENTOS
-   EXTRAS E SEM VAZAR PARA FORA DO GRID */
-.clv-dif__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin-top: clamp(48px, 7vw, 80px);
-  border-top: 1px solid var(--clv-line);
-}
-
-.clv-dif__card {
-  position: relative;
-  padding: clamp(32px, 4vw, 48px) clamp(24px, 3vw, 40px);
-  border-bottom: 1px solid var(--clv-line);
-}
-
-.clv-dif__card:nth-child(odd)  { border-right: 1px solid var(--clv-line); padding-left: 0; }
-.clv-dif__card:nth-child(even) { padding-right: 0; }
-
-.clv-dif__num {
-  display: block;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  color: rgb(20 20 15 / 0.1);
-  margin-bottom: 1.25rem;
-}
-
-.clv-dif__title {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(1.125rem, 2vw, 1.5rem);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin: 0 0 0.875rem;
-  color: var(--clv-ink);
-}
-
-.clv-dif__desc {
-  font-size: 0.9375rem;
-  line-height: 1.7;
-  color: var(--clv-muted);
-  margin: 0 0 1.5rem;
-}
-
-.clv-dif__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-@media (max-width: 720px) {
-  .clv-dif__grid { grid-template-columns: 1fr; }
-
-  .clv-dif__card,
-  .clv-dif__card:nth-child(odd),
-  .clv-dif__card:nth-child(even) {
-    border-right: 0;
-    padding-inline: 0;
   }
 }
 
@@ -1121,8 +839,176 @@ body {
 
 .clv-map-popup__cta:hover { background: var(--clv-purple-vivid); }
 
+/* ---------- RESPONSIVO ---------- */
+
 @media (max-width: 640px) {
   .clv-mapa__canvas { height: 360px; }
+}
+
+/* ============================================
+   SEÇÃO 5 — SOBRE
+   ============================================ */
+
+.clv-sobre {
+  background: var(--clv-bg-dark);
+  padding: clamp(80px, 12vw, 140px) 0;
+  color: #fff;
+}
+
+.clv-sobre__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+
+.clv-sobre__heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.875rem, 4.5vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: #fff;
+}
+
+.clv-sobre__text {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgb(255 255 255 / 0.7);
+  margin: 0 0 1.25rem;
+}
+
+.clv-sobre__text + .clv-btn { margin-top: 1rem; }
+
+/* MESMO RESPIRO h2→TEXTO DAS OUTRAS SEÇÕES (SUBTÍTULOS: 1.25rem) */
+.clv-sobre__heading + .clv-sobre__text { margin-top: 1.25rem; }
+
+/* ---------- MÍDIA ---------- */
+
+.clv-sobre__media {
+  position: relative;
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+
+.clv-sobre__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.clv-sobre__badge {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 2.5rem 1.5rem 1.5rem;
+  background: linear-gradient(to top, rgb(20 0 30 / 0.92) 0%, transparent 100%);
+}
+
+.clv-sobre__badge-top {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--clv-purple-light);
+}
+
+.clv-sobre__badge-bottom {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+/* ---------- ORIGEM — CALLOUT COM FILETE ---------- */
+
+.clv-sobre__origem {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border-left: 3px solid var(--clv-purple);
+}
+
+.clv-sobre__origem-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clv-purple-light);
+  margin-bottom: 0.5rem;
+}
+
+.clv-sobre__origem-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffffff60;
+  margin-bottom: 0.25rem;
+}
+
+.clv-sobre__origem-text {
+  font-size: 0.9375rem;
+  color: #ffffffcc;
+  line-height: 1.6;
+}
+
+/* ---------- RESPONSIVO ---------- */
+
+@media (max-width: 860px) {
+  .clv-sobre__grid { grid-template-columns: 1fr; }
+  .clv-sobre__media { aspect-ratio: 4 / 3; }
+}
+
+/* ============================================
+   SEÇÃO 6 — EXPERIÊNCIA
+   ============================================ */
+
+.clv-exp {
+  background: var(--clv-bg-soft);
+  padding: clamp(80px, 12vw, 140px) 0;
+  padding-bottom: 5rem;
+  text-align: center;
+}
+
+.clv-exp__subtitle {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--clv-muted);
+  margin: 1.25rem 0 0;
+}
+
+/* ---------- LISTA EMPILHADA ---------- */
+
+.clv-exp__list {
+  list-style: none;
+  margin: clamp(40px, 6vw, 64px) 0 0;
+  padding: 0;
+}
+
+.clv-exp__item {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--clv-purple-light);
+}
+
+/* ---------- TEXTO CORRIDO ---------- */
+
+.clv-exp__text {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--clv-muted);
+  margin: 0;
 }
 
 /* ============================================
@@ -1181,6 +1067,132 @@ body {
 @media (max-width: 640px) {
   .marcas__marquee { gap: 1.5rem; }
   .marcas__logo    { height: 40px; }
+}
+
+/* ============================================
+   SEÇÃO 8 — DIFERENCIAIS
+   ============================================ */
+
+/* FAIXA ESCURA — MESMO FUNDO DO HERO E DO "SOBRE" */
+
+.clv-dif {
+  background: var(--clv-bg-dark);
+  padding: 5rem 1.5rem;
+}
+
+/* ---------- LEGIBILIDADE NO FUNDO ESCURO ---------- */
+
+/* AS CORES BASE DESTES ELEMENTOS SÃO --clv-ink / --clv-muted, PENSADAS PARA
+   FUNDO CLARO — AQUI ELAS SERIAM ILEGÍVEIS. */
+
+.clv-dif .clv-dif__heading,
+.clv-dif .clv-dif__title {
+  color: #ffffff;
+}
+
+.clv-dif .clv-dif__desc,
+.clv-dif .clv-dif__subtitle {
+  color: #ffffffcc;
+}
+
+.clv-dif .clv-dif__num {
+  color: #ffffff50;
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+/* O CHIP É ROXO SOBRE ROXO TRANSLÚCIDO — SOME NO ESCURO */
+
+.clv-dif .clv-chip {
+  color: var(--clv-purple-light);
+  background: rgb(163 115 255 / 0.12);
+}
+
+.clv-dif__head { max-width: 40rem; }
+
+.clv-dif__heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--clv-ink);
+}
+
+.clv-dif__subtitle {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--clv-muted);
+  margin: 1.25rem 0 0;
+}
+
+/* ---------- GRID 2x2 COM DIVISÓRIAS ---------- */
+
+/* AS LINHAS SÃO DESENHADAS POR BORDA DOS CARDS — SEM PSEUDO-ELEMENTOS
+   EXTRAS E SEM VAZAR PARA FORA DO GRID */
+.clv-dif__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: clamp(48px, 7vw, 80px);
+  border-top: 1px solid var(--clv-line);
+}
+
+.clv-dif__card {
+  position: relative;
+  padding: clamp(32px, 4vw, 48px) clamp(24px, 3vw, 40px);
+  border-bottom: 1px solid var(--clv-line);
+}
+
+.clv-dif__card:nth-child(odd)  { border-right: 1px solid var(--clv-line); padding-left: 0; }
+.clv-dif__card:nth-child(even) { padding-right: 0; }
+
+.clv-dif__num {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: rgb(20 20 15 / 0.1);
+  margin-bottom: 1.25rem;
+}
+
+.clv-dif__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.875rem;
+  color: var(--clv-ink);
+}
+
+.clv-dif__desc {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--clv-muted);
+  margin: 0 0 1.5rem;
+}
+
+.clv-dif__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 720px) {
+  .clv-dif__grid { grid-template-columns: 1fr; }
+
+  .clv-dif__card,
+  .clv-dif__card:nth-child(odd),
+  .clv-dif__card:nth-child(even) {
+    border-right: 0;
+    padding-inline: 0;
+  }
 }
 
 /* ============================================
@@ -1424,6 +1436,45 @@ body {
   color: var(--clv-purple-dark);
 }
 
+/* ---------- RESPONSIVO ---------- */
+
+@media (max-width: 860px) {
+  .clv-contato__cards { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   RODAPÉ
+   ============================================ */
+
+.clv-footer {
+  background: var(--clv-bg-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2.5rem 1.5rem;
+}
+
+.clv-footer__logo {
+  height: 32px;
+  width: auto;
+  opacity: 0.85;
+}
+
+.clv-footer__text {
+  font-size: 0.75rem;
+  color: #ffffff50;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+/* .clv-no-scroll VIVE EM menu.css — TRAVA DE SCROLL É RESPONSABILIDADE DO MENU */
+
+/* ============================================
+   OVERLAY — FORMULÁRIO DE CONTATO
+   ============================================ */
+
 /* ---------- COLS ---------- */
 
 .clv-contato__cols {
@@ -1532,7 +1583,6 @@ body {
 /* ---------- RESPONSIVO ---------- */
 
 @media (max-width: 860px) {
-  .clv-contato__cards { grid-template-columns: 1fr; }
   .clv-contato__cols { grid-template-columns: 1fr; }
   .clv-contato__row { grid-template-columns: 1fr; }
   .clv-contato__checks { grid-template-columns: 1fr; }
@@ -1633,6 +1683,8 @@ body {
   color: var(--clv-purple-light);
 }
 
+/* ---------- RESPONSIVO ---------- */
+
 /* MOBILE — PAINEL E COLUNAS COM RESPIRO PROPORCIONAL À TELA.
    O TOPO MAIOR QUE AS LATERAIS DEIXA O X FORA DO CAMINHO DO SWITCHER. */
 @media (max-width: 640px) {
@@ -1654,32 +1706,3 @@ body {
     font-size: 0.8125rem;
   }
 }
-
-/* ============================================
-   RODAPÉ
-   ============================================ */
-
-.clv-footer {
-  background: var(--clv-bg-dark);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2.5rem 1.5rem;
-}
-
-.clv-footer__logo {
-  height: 32px;
-  width: auto;
-  opacity: 0.85;
-}
-
-.clv-footer__text {
-  font-size: 0.75rem;
-  color: #ffffff50;
-  text-align: center;
-  letter-spacing: 0.05em;
-}
-
-/* .clv-no-scroll VIVE EM menu.css — TRAVA DE SCROLL É RESPONSABILIDADE DO MENU */
