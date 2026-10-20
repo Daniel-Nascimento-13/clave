@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://claveooh.com.br/sitemap.xml
