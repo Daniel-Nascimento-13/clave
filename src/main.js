@@ -32,4 +32,8 @@ document.querySelectorAll("[data-whatsapp-cta]").forEach((el) => {
 
 initContato();
 
+document.querySelectorAll("[data-year]").forEach((el) => {
+  el.textContent = new Date().getFullYear();
+});
+
 initMenu();
