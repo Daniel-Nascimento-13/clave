@@ -294,9 +294,8 @@ body {
    MENU — LOGO (COMPLEMENTO A menu.css)
    ============================================ */
 
-/* logo.webp É ~2:1 (703×355) — PROPORCIONALMENTE ESTREITO PARA UM LOGO DE
-   BARRA, POR ISSO A ALTURA É GENEROSA (44px; 52px NO MOBILE).
-   GEOMETRIA DA BARRA (PADDING/FUNDO) SEGUE DE menu.css. */
+/* ALTURA DO LOGO (44px; 52px NO MOBILE) E GEOMETRIA DA BARRA (PADDING/FUNDO)
+   VIVEM EM menu.css — AQUI SÓ ALINHAMENTO E display. */
 
 /* order: 2 VEM DE menu.css E SOBREVIVE — AQUI SÓ ENTRA O ALINHAMENTO */
 
@@ -309,18 +308,7 @@ body {
    COM O PAI EM FLEX, vertical-align SERIA INÓCUO */
 
 .clv-menu__logo img {
-  height: 44px;
-  width: auto;
   display: block;
-}
-
-/* ESTE BLOCO NÃO ESTÁ EM MEDIA QUERY E VEM DEPOIS DO @import DE menu.css —
-   VENCE A REGRA MOBILE DE LÁ POR ORDEM. O BREAKPOINT PRECISA SER REPETIDO. */
-
-@media (max-width: 860px) {
-  .clv-menu__logo img {
-    height: 52px;
-  }
 }
 
 /* ============================================
